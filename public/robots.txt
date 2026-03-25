@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://observatorio-etp.pages.dev/sitemap-index.xml
