@@ -1,0 +1,23 @@
+---
+interface Props {
+  status: 'ativa' | 'em-andamento' | 'encerrada';
+}
+
+const { status } = Astro.props;
+
+const styles = {
+  ativa: 'bg-secondary/10 text-secondary',
+  'em-andamento': 'bg-primary/10 text-primary',
+  encerrada: 'bg-outline-variant/20 text-on-surface-variant',
+};
+
+const labels = {
+  ativa: 'Ativa',
+  'em-andamento': 'Em andamento',
+  encerrada: 'Encerrada',
+};
+---
+
+<span class:list={['font-label text-[10px] uppercase tracking-widest px-3 py-1 rounded-full', styles[status]]}>
+  {labels[status]}
+</span>

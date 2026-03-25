@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/Container.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import PolicyCard from '../../components/PolicyCard.astro';
+import { getCollection } from 'astro:content';
+
+const politicas = await getCollection('politicas');
+const ativas = politicas.filter(p => p.data.status !== 'encerrada');
+const encerradas = politicas.filter(p => p.data.status === 'encerrada');
+---
+
+<BaseLayout title="Políticas Públicas" activePage="politicas">
+  <section class="py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Políticas Públicas de Educação Profissional"
+        subtitle="Monitoramento das principais políticas, programas e marcos regulatórios que impactam o ensino técnico e profissionalizante no Brasil."
+      />
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+        {ativas.map(p => (
+          <PolicyCard
+            title={p.data.title}
+            status={p.data.status}
+            excerpt={p.data.excerpt}
+            href={`/politicas/${p.id}/`}
+            progressLabel={p.data.progressLabel}
+            progressValue={p.data.progressValue}
+          />
+        ))}
+      </div>
+
+      {encerradas.length > 0 && (
+        <>
+          <h3 class="font-label text-xs font-medium uppercase tracking-[0.2em] text-on-surface-variant mb-6">Programas encerrados</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {encerradas.map(p => (
+              <PolicyCard
+                title={p.data.title}
+                status={p.data.status}
+                excerpt={p.data.excerpt}
+                href={`/politicas/${p.id}/`}
+                progressLabel={p.data.progressLabel}
+                progressValue={p.data.progressValue}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </Container>
+  </section>
+</BaseLayout>

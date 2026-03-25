@@ -1,0 +1,39 @@
+---
+import EditorialLayout from '../../layouts/EditorialLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const politicas = await getCollection('politicas');
+  return politicas.map(entry => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const statusLabel = entry.data.status === 'ativa' ? 'Política Ativa' : entry.data.status === 'encerrada' ? 'Programa Encerrado' : 'Em Andamento';
+---
+
+<EditorialLayout
+  title={entry.data.title}
+  subtitle={entry.data.excerpt}
+  category={statusLabel}
+  backLink="/politicas/"
+  backLabel="Políticas Públicas"
+  activePage="politicas"
+>
+  <Content />
+
+  {entry.data.legislacao && entry.data.legislacao.length > 0 && (
+    <div class="mt-10 pt-6 border-t border-surface-container-high">
+      <h3 class="font-label text-xs font-medium uppercase tracking-[0.2em] text-on-surface-variant mb-3">Base Legislativa</h3>
+      <ul class="space-y-1">
+        {entry.data.legislacao.map((lei: string) => (
+          <li class="font-label text-sm text-primary">{lei}</li>
+        ))}
+      </ul>
+    </div>
+  )}
+</EditorialLayout>
