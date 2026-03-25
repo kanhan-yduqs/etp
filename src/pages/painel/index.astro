@@ -4,8 +4,8 @@ import Container from '../../components/Container.astro';
 import BigNumber from '../../components/BigNumber.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import SourceNote from '../../components/SourceNote.astro';
-import LineChart from '../../components/charts/LineChart.astro';
-import BarChart from '../../components/charts/BarChart.astro';
+import FilterBar from '../../components/FilterBar.astro';
+import ChoroplethMap from '../../components/charts/ChoroplethMap.astro';
 import {
   getSerieTemporal,
   getMatriculasPorUF,
@@ -16,54 +16,28 @@ import {
   calcGrowthPercent,
   MODALIDADE_LABELS,
   MODALIDADE_COLORS,
+  getMetadata,
 } from '../../lib/data';
 
 const serie = getSerieTemporal();
 const latestYear = getLatestYear();
 const latest = serie.find(s => s.ano === latestYear)!;
 const previous = serie.find(s => s.ano === latestYear - 1)!;
+const meta = getMetadata();
 
-// --- Gráfico 1: Modalidades ao longo do tempo ---
-const modalidades = getMatriculasPorModalidade();
-const anos = [...new Set(modalidades.map(m => m.ano))].sort();
-const modNames = [...new Set(modalidades.map(m => m.modalidade))];
+// Full datasets for client-side filtering
+const allUFs = getMatriculasPorUF();
+const allModalidades = getMatriculasPorModalidade();
 
-const modalidadeChartData = JSON.stringify({
-  labels: anos.map(a => a.toString()),
-  datasets: modNames.map(mod => ({
-    label: MODALIDADE_LABELS[mod] || mod,
-    data: anos.map(ano => {
-      const entry = modalidades.find(m => m.ano === ano && m.modalidade === mod);
-      return entry?.total || 0;
-    }),
-    backgroundColor: MODALIDADE_COLORS[mod] || '#71787c',
-    borderRadius: 3,
-  })),
-});
+// UF list for filter dropdown
+const ufList = [...new Map(allUFs.map(u => [u.sigla_uf, { sigla: u.sigla_uf, nome: u.nome_uf }])).values()];
 
-// --- Gráfico 2: Top 10 UFs ---
-const ufsLatest = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total).slice(0, 10);
+// Map data for latest year
+const mapDataObj: Record<string, number> = {};
+getMatriculasPorUF(latestYear).forEach(u => { mapDataObj[u.sigla_uf] = u.total; });
 
-const ufChartData = JSON.stringify({
-  labels: ufsLatest.map(u => u.sigla_uf),
-  datasets: [{
-    label: `Matrículas ${latestYear}`,
-    data: ufsLatest.map(u => u.total),
-    backgroundColor: '#0D3B4C',
-    borderRadius: 4,
-  }],
-});
-
-// --- Gráfico 3: Distribuição por rede ---
-const redeChartData = JSON.stringify({
-  labels: ['Federal', 'Estadual', 'Municipal', 'Privada'],
-  datasets: [{
-    label: `Matrículas ${latestYear}`,
-    data: [latest.federal, latest.estadual, latest.municipal, latest.privada],
-    backgroundColor: ['#0D3B4C', '#476800', '#2d6195', '#8da1b9'],
-    borderRadius: 4,
-  }],
-});
+// Pre-built chart data for initial render (latest year)
+const ufsTop10 = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total).slice(0, 10);
 ---
 
 <BaseLayout title="Painel de Indicadores" activePage="dados">
@@ -74,8 +48,8 @@ const redeChartData = JSON.stringify({
         subtitle="Exploração analítica dos dados da Educação Profissional e Tecnológica no Brasil."
       />
 
-      <!-- Big numbers row -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+      <!-- Big numbers -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         <BigNumber
           value={formatNumber(latest.total)}
           label="Total Matrículas EPT"
@@ -95,54 +69,254 @@ const redeChartData = JSON.stringify({
           trendValue="do total"
         />
       </div>
+
+      <!-- Filters -->
+      <FilterBar
+        anos={meta.anos_cobertos}
+        ufs={ufList}
+        showUF={true}
+        showRede={true}
+      />
     </Container>
   </section>
 
-  <!-- Modalidades -->
-  <section class="bg-surface-container-low py-16 md:py-24">
+  <!-- Mapa -->
+  <section class="bg-surface-container-low dark:bg-dark-surface-container-low py-16 md:py-24">
     <Container>
       <SectionHeader
-        title="Matrículas por Modalidade"
-        subtitle="Evolução das matrículas em cursos técnicos integrados, concomitantes, subsequentes e integrados à EJA."
+        title="Distribuição por Estado"
+        subtitle="Clique em um estado para ver seu perfil detalhado."
       />
-
-      <div class="bg-surface-container-lowest p-4 md:p-8 rounded-xl">
-        <BarChart chartId="modalidades" chartData={modalidadeChartData} height="420px" />
-      </div>
-
-      <SourceNote source="Sinopses Estatísticas da Educação Básica — INEP/MEC" year={`${serie[0].ano}–${latestYear}`} />
+      <ChoroplethMap mapId="painel-mapa" mapData={JSON.stringify(mapDataObj)} legendLabel="Matrículas" height="480px" />
+      <SourceNote source="Sinopses Estatísticas — INEP/MEC" year={latestYear} />
     </Container>
   </section>
 
-  <!-- Top UFs -->
+  <!-- Top UFs (filterable) -->
   <section class="py-16 md:py-24">
     <Container>
       <SectionHeader
         title="Top 10 Estados por Matrículas"
-        subtitle={`Unidades da Federação com maior número de matrículas na Educação Profissional em ${latestYear}.`}
+        subtitle="Unidades da Federação com maior número de matrículas."
+        id="top-ufs-section"
       />
-
-      <div class="bg-surface-container-lowest p-4 md:p-8 rounded-xl">
-        <BarChart chartId="top-ufs" chartData={ufChartData} horizontal={true} height="420px" />
+      <div class="bg-surface-container-lowest dark:bg-dark-surface-container p-4 md:p-8 rounded-xl">
+        <div class="relative" style="height: 420px">
+          <canvas id="chart-top-ufs"></canvas>
+        </div>
       </div>
-
-      <SourceNote source="Sinopses Estatísticas da Educação Básica — INEP/MEC" year={latestYear} />
+      <SourceNote source="Sinopses Estatísticas — INEP/MEC" year={latestYear} />
     </Container>
   </section>
 
-  <!-- Distribuição por Rede -->
-  <section class="bg-surface-container-low py-16 md:py-24">
+  <!-- Distribuição por Rede (filterable) -->
+  <section class="bg-surface-container-low dark:bg-dark-surface-container-low py-16 md:py-24">
     <Container>
       <SectionHeader
         title="Distribuição por Rede"
-        subtitle={`Matrículas da Educação Profissional por dependência administrativa em ${latestYear}.`}
+        subtitle="Matrículas por dependência administrativa."
       />
-
-      <div class="bg-surface-container-lowest p-4 md:p-8 rounded-xl">
-        <BarChart chartId="por-rede" chartData={redeChartData} height="350px" />
+      <div class="bg-surface-container-lowest dark:bg-dark-surface-container p-4 md:p-8 rounded-xl">
+        <div class="relative" style="height: 350px">
+          <canvas id="chart-por-rede"></canvas>
+        </div>
       </div>
-
-      <SourceNote source="Sinopses Estatísticas da Educação Básica — INEP/MEC" year={latestYear} />
+      <SourceNote source="Sinopses Estatísticas — INEP/MEC" year={latestYear} />
     </Container>
   </section>
+
+  <!-- Modalidades ao longo do tempo -->
+  <section class="py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Evolução por Modalidade"
+        subtitle="Matrículas em cursos técnicos integrados, concomitantes, subsequentes e integrados à EJA."
+      />
+      <div class="bg-surface-container-lowest dark:bg-dark-surface-container p-4 md:p-8 rounded-xl">
+        <div class="relative" style="height: 420px">
+          <canvas id="chart-modalidades"></canvas>
+        </div>
+      </div>
+      <SourceNote source="Sinopses Estatísticas — INEP/MEC" year={`${serie[0].ano}–${latestYear}`} />
+    </Container>
+  </section>
+
+  <!-- Embedded full data for client-side filtering -->
+  <script type="application/json" id="painel-data-ufs" set:html={JSON.stringify(allUFs)} />
+  <script type="application/json" id="painel-data-serie" set:html={JSON.stringify(serie)} />
+  <script type="application/json" id="painel-data-modalidades" set:html={JSON.stringify(allModalidades)} />
 </BaseLayout>
+
+<script>
+  import { Chart, BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
+  Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend);
+
+  // Chart defaults
+  Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
+  Chart.defaults.font.size = 12;
+  Chart.defaults.color = '#41484c';
+  Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(0, 37, 50, 0.9)';
+  Chart.defaults.plugins.tooltip.cornerRadius = 6;
+  Chart.defaults.responsive = true;
+  Chart.defaults.maintainAspectRatio = false;
+
+  const MODALIDADE_LABELS: Record<string, string> = {
+    integrada: 'Integrada ao EM',
+    concomitante: 'Concomitante',
+    subsequente: 'Subsequente',
+    integrada_eja: 'Integrada à EJA',
+  };
+  const MODALIDADE_COLORS: Record<string, string> = {
+    integrada: '#0D3B4C',
+    concomitante: '#476800',
+    subsequente: '#4a6d00',
+    integrada_eja: '#2d6195',
+  };
+
+  // Load embedded data
+  const allUFs = JSON.parse(document.getElementById('painel-data-ufs')?.textContent || '[]');
+  const allSerie = JSON.parse(document.getElementById('painel-data-serie')?.textContent || '[]');
+  const allModalidades = JSON.parse(document.getElementById('painel-data-modalidades')?.textContent || '[]');
+
+  function formatNum(n: number): string {
+    if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace('.', ',') + 'M';
+    if (n >= 1_000) return Math.round(n).toLocaleString('pt-BR');
+    return n.toString();
+  }
+
+  function tooltipLabel(ctx: any, horizontal = false) {
+    const val = ctx.parsed[horizontal ? 'x' : 'y'];
+    return `${ctx.dataset.label}: ${formatNum(val)}`;
+  }
+
+  function tickFormat(value: any) {
+    if (typeof value === 'number') {
+      if (value >= 1_000_000) return (value / 1_000_000).toFixed(1) + 'M';
+      if (value >= 1_000) return (value / 1_000).toFixed(0) + 'k';
+    }
+    return value;
+  }
+
+  // --- Chart instances ---
+  let chartTopUFs: Chart | null = null;
+  let chartPorRede: Chart | null = null;
+  let chartModalidades: Chart | null = null;
+
+  function buildCharts(ano: number, uf: string, rede: string) {
+    // Filter UFs for selected year
+    let ufsForYear = allUFs.filter((u: any) => u.ano === ano);
+
+    // If specific UF selected, show only that
+    if (uf !== 'todos') {
+      ufsForYear = ufsForYear.filter((u: any) => u.sigla_uf === uf);
+    }
+
+    // Sort and take top 10
+    const top10 = [...ufsForYear].sort((a: any, b: any) => b.total - a.total).slice(0, uf === 'todos' ? 10 : 1);
+
+    // --- Top UFs chart ---
+    const topUFsCanvas = document.getElementById('chart-top-ufs') as HTMLCanvasElement;
+    if (chartTopUFs) chartTopUFs.destroy();
+    chartTopUFs = new Chart(topUFsCanvas, {
+      type: 'bar',
+      data: {
+        labels: top10.map((u: any) => u.sigla_uf),
+        datasets: [{
+          label: `Matrículas ${ano}`,
+          data: top10.map((u: any) => rede === 'total' ? u.total : (u[rede] || 0)),
+          backgroundColor: '#0D3B4C',
+          borderRadius: 4,
+        }],
+      },
+      options: {
+        indexAxis: 'y',
+        scales: {
+          x: { ticks: { callback: tickFormat }, grid: { color: 'rgba(0,0,0,0.06)' } },
+          y: { grid: { color: 'rgba(0,0,0,0.04)' } },
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: (ctx: any) => tooltipLabel(ctx, true) } },
+        },
+      },
+    });
+
+    // --- Rede distribution chart ---
+    // Aggregate across selected UFs
+    const redeData = { federal: 0, estadual: 0, municipal: 0, privada: 0 };
+    const ufsToSum = uf === 'todos' ? ufsForYear : ufsForYear;
+    ufsToSum.forEach((u: any) => {
+      redeData.federal += u.federal;
+      redeData.estadual += u.estadual;
+      redeData.municipal += u.municipal;
+      redeData.privada += u.privada;
+    });
+
+    const redeCanvas = document.getElementById('chart-por-rede') as HTMLCanvasElement;
+    if (chartPorRede) chartPorRede.destroy();
+    chartPorRede = new Chart(redeCanvas, {
+      type: 'bar',
+      data: {
+        labels: ['Federal', 'Estadual', 'Municipal', 'Privada'],
+        datasets: [{
+          label: `Matrículas ${ano}`,
+          data: [redeData.federal, redeData.estadual, redeData.municipal, redeData.privada],
+          backgroundColor: ['#0D3B4C', '#476800', '#2d6195', '#8da1b9'],
+          borderRadius: 4,
+        }],
+      },
+      options: {
+        scales: {
+          x: { grid: { color: 'rgba(0,0,0,0.04)' } },
+          y: { ticks: { callback: tickFormat }, grid: { color: 'rgba(0,0,0,0.06)' } },
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: (ctx: any) => tooltipLabel(ctx) } },
+        },
+      },
+    });
+
+    // --- Modalidades over time chart ---
+    const anos = [...new Set(allModalidades.map((m: any) => m.ano))].sort() as number[];
+    const modNames = ['integrada', 'concomitante', 'subsequente', 'integrada_eja'];
+
+    const modCanvas = document.getElementById('chart-modalidades') as HTMLCanvasElement;
+    if (chartModalidades) chartModalidades.destroy();
+    chartModalidades = new Chart(modCanvas, {
+      type: 'bar',
+      data: {
+        labels: anos.map(a => a.toString()),
+        datasets: modNames.map(mod => ({
+          label: MODALIDADE_LABELS[mod] || mod,
+          data: anos.map(a => {
+            const entry = allModalidades.find((m: any) => m.ano === a && m.modalidade === mod);
+            return entry?.total || 0;
+          }),
+          backgroundColor: MODALIDADE_COLORS[mod] || '#71787c',
+          borderRadius: 3,
+        })),
+      },
+      options: {
+        scales: {
+          x: { grid: { color: 'rgba(0,0,0,0.04)' } },
+          y: { ticks: { callback: tickFormat }, grid: { color: 'rgba(0,0,0,0.06)' } },
+        },
+        plugins: {
+          legend: { position: 'bottom', labels: { usePointStyle: true, pointStyleWidth: 10, padding: 16 } },
+          tooltip: { callbacks: { label: (ctx: any) => tooltipLabel(ctx) } },
+        },
+      },
+    });
+  }
+
+  // Initial render
+  const latestYear = Math.max(...allSerie.map((s: any) => s.ano));
+  buildCharts(latestYear, 'todos', 'total');
+
+  // Listen for filter changes
+  document.addEventListener('filter-change', ((e: CustomEvent) => {
+    const { ano, uf, rede } = e.detail;
+    buildCharts(ano, uf, rede);
+  }) as EventListener);
+</script>

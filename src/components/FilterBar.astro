@@ -1,0 +1,76 @@
+---
+interface Props {
+  anos: number[];
+  ufs?: { sigla: string; nome: string }[];
+  showUF?: boolean;
+  showRede?: boolean;
+  showModalidade?: boolean;
+}
+
+const { anos, ufs = [], showUF = false, showRede = false, showModalidade = false } = Astro.props;
+---
+
+<div class="flex flex-wrap items-end gap-4 mb-10 p-4 md:p-6 bg-surface-container-lowest dark:bg-dark-surface-container rounded-xl">
+  <!-- Ano -->
+  <div class="flex flex-col gap-1">
+    <label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant" for="filter-ano">Ano</label>
+    <select id="filter-ano" class="font-label text-sm text-primary bg-transparent border-b border-outline-variant focus:border-primary focus:outline-none py-1 pr-6 cursor-pointer">
+      {anos.sort((a, b) => b - a).map(ano => (
+        <option value={ano}>{ano}</option>
+      ))}
+    </select>
+  </div>
+
+  {showUF && ufs.length > 0 && (
+    <div class="flex flex-col gap-1">
+      <label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant" for="filter-uf">Estado</label>
+      <select id="filter-uf" class="font-label text-sm text-primary bg-transparent border-b border-outline-variant focus:border-primary focus:outline-none py-1 pr-6 cursor-pointer">
+        <option value="todos">Todos</option>
+        {ufs.sort((a, b) => a.nome.localeCompare(b.nome)).map(uf => (
+          <option value={uf.sigla}>{uf.sigla} — {uf.nome}</option>
+        ))}
+      </select>
+    </div>
+  )}
+
+  {showRede && (
+    <div class="flex flex-col gap-1">
+      <label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant" for="filter-rede">Rede</label>
+      <select id="filter-rede" class="font-label text-sm text-primary bg-transparent border-b border-outline-variant focus:border-primary focus:outline-none py-1 pr-6 cursor-pointer">
+        <option value="total">Todas</option>
+        <option value="federal">Federal</option>
+        <option value="estadual">Estadual</option>
+        <option value="municipal">Municipal</option>
+        <option value="privada">Privada</option>
+      </select>
+    </div>
+  )}
+
+  {showModalidade && (
+    <div class="flex flex-col gap-1">
+      <label class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant" for="filter-modalidade">Modalidade</label>
+      <select id="filter-modalidade" class="font-label text-sm text-primary bg-transparent border-b border-outline-variant focus:border-primary focus:outline-none py-1 pr-6 cursor-pointer">
+        <option value="todas">Todas</option>
+        <option value="integrada">Integrada ao EM</option>
+        <option value="concomitante">Concomitante</option>
+        <option value="subsequente">Subsequente</option>
+        <option value="integrada_eja">Integrada à EJA</option>
+      </select>
+    </div>
+  )}
+</div>
+
+<script>
+  // Dispatch custom event on any filter change
+  document.querySelectorAll('[id^="filter-"]').forEach(select => {
+    select.addEventListener('change', () => {
+      const filters = {
+        ano: parseInt((document.getElementById('filter-ano') as HTMLSelectElement)?.value || '0'),
+        uf: (document.getElementById('filter-uf') as HTMLSelectElement)?.value || 'todos',
+        rede: (document.getElementById('filter-rede') as HTMLSelectElement)?.value || 'total',
+        modalidade: (document.getElementById('filter-modalidade') as HTMLSelectElement)?.value || 'todas',
+      };
+      document.dispatchEvent(new CustomEvent('filter-change', { detail: filters }));
+    });
+  });
+</script>
