@@ -4,10 +4,85 @@ import Container from '../components/Container.astro';
 import BigNumber from '../components/BigNumber.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import SourceNote from '../components/SourceNote.astro';
+import LineChart from '../components/charts/LineChart.astro';
+import BarChart from '../components/charts/BarChart.astro';
+import {
+  getSerieTemporal,
+  getMatriculasPorRegiao,
+  getLatestYear,
+  formatNumber,
+  formatPercent,
+  calcGrowthPercent,
+} from '../lib/data';
+
+// --- Dados calculados em build time ---
+const serie = getSerieTemporal();
+const latestYear = getLatestYear();
+const latest = serie.find(s => s.ano === latestYear)!;
+const previous = serie.find(s => s.ano === latestYear - 1)!;
+const oldest = serie[0];
+
+const growthYoY = calcGrowthPercent(latest.total, previous.total);
+const growthPublicaYoY = calcGrowthPercent(latest.publica, previous.publica);
+const growth5y = calcGrowthPercent(latest.total, oldest.total);
+
+// --- Gráfico: Série temporal ---
+const lineChartData = JSON.stringify({
+  labels: serie.map(s => s.ano.toString()),
+  datasets: [
+    {
+      label: 'Total',
+      data: serie.map(s => s.total),
+      borderColor: '#0D3B4C',
+      backgroundColor: 'rgba(13, 59, 76, 0.1)',
+      fill: true,
+      tension: 0.3,
+      borderWidth: 2.5,
+      pointRadius: 4,
+      pointBackgroundColor: '#0D3B4C',
+    },
+    {
+      label: 'Rede Pública',
+      data: serie.map(s => s.publica),
+      borderColor: '#476800',
+      backgroundColor: 'rgba(71, 104, 0, 0.05)',
+      fill: true,
+      tension: 0.3,
+      borderWidth: 2,
+      pointRadius: 3,
+      pointBackgroundColor: '#476800',
+    },
+    {
+      label: 'Rede Privada',
+      data: serie.map(s => s.privada),
+      borderColor: '#2d6195',
+      backgroundColor: 'rgba(45, 97, 149, 0.05)',
+      fill: true,
+      tension: 0.3,
+      borderWidth: 2,
+      pointRadius: 3,
+      pointBackgroundColor: '#2d6195',
+    },
+  ],
+});
+
+// --- Gráfico: Matrículas por região ---
+const regioes = getMatriculasPorRegiao(latestYear).sort((a, b) => b.total - a.total);
+const barChartData = JSON.stringify({
+  labels: regioes.map(r => r.regiao),
+  datasets: [
+    {
+      label: `Matrículas ${latestYear}`,
+      data: regioes.map(r => r.total),
+      backgroundColor: ['#0D3B4C', '#476800', '#4a6d00', '#2d6195', '#8da1b9'],
+      borderRadius: 4,
+    },
+  ],
+});
 ---
 
 <BaseLayout title="Home">
-  <!-- Hero Section -->
+  <!-- Hero -->
   <section class="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
     <Container class="py-16 md:py-20 relative z-10 w-full">
       <div class="max-w-5xl mx-auto space-y-8 text-center flex flex-col items-center">
@@ -32,27 +107,44 @@ import SourceNote from '../components/SourceNote.astro';
   <!-- Big Numbers -->
   <section class="bg-surface-container-low py-16 md:py-24">
     <Container>
-      <SectionHeader
-        label="Indicadores Nacionais"
-        title="Panorama Estratégico"
-      >
+      <SectionHeader label="Indicadores Nacionais" title="Panorama Estratégico">
         <div class="text-on-surface-variant font-label text-sm italic">
-          Última atualização: Censo Escolar 2024
+          Última atualização: Censo Escolar {latestYear}
         </div>
       </SectionHeader>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <BigNumber value="2.6M" label="Total Matrículas EPT" trend="up" trendValue="+6.7% vs 2023" />
-        <BigNumber value="1.6M" label="Rede Pública" trend="up" trendValue="+17.1% vs 2023" />
-        <BigNumber value="27" label="Estados com Dados" />
-        <BigNumber value="+34%" label="Crescimento 2019–2024" trend="up" trendValue="5 anos" />
+        <BigNumber
+          value={formatNumber(latest.total)}
+          label="Total Matrículas EPT"
+          trend="up"
+          trendValue={`+${formatPercent(growthYoY)} vs ${latestYear - 1}`}
+        />
+        <BigNumber
+          value={formatNumber(latest.publica)}
+          label="Rede Pública"
+          trend="up"
+          trendValue={`+${formatPercent(growthPublicaYoY)} vs ${latestYear - 1}`}
+        />
+        <BigNumber
+          value={formatNumber(latest.estadual)}
+          label="Rede Estadual"
+          trend="up"
+          trendValue="maior rede"
+        />
+        <BigNumber
+          value={`+${formatPercent(growth5y, 0)}`}
+          label={`Crescimento ${oldest.ano}–${latestYear}`}
+          trend="up"
+          trendValue={`${serie.length} anos`}
+        />
       </div>
 
-      <SourceNote source="Sinopses Estatísticas da Educação Básica — INEP/MEC" year="2019–2024" />
+      <SourceNote source="Sinopses Estatísticas da Educação Básica — INEP/MEC" year={`${oldest.ano}–${latestYear}`} />
     </Container>
   </section>
 
-  <!-- Charts placeholder -->
+  <!-- Série Temporal -->
   <section class="py-16 md:py-24">
     <Container>
       <SectionHeader
@@ -60,16 +152,32 @@ import SourceNote from '../components/SourceNote.astro';
         subtitle="Série temporal de matrículas na Educação Profissional e Tecnológica por tipo de rede."
       />
 
-      <div class="bg-surface-container-lowest p-6 md:p-8 rounded-xl min-h-[400px] flex items-center justify-center">
-        <p class="text-on-surface-variant font-label text-sm">Gráfico de evolução temporal (Sprint 0D)</p>
+      <div class="bg-surface-container-lowest p-4 md:p-8 rounded-xl">
+        <LineChart chartId="serie-temporal" chartData={lineChartData} yLabel="Matrículas" />
       </div>
 
-      <SourceNote source="Sinopses Estatísticas da Educação Básica — INEP/MEC" year="2019–2024" />
+      <SourceNote source="Sinopses Estatísticas da Educação Básica — INEP/MEC" year={`${oldest.ano}–${latestYear}`} />
     </Container>
   </section>
 
-  <!-- Analyses preview -->
+  <!-- Matrículas por Região -->
   <section class="bg-surface-container-low py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Distribuição Regional"
+        subtitle={`Matrículas da Educação Profissional por região do Brasil em ${latestYear}.`}
+      />
+
+      <div class="bg-surface-container-lowest p-4 md:p-8 rounded-xl">
+        <BarChart chartId="por-regiao" chartData={barChartData} horizontal={true} height="320px" />
+      </div>
+
+      <SourceNote source="Sinopses Estatísticas da Educação Básica — INEP/MEC" year={latestYear} />
+    </Container>
+  </section>
+
+  <!-- Análises preview -->
+  <section class="py-16 md:py-24">
     <Container>
       <SectionHeader
         label="Análises em Destaque"

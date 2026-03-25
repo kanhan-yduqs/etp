@@ -1,6 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Container from '../components/Container.astro';
+import { getMetadata, getSerieTemporal, formatNumber } from '../lib/data';
+
+const meta = getMetadata();
+const serie = getSerieTemporal();
+const dataProcessamento = new Date(meta.data_processamento).toLocaleDateString('pt-BR', {
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+});
 ---
 
 <BaseLayout title="Metodologia">
@@ -9,8 +18,121 @@ import Container from '../components/Container.astro';
       <div class="max-w-3xl">
         <span class="font-label text-xs font-medium uppercase tracking-[0.2em] text-on-surface-variant">Transparência</span>
         <h1 class="text-4xl md:text-5xl font-bold mt-2 text-primary">Metodologia</h1>
-        <div class="mt-8 space-y-6 text-on-surface-variant text-base leading-relaxed">
-          <p>Conteúdo detalhado será adicionado no Sprint 0D com dados do metadata.json.</p>
+
+        <div class="mt-12 space-y-10 text-on-surface-variant text-base leading-relaxed">
+          <section>
+            <h2 class="text-2xl font-bold text-primary mb-4">Fonte dos dados</h2>
+            <p>
+              Os dados apresentados neste Observatório são extraídos das
+              <strong class="text-primary">Sinopses Estatísticas da Educação Básica</strong>,
+              publicadas anualmente pelo Instituto Nacional de Estudos e Pesquisas Educacionais
+              Anísio Teixeira (<strong class="text-primary">INEP/MEC</strong>).
+            </p>
+            <p class="mt-3">
+              As Sinopses são tabelas pré-agregadas derivadas do Censo Escolar da Educação Básica,
+              o maior e mais abrangente levantamento estatístico sobre a educação básica no Brasil.
+              São publicadas em formato Excel com dados por Unidade da Federação, município, rede
+              administrativa e modalidade de ensino.
+            </p>
+            <div class="mt-4 bg-surface-container-low p-4 rounded-xl">
+              <p class="font-label text-sm">
+                <strong>Link oficial:</strong>
+                <a href={meta.url_fonte} class="text-secondary hover:underline" target="_blank" rel="noopener">{meta.url_fonte}</a>
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <h2 class="text-2xl font-bold text-primary mb-4">Cobertura temporal</h2>
+            <p>
+              O Observatório cobre atualmente <strong class="text-primary">{meta.anos_cobertos.length} anos</strong> de dados:
+              de <strong class="text-primary">{meta.anos_cobertos[0]}</strong> a <strong class="text-primary">{meta.anos_cobertos[meta.anos_cobertos.length - 1]}</strong>.
+            </p>
+            <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-3">
+              {serie.map(s => (
+                <div class="bg-surface-container-low p-3 rounded-xl text-center">
+                  <span class="font-label text-sm font-bold text-primary block">{s.ano}</span>
+                  <span class="font-label text-xs text-on-surface-variant">{formatNumber(s.total)} matrículas</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <h2 class="text-2xl font-bold text-primary mb-4">Processamento dos dados</h2>
+            <p>Os dados brutos passam por um pipeline de processamento (ETL) que realiza:</p>
+            <ol class="list-decimal pl-6 mt-3 space-y-2">
+              <li>Download dos arquivos Excel das Sinopses Estatísticas do INEP</li>
+              <li>Extração das abas de <strong>Educação Profissional</strong> (aba 1.30 — matrículas por modalidade e rede)</li>
+              <li>Limpeza: remoção de cabeçalhos mesclados, notas de rodapé, conversão de formatos numéricos brasileiros</li>
+              <li>Agregação: totais por UF, região, modalidade e rede administrativa</li>
+              <li>Exportação em formato JSON para consumo pelo site</li>
+            </ol>
+            <p class="mt-4">
+              Todo o pipeline é open source e replicável. Os scripts estão disponíveis em
+              <code class="bg-surface-container-high px-2 py-1 rounded text-sm font-label">data/scripts/</code>
+              no repositório do projeto.
+            </p>
+          </section>
+
+          <section>
+            <h2 class="text-2xl font-bold text-primary mb-4">Modalidades incluídas</h2>
+            <p>O Observatório rastreia as seguintes modalidades de Educação Profissional Técnica:</p>
+            <div class="mt-4 space-y-3">
+              <div class="bg-surface-container-low p-4 rounded-xl">
+                <strong class="text-primary">Integrada ao Ensino Médio</strong>
+                <p class="text-sm mt-1">Curso técnico realizado de forma integrada ao ensino médio regular, em uma única matrícula.</p>
+              </div>
+              <div class="bg-surface-container-low p-4 rounded-xl">
+                <strong class="text-primary">Concomitante</strong>
+                <p class="text-sm mt-1">Curso técnico realizado simultaneamente ao ensino médio, mas com matrículas separadas.</p>
+              </div>
+              <div class="bg-surface-container-low p-4 rounded-xl">
+                <strong class="text-primary">Subsequente</strong>
+                <p class="text-sm mt-1">Curso técnico realizado após a conclusão do ensino médio.</p>
+              </div>
+              <div class="bg-surface-container-low p-4 rounded-xl">
+                <strong class="text-primary">Integrada à EJA</strong>
+                <p class="text-sm mt-1">Curso técnico integrado à Educação de Jovens e Adultos.</p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h2 class="text-2xl font-bold text-primary mb-4">Dicionário de dados</h2>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-surface-container-high">
+                    <th class="text-left py-3 pr-4 font-label font-semibold text-primary">Campo</th>
+                    <th class="text-left py-3 font-label font-semibold text-primary">Descrição</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-surface-container-high">
+                  <tr><td class="py-2 pr-4 font-label"><code>ano</code></td><td class="py-2">Ano de referência do Censo Escolar</td></tr>
+                  <tr><td class="py-2 pr-4 font-label"><code>total</code></td><td class="py-2">Total de matrículas em todas as modalidades EPT</td></tr>
+                  <tr><td class="py-2 pr-4 font-label"><code>publica</code></td><td class="py-2">Soma: federal + estadual + municipal</td></tr>
+                  <tr><td class="py-2 pr-4 font-label"><code>privada</code></td><td class="py-2">Matrículas na rede privada</td></tr>
+                  <tr><td class="py-2 pr-4 font-label"><code>federal</code></td><td class="py-2">Rede federal (Institutos Federais, CEFETs, etc.)</td></tr>
+                  <tr><td class="py-2 pr-4 font-label"><code>estadual</code></td><td class="py-2">Rede estadual de ensino</td></tr>
+                  <tr><td class="py-2 pr-4 font-label"><code>municipal</code></td><td class="py-2">Rede municipal de ensino</td></tr>
+                  <tr><td class="py-2 pr-4 font-label"><code>sigla_uf</code></td><td class="py-2">Sigla da Unidade da Federação (ex: SP, RJ)</td></tr>
+                  <tr><td class="py-2 pr-4 font-label"><code>regiao</code></td><td class="py-2">Região geográfica (Norte, Nordeste, Centro-Oeste, Sudeste, Sul)</td></tr>
+                  <tr><td class="py-2 pr-4 font-label"><code>modalidade</code></td><td class="py-2">Tipo: integrada, concomitante, subsequente, integrada_eja</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section>
+            <h2 class="text-2xl font-bold text-primary mb-4">Notas importantes</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              {meta.notas.map(nota => <li>{nota}</li>)}
+              <li>Dados processados em: {dataProcessamento}</li>
+              <li>Total de registros por UF: {meta.total_registros_uf.toLocaleString('pt-BR')}</li>
+              <li>Total de registros por região: {meta.total_registros_regiao.toLocaleString('pt-BR')}</li>
+            </ul>
+          </section>
         </div>
       </div>
     </Container>

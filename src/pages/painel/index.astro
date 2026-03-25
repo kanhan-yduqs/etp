@@ -1,7 +1,69 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Container from '../../components/Container.astro';
+import BigNumber from '../../components/BigNumber.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
+import SourceNote from '../../components/SourceNote.astro';
+import LineChart from '../../components/charts/LineChart.astro';
+import BarChart from '../../components/charts/BarChart.astro';
+import {
+  getSerieTemporal,
+  getMatriculasPorUF,
+  getMatriculasPorModalidade,
+  getLatestYear,
+  formatNumber,
+  formatPercent,
+  calcGrowthPercent,
+  MODALIDADE_LABELS,
+  MODALIDADE_COLORS,
+} from '../../lib/data';
+
+const serie = getSerieTemporal();
+const latestYear = getLatestYear();
+const latest = serie.find(s => s.ano === latestYear)!;
+const previous = serie.find(s => s.ano === latestYear - 1)!;
+
+// --- Gráfico 1: Modalidades ao longo do tempo ---
+const modalidades = getMatriculasPorModalidade();
+const anos = [...new Set(modalidades.map(m => m.ano))].sort();
+const modNames = [...new Set(modalidades.map(m => m.modalidade))];
+
+const modalidadeChartData = JSON.stringify({
+  labels: anos.map(a => a.toString()),
+  datasets: modNames.map(mod => ({
+    label: MODALIDADE_LABELS[mod] || mod,
+    data: anos.map(ano => {
+      const entry = modalidades.find(m => m.ano === ano && m.modalidade === mod);
+      return entry?.total || 0;
+    }),
+    backgroundColor: MODALIDADE_COLORS[mod] || '#71787c',
+    borderRadius: 3,
+  })),
+});
+
+// --- Gráfico 2: Top 10 UFs ---
+const ufsLatest = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total).slice(0, 10);
+
+const ufChartData = JSON.stringify({
+  labels: ufsLatest.map(u => u.sigla_uf),
+  datasets: [{
+    label: `Matrículas ${latestYear}`,
+    data: ufsLatest.map(u => u.total),
+    backgroundColor: '#0D3B4C',
+    borderRadius: 4,
+  }],
+});
+
+// --- Gráfico 3: Distribuição por rede ---
+const redeChartData = JSON.stringify({
+  labels: ['Federal', 'Estadual', 'Municipal', 'Privada'],
+  datasets: [{
+    label: `Matrículas ${latestYear}`,
+    data: [latest.federal, latest.estadual, latest.municipal, latest.privada],
+    backgroundColor: ['#0D3B4C', '#476800', '#2d6195', '#8da1b9'],
+    borderRadius: 4,
+  }],
+});
 ---
 
 <BaseLayout title="Painel de Indicadores" activePage="dados">
@@ -12,7 +74,75 @@ import SectionHeader from '../../components/SectionHeader.astro';
         subtitle="Exploração analítica dos dados da Educação Profissional e Tecnológica no Brasil."
       />
 
-      <p class="text-on-surface-variant font-label text-sm">Gráficos interativos serão adicionados no Sprint 0D.</p>
+      <!-- Big numbers row -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <BigNumber
+          value={formatNumber(latest.total)}
+          label="Total Matrículas EPT"
+          trend="up"
+          trendValue={`+${formatPercent(calcGrowthPercent(latest.total, previous.total))} vs ${latestYear - 1}`}
+          source={`Censo Escolar ${latestYear}`}
+        />
+        <BigNumber
+          value={serie.length.toString()}
+          label="Anos de Série Histórica"
+          source={`${serie[0].ano}–${latestYear}`}
+        />
+        <BigNumber
+          value={formatPercent((latest.publica / latest.total) * 100, 0)}
+          label="Rede Pública"
+          trend="up"
+          trendValue="do total"
+        />
+      </div>
+    </Container>
+  </section>
+
+  <!-- Modalidades -->
+  <section class="bg-surface-container-low py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Matrículas por Modalidade"
+        subtitle="Evolução das matrículas em cursos técnicos integrados, concomitantes, subsequentes e integrados à EJA."
+      />
+
+      <div class="bg-surface-container-lowest p-4 md:p-8 rounded-xl">
+        <BarChart chartId="modalidades" chartData={modalidadeChartData} height="420px" />
+      </div>
+
+      <SourceNote source="Sinopses Estatísticas da Educação Básica — INEP/MEC" year={`${serie[0].ano}–${latestYear}`} />
+    </Container>
+  </section>
+
+  <!-- Top UFs -->
+  <section class="py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Top 10 Estados por Matrículas"
+        subtitle={`Unidades da Federação com maior número de matrículas na Educação Profissional em ${latestYear}.`}
+      />
+
+      <div class="bg-surface-container-lowest p-4 md:p-8 rounded-xl">
+        <BarChart chartId="top-ufs" chartData={ufChartData} horizontal={true} height="420px" />
+      </div>
+
+      <SourceNote source="Sinopses Estatísticas da Educação Básica — INEP/MEC" year={latestYear} />
+    </Container>
+  </section>
+
+  <!-- Distribuição por Rede -->
+  <section class="bg-surface-container-low py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Distribuição por Rede"
+        subtitle={`Matrículas da Educação Profissional por dependência administrativa em ${latestYear}.`}
+      />
+
+      <div class="bg-surface-container-lowest p-4 md:p-8 rounded-xl">
+        <BarChart chartId="por-rede" chartData={redeChartData} height="350px" />
+      </div>
+
+      <SourceNote source="Sinopses Estatísticas da Educação Básica — INEP/MEC" year={latestYear} />
     </Container>
   </section>
 </BaseLayout>

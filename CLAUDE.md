@@ -116,13 +116,19 @@ Schema.org Dataset markup, OG/Twitter Cards com imagens dinâmicas, URLs semânt
 
 ## Roadmap
 
-### Fase 0 - Fundação (ATUAL)
+### Fase 0 - Fundação (COMPLETA)
 - [x] Briefing e planejamento
-- [ ] Pesquisa extensiva e seleção de dados prioritários
-- [ ] Download e processamento do primeiro lote de dados (Censo Escolar)
-- [ ] Escolha final do framework (Astro vs Eleventy, baseada nos dados)
-- [ ] Setup do projeto (framework, TailwindCSS, build pipeline)
-- [ ] Identidade visual e design system básico
+- [x] Pesquisa extensiva e seleção de dados prioritários
+- [x] Download e processamento do primeiro lote de dados (Sinopses INEP 2019-2024)
+- [x] Framework: Astro escolhido (islands architecture)
+- [x] Setup: Astro + TailwindCSS + Chart.js
+- [x] Design system: tokens do Stitch/Google, 7 componentes, templates light+dark em design/reference/
+- [x] Pipeline ETL Python: 5 JSONs gerados (série temporal, UF, região, modalidade, metadata)
+- [x] Home com big numbers + 2 gráficos interativos (Chart.js)
+- [x] Painel com 3 gráficos (modalidades, top UFs, distribuição por rede)
+- [x] Metodologia com conteúdo real (fontes, ETL, dicionário de dados)
+- [x] CI: GitHub Actions (build check)
+- [x] README
 
 ### Fase 1 - MVP
 - [ ] Pipeline ETL Censo Escolar (matrículas por modalidade, UF, rede)
@@ -158,28 +164,55 @@ Schema.org Dataset markup, OG/Twitter Cards com imagens dinâmicas, URLs semânt
 
 ---
 
+## Como rodar
+
+```bash
+# Dev server
+npm install
+npm run dev          # http://localhost:4321
+
+# Build estático
+npm run build        # gera dist/
+npm run preview      # serve o build
+
+# Pipeline de dados (quando INEP publicar novos dados)
+cd data
+source .venv/bin/activate
+python scripts/00_download_sinopses.py --anos 2025
+python scripts/01_process_sinopses.py
+# Depois: npm run build para regenerar o site com dados novos
+```
+
+---
+
 ## Handoff - Estado atual e próximas etapas
 
-**Estágio:** Fase 0 - Fundação. Briefing completo e aprovado. Nenhum código escrito ainda.
+**Estágio:** Fase 0 completa. Fase 1 (MVP) é a próxima.
 
-**O que foi feito:**
-- Briefing inicial elaborado e refinado com pesquisa extensiva de fontes, benchmarks e decisões de arquitetura
-- Mapeamento completo de fontes de dados nacionais e internacionais
-- Arquitetura de conteúdo e mapa do site definidos
-- Stack técnica definida (pendente escolha final Astro vs Eleventy)
-- Decisões-chave registradas: conteúdo AI-based (Claude Opus 4.6 + revisão humana), identidade visual a criar externamente, hospedagem flexível (kanhan.com.br ou domínio próprio)
-- Git inicializado
+**O que está funcional:**
+- Site Astro com 4 páginas (Home, Painel, Sobre, Metodologia)
+- 5 gráficos Chart.js interativos com dados reais do INEP (2019-2024)
+- Big numbers calculados dinamicamente a partir dos JSONs
+- Design system com tokens do Stitch/Google (light theme)
+- Pipeline ETL Python completo e funcional
+- CI via GitHub Actions
+- Build em ~2.5s, 4 páginas estáticas
 
-**Decisões tomadas pelo Marcelo:**
-- Framework: decidir após primeiro lote de dados (o que melhor se encaixar)
-- Identidade visual: criar paralelamente (Stitch/Google, templates, ou do zero)
-- Conteúdo editorial: AI-based com Claude Opus 4.6, revisão humana, escopo generoso para lançamento
-- Domínio: resolver separadamente, pode ser sub de kanhan.com.br
+**Decisões tomadas:**
+- Framework: Astro (islands architecture)
+- Design: Stitch/Google templates como referência (light + dark em design/reference/)
+- Dados: Sinopses Estatísticas INEP como fonte primária (pré-agregadas, fáceis de processar)
+- Conteúdo: AI-based (Claude Opus 4.6) com revisão humana
+- Deploy: a definir (GitHub Pages ou Cloudflare Pages)
+- Domínio: a definir (pode ser sub de kanhan.com.br)
 
-**Próximas etapas imediatas:**
-1. **Pesquisa e obtenção de dados** - Baixar microdados do Censo Escolar (INEP) e Sinopses Estatísticas como primeiro dataset. Identificar o recorte de dados para EPT.
-2. **Pipeline ETL** - Criar scripts Python para processar Censo Escolar em JSONs consumíveis (matrículas por modalidade, UF, rede, eixo tecnológico, série temporal).
-3. **Escolha do framework** - Com os dados processados em mãos, avaliar Astro vs Eleventy e iniciar setup do projeto.
-4. **Primeiras visualizações** - Prototipar 2-3 gráficos com dados reais para validar stack de visualização.
-5. **Conteúdo inicial** - Gerar com Claude: textos institucionais, panorama nacional, 5 white papers regionais.
-6. **Identidade visual** - Marcelo resolve em paralelo (logo, paleta, tipografia).
+**Próximas etapas (Fase 1 - MVP):**
+1. **Mapas** — Mapa coroplético do Brasil com Leaflet/MapLibre (matrículas por UF)
+2. **Filtros interativos** — Dropdowns para UF, rede, modalidade, período nos gráficos
+3. **Conteúdo editorial** — White papers regionais (5), panorama nacional, comparativo internacional
+4. **Páginas de políticas** — Pé-de-Meia, Novo EM, PROPAG, PRONATEC, PNE
+5. **Comparações internacionais** — Dados OCDE/UNESCO
+6. **Perfis estaduais** — 27 páginas geradas a partir dos dados por UF
+7. **Deploy** — Configurar hospedagem e domínio
+8. **Pagefind** — Busca client-side
+9. **Dark mode** — Ativar com base nos templates dark do Stitch

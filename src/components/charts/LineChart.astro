@@ -1,0 +1,67 @@
+---
+interface Props {
+  chartId: string;
+  chartData: string; // JSON serializado
+  title?: string;
+  xLabel?: string;
+  yLabel?: string;
+  height?: string;
+}
+
+const { chartId, chartData, title, xLabel, yLabel, height = '400px' } = Astro.props;
+---
+
+<div class="relative" style={`height: ${height}`}>
+  <canvas id={chartId} data-chart-type="line" data-chart={chartData} data-x-label={xLabel} data-y-label={yLabel}></canvas>
+</div>
+
+<script>
+  import { Chart } from './ChartConfig';
+
+  document.querySelectorAll<HTMLCanvasElement>('canvas[data-chart-type="line"]').forEach(canvas => {
+    const data = JSON.parse(canvas.dataset.chart || '{}');
+    const xLabel = canvas.dataset.xLabel;
+    const yLabel = canvas.dataset.yLabel;
+
+    new Chart(canvas, {
+      type: 'line',
+      data: data,
+      options: {
+        interaction: { mode: 'index', intersect: false },
+        scales: {
+          x: {
+            title: xLabel ? { display: true, text: xLabel, font: { family: "'Space Grotesk'" } } : { display: false },
+            grid: { color: 'rgba(0,0,0,0.04)' },
+          },
+          y: {
+            title: yLabel ? { display: true, text: yLabel, font: { family: "'Space Grotesk'" } } : { display: false },
+            grid: { color: 'rgba(0,0,0,0.06)' },
+            ticks: {
+              callback: function(value: any) {
+                if (typeof value === 'number') {
+                  if (value >= 1_000_000) return (value / 1_000_000).toFixed(1) + 'M';
+                  if (value >= 1_000) return (value / 1_000).toFixed(0) + 'k';
+                }
+                return value;
+              }
+            }
+          },
+        },
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: {
+            callbacks: {
+              label: function(ctx: any) {
+                const val = ctx.parsed.y;
+                const formatted = val >= 1_000_000
+                  ? (val / 1_000_000).toFixed(2).replace('.', ',') + 'M'
+                  : val.toLocaleString('pt-BR');
+                return `${ctx.dataset.label}: ${formatted}`;
+              }
+            }
+          }
+        },
+      },
+    });
+  });
+</script>
