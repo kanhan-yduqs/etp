@@ -1,0 +1,67 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Container from '../components/Container.astro';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  date?: string;
+  category?: string;
+  readTime?: string;
+  backLink?: string;
+  backLabel?: string;
+  activePage?: 'dados' | 'politicas' | 'analises' | 'sobre' | 'comparacoes' | 'perfis';
+}
+
+const { title, subtitle, date, category, readTime, backLink, backLabel, activePage } = Astro.props;
+---
+
+<BaseLayout title={title} activePage={activePage}>
+  <section class="py-12 md:py-20">
+    <Container>
+      <div class="max-w-3xl">
+        <!-- Breadcrumb / back link -->
+        {backLink && (
+          <a href={backLink} class="inline-flex items-center gap-1 text-sm text-on-surface-variant hover:text-primary transition-colors mb-8">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            {backLabel || 'Voltar'}
+          </a>
+        )}
+
+        <!-- Meta badges -->
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          {category && (
+            <span class="font-label text-[10px] uppercase tracking-widest text-secondary bg-secondary/10 px-3 py-1 rounded-full">
+              {category}
+            </span>
+          )}
+          {date && (
+            <span class="font-label text-xs text-on-surface-variant">{date}</span>
+          )}
+          {readTime && (
+            <span class="font-label text-xs text-on-surface-variant">
+              {readTime} de leitura
+            </span>
+          )}
+        </div>
+
+        <!-- Title -->
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-primary leading-tight">{title}</h1>
+
+        {subtitle && (
+          <p class="mt-4 text-lg text-on-surface-variant leading-relaxed">{subtitle}</p>
+        )}
+
+        <!-- Separator -->
+        <div class="mt-8 mb-10 h-[2px] bg-surface-container-high w-16"></div>
+
+        <!-- Article body -->
+        <div class="prose-etp">
+          <slot />
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

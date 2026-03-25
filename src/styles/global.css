@@ -20,15 +20,19 @@
 
   body {
     font-family: 'Inter', system-ui, sans-serif;
-    background-color: #fbfaf1;
-    color: #1b1c17;
     margin: 0;
     padding: 0;
   }
 
-  .dark body {
-    background-color: #121c20;
-    color: #e4e3db;
+  .dark {
+    --chart-1: #a4cce1;
+    --chart-2: #b9f54f;
+    --chart-3: #9ed833;
+    --chart-4: #b4c9e1;
+    --chart-5: #476800;
+    --chart-6: #0D3B4C;
+    --chart-7: #71787c;
+    --chart-8: #4a6d00;
   }
 }
 

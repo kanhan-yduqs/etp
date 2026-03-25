@@ -6,7 +6,7 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
-  activePage?: 'dados' | 'politicas' | 'analises' | 'sobre';
+  activePage?: 'dados' | 'politicas' | 'analises' | 'sobre' | 'comparacoes' | 'perfis';
 }
 
 const { title, description = 'Observatório Nacional do Ensino Técnico e Profissionalizante — dados, análises e comparações internacionais sobre a educação profissional no Brasil.', activePage } = Astro.props;
@@ -14,7 +14,7 @@ const fullTitle = title === 'Home' ? 'Observatório Nacional ETP' : `${title} �
 ---
 
 <!DOCTYPE html>
-<html lang="pt-BR" class="light">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,8 +23,17 @@ const fullTitle = title === 'Home' ? 'Observatório Nacional ETP' : `${title} �
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Prevent dark mode flash: apply theme before paint -->
+  <script is:inline>
+    (function() {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
 </head>
-<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+<body class="bg-surface dark:bg-dark-surface text-on-surface dark:text-dark-on-surface min-h-screen flex flex-col transition-colors duration-200">
   <Header activePage={activePage} />
 
   <main class="pt-20 flex-1">
