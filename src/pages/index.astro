@@ -6,9 +6,11 @@ import SectionHeader from '../components/SectionHeader.astro';
 import SourceNote from '../components/SourceNote.astro';
 import LineChart from '../components/charts/LineChart.astro';
 import BarChart from '../components/charts/BarChart.astro';
+import ChoroplethMap from '../components/charts/ChoroplethMap.astro';
 import {
   getSerieTemporal,
   getMatriculasPorRegiao,
+  getMatriculasPorUF,
   getLatestYear,
   formatNumber,
   formatPercent,
@@ -79,6 +81,12 @@ const barChartData = JSON.stringify({
     },
   ],
 });
+
+// --- Mapa: dados por UF ---
+const ufsMap = getMatriculasPorUF(latestYear);
+const mapDataObj: Record<string, number> = {};
+ufsMap.forEach(u => { mapDataObj[u.sigla_uf] = u.total; });
+const mapData = JSON.stringify(mapDataObj);
 ---
 
 <BaseLayout title="Home">
@@ -176,8 +184,27 @@ const barChartData = JSON.stringify({
     </Container>
   </section>
 
-  <!-- Análises preview -->
+  <!-- Mapa Nacional -->
   <section class="py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Distribuição Territorial da ETP"
+        subtitle={`Matrículas da Educação Profissional por Unidade da Federação em ${latestYear}. Clique em um estado para ver seu perfil.`}
+      />
+
+      <ChoroplethMap
+        mapId="mapa-brasil"
+        mapData={mapData}
+        legendLabel="Matrículas"
+        height="520px"
+      />
+
+      <SourceNote source="Sinopses Estatísticas da Educação Básica — INEP/MEC" year={latestYear} />
+    </Container>
+  </section>
+
+  <!-- Análises preview -->
+  <section class="bg-surface-container-low py-16 md:py-24">
     <Container>
       <SectionHeader
         label="Análises em Destaque"

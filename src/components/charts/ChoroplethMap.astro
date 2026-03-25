@@ -1,0 +1,149 @@
+---
+interface Props {
+  mapId: string;
+  mapData: string; // JSON: { "SP": 482123, "RJ": 215000, ... }
+  colorLow?: string;
+  colorHigh?: string;
+  legendLabel?: string;
+  height?: string;
+}
+
+const {
+  mapId,
+  mapData,
+  colorLow = '#e9e8e0',
+  colorHigh = '#0D3B4C',
+  legendLabel = 'Matrículas',
+  height = '500px',
+} = Astro.props;
+---
+
+<div class="relative rounded-xl overflow-hidden" style={`height: ${height}`}>
+  <div
+    id={mapId}
+    class="w-full h-full bg-surface-container-lowest dark:bg-dark-surface"
+    data-map-data={mapData}
+    data-color-low={colorLow}
+    data-color-high={colorHigh}
+    data-legend-label={legendLabel}
+  ></div>
+</div>
+
+<script>
+  import L from 'leaflet';
+  import 'leaflet/dist/leaflet.css';
+  import { createColorScale, IBGE_TO_SIGLA } from '../../lib/colorScale';
+
+  document.querySelectorAll<HTMLDivElement>('[data-map-data]').forEach(async (container) => {
+    const data: Record<string, number> = JSON.parse(container.dataset.mapData || '{}');
+    const colorLow = container.dataset.colorLow || '#e9e8e0';
+    const colorHigh = container.dataset.colorHigh || '#0D3B4C';
+    const legendLabel = container.dataset.legendLabel || 'Valor';
+
+    // Fetch GeoJSON
+    const response = await fetch('/geo/brazil-ufs.geojson');
+    const geojson = await response.json();
+
+    // Calculate min/max for color scale
+    const values = Object.values(data).filter(v => v > 0);
+    const min = Math.min(...values);
+    const max = Math.max(...values);
+    const getColor = createColorScale(min, max, colorLow, colorHigh);
+
+    // Initialize Leaflet map
+    const map = L.map(container, {
+      zoomControl: false,
+      attributionControl: false,
+      dragging: false,
+      scrollWheelZoom: false,
+      doubleClickZoom: false,
+      touchZoom: false,
+    });
+
+    // Format number for tooltip
+    function formatNum(n: number): string {
+      if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace('.', ',') + 'M';
+      if (n >= 1_000) return Math.round(n).toLocaleString('pt-BR');
+      return n.toString();
+    }
+
+    // Add GeoJSON layer
+    const geoLayer = L.geoJSON(geojson, {
+      style: (feature) => {
+        const codarea = feature?.properties?.codarea;
+        const sigla = IBGE_TO_SIGLA[codarea] || '';
+        const value = data[sigla] || 0;
+        return {
+          fillColor: value > 0 ? getColor(value) : '#e9e8e0',
+          fillOpacity: 0.85,
+          color: '#fbfaf1',
+          weight: 1.5,
+        };
+      },
+      onEachFeature: (feature, layer) => {
+        const codarea = feature?.properties?.codarea;
+        const sigla = IBGE_TO_SIGLA[codarea] || '??';
+        const value = data[sigla] || 0;
+
+        layer.bindTooltip(
+          `<div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:#002532">${sigla}</div>
+           <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;color:#41484c">${legendLabel}: ${formatNum(value)}</div>`,
+          { sticky: true, className: 'etp-tooltip' }
+        );
+
+        layer.on({
+          mouseover: (e: any) => {
+            e.target.setStyle({ weight: 2.5, color: '#476800', fillOpacity: 0.95 });
+          },
+          mouseout: (e: any) => {
+            geoLayer.resetStyle(e.target);
+          },
+          click: () => {
+            window.location.href = `/perfis/${sigla.toLowerCase()}/`;
+          },
+        });
+      },
+    }).addTo(map);
+
+    // Fit bounds to Brazil
+    map.fitBounds(geoLayer.getBounds(), { padding: [10, 10] });
+
+    // Legend
+    const legend = L.control({ position: 'bottomright' });
+    legend.onAdd = () => {
+      const div = L.DomUtil.create('div', 'etp-legend');
+      div.innerHTML = `
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:#41484c;margin-bottom:4px">${legendLabel}</div>
+        <div style="display:flex;align-items:center;gap:4px">
+          <span style="font-family:'Space Grotesk',sans-serif;font-size:11px;color:#41484c">${formatNum(min)}</span>
+          <div style="width:80px;height:10px;border-radius:4px;background:linear-gradient(to right,${colorLow},${colorHigh})"></div>
+          <span style="font-family:'Space Grotesk',sans-serif;font-size:11px;color:#41484c">${formatNum(max)}</span>
+        </div>`;
+      return div;
+    };
+    legend.addTo(map);
+  });
+</script>
+
+<style is:global>
+  .etp-tooltip {
+    background: rgba(251, 250, 241, 0.95) !important;
+    border: none !important;
+    border-radius: 6px !important;
+    padding: 8px 12px !important;
+    box-shadow: 0 4px 16px rgba(0, 37, 50, 0.1) !important;
+  }
+  .etp-tooltip::before {
+    border-top-color: rgba(251, 250, 241, 0.95) !important;
+  }
+  .etp-legend {
+    background: rgba(251, 250, 241, 0.9);
+    padding: 8px 12px;
+    border-radius: 6px;
+    backdrop-filter: blur(8px);
+  }
+  .leaflet-container {
+    background: transparent !important;
+    cursor: pointer;
+  }
+</style>
