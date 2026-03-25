@@ -1,0 +1,28 @@
+---
+import EditorialLayout from '../../layouts/EditorialLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const analises = await getCollection('analises');
+  return analises.map(entry => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<EditorialLayout
+  title={entry.data.title}
+  subtitle={entry.data.excerpt}
+  date={entry.data.date}
+  category={entry.data.category}
+  readTime={entry.data.readTime}
+  backLink="/analises/"
+  backLabel="Análises"
+  activePage="analises"
+>
+  <Content />
+</EditorialLayout>

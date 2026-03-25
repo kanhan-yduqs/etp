@@ -8,6 +8,7 @@ import porUf from '../../data/processed/matriculas_ept_por_uf.json';
 import porModalidade from '../../data/processed/matriculas_ept_por_modalidade.json';
 import porRegiao from '../../data/processed/matriculas_ept_por_regiao.json';
 import metadata from '../../data/processed/metadata.json';
+import comparacoesData from '../../data/processed/comparacoes_internacionais.json';
 
 // --- Interfaces ---
 
@@ -125,6 +126,22 @@ export const MODALIDADE_COLORS: Record<string, string> = {
   subsequente: '#4a6d00',
   integrada_eja: '#2d6195',
 };
+
+// --- Comparações Internacionais ---
+
+export interface ComparacaoInternacional {
+  country: string;
+  iso3: string;
+  vetEnrollmentRate: number;
+  publicInvestment: number;
+  employability12m: number;
+  vetModel: string;
+  vetModelLabel: string;
+}
+
+export function getComparacoesInternacionais(): ComparacaoInternacional[] {
+  return comparacoesData as ComparacaoInternacional[];
+}
 
 // --- Helpers para Perfis Estaduais ---
 

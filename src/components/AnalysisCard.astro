@@ -1,0 +1,55 @@
+---
+interface Props {
+  title: string;
+  category: string;
+  date?: string;
+  excerpt: string;
+  href: string;
+  readTime?: string;
+  featured?: boolean;
+}
+
+const { title, category, date, excerpt, href, readTime, featured = false } = Astro.props;
+
+const categoryColors: Record<string, string> = {
+  nacional: 'bg-primary/10 text-primary',
+  regional: 'bg-secondary/10 text-secondary',
+  internacional: 'bg-chart-4/10 text-chart-4',
+  politicas: 'bg-outline/10 text-outline',
+};
+---
+
+<a href={href} class:list={[
+  'group block bg-surface-container-lowest dark:bg-dark-surface-container rounded-xl hover:shadow-md transition-all overflow-hidden',
+  featured ? 'md:col-span-2 md:grid md:grid-cols-2' : ''
+]}>
+  {/* Color block placeholder for image */}
+  <div class:list={[
+    'bg-primary/5',
+    featured ? 'min-h-[200px] md:min-h-full' : 'h-[140px]'
+  ]}></div>
+
+  <div class="p-6">
+    <div class="flex items-center gap-3 mb-3">
+      <span class:list={['font-label text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full', categoryColors[category] || categoryColors.nacional]}>
+        {category}
+      </span>
+      {date && <span class="font-label text-xs text-on-surface-variant">{date}</span>}
+      {readTime && <span class="font-label text-xs text-on-surface-variant">{readTime}</span>}
+    </div>
+
+    <h3 class:list={[
+      'font-bold text-primary group-hover:text-secondary transition-colors',
+      featured ? 'text-2xl' : 'text-lg'
+    ]}>{title}</h3>
+
+    <p class:list={[
+      'text-on-surface-variant mt-2 leading-relaxed',
+      featured ? 'text-base' : 'text-sm'
+    ]}>{excerpt}</p>
+
+    <span class="inline-block mt-4 font-label text-sm text-secondary font-medium">
+      Ler análise completa →
+    </span>
+  </div>
+</a>

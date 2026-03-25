@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/Container.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import AnalysisCard from '../../components/AnalysisCard.astro';
+import { getCollection } from 'astro:content';
+
+const analises = await getCollection('analises');
+const featured = analises.find(a => a.data.featured);
+const others = analises.filter(a => !a.data.featured).sort((a, b) => a.data.date > b.data.date ? -1 : 1);
+---
+
+<BaseLayout title="Análises e White Papers" activePage="analises">
+  <section class="py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Análises e White Papers"
+        subtitle="Pesquisas fundamentadas e dados técnicos que moldam o futuro da Educação Técnica e Profissional no Brasil."
+      />
+
+      <!-- Featured article -->
+      {featured && (
+        <div class="mb-12">
+          <AnalysisCard
+            title={featured.data.title}
+            category={featured.data.category}
+            date={featured.data.date}
+            excerpt={featured.data.excerpt}
+            href={`/analises/${featured.id}/`}
+            readTime={featured.data.readTime}
+            featured={true}
+          />
+        </div>
+      )}
+
+      <!-- All others -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {others.map(a => (
+          <AnalysisCard
+            title={a.data.title}
+            category={a.data.category}
+            date={a.data.date}
+            excerpt={a.data.excerpt}
+            href={`/analises/${a.id}/`}
+            readTime={a.data.readTime}
+          />
+        ))}
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

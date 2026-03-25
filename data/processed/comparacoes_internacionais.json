@@ -1,0 +1,92 @@
+[
+  {
+    "country": "Alemanha",
+    "iso3": "DEU",
+    "vetEnrollmentRate": 45.3,
+    "publicInvestment": 1.2,
+    "employability12m": 92,
+    "vetModel": "dual",
+    "vetModelLabel": "Sistema Dual (empresa + escola)"
+  },
+  {
+    "country": "Suíça",
+    "iso3": "CHE",
+    "vetEnrollmentRate": 65.0,
+    "publicInvestment": 1.5,
+    "employability12m": 95,
+    "vetModel": "dual",
+    "vetModelLabel": "Sistema Dual sofisticado"
+  },
+  {
+    "country": "Austrália",
+    "iso3": "AUS",
+    "vetEnrollmentRate": 52.1,
+    "publicInvestment": 0.9,
+    "employability12m": 85,
+    "vetModel": "flexivel",
+    "vetModelLabel": "Sistema nacional flexível"
+  },
+  {
+    "country": "Coreia do Sul",
+    "iso3": "KOR",
+    "vetEnrollmentRate": 25.0,
+    "publicInvestment": 0.7,
+    "employability12m": 78,
+    "vetModel": "meister",
+    "vetModelLabel": "Meister schools + KRIVET"
+  },
+  {
+    "country": "Finlândia",
+    "iso3": "FIN",
+    "vetEnrollmentRate": 71.0,
+    "publicInvestment": 1.1,
+    "employability12m": 88,
+    "vetModel": "integrado",
+    "vetModelLabel": "VET integrado ao sistema educacional"
+  },
+  {
+    "country": "Chile",
+    "iso3": "CHL",
+    "vetEnrollmentRate": 38.0,
+    "publicInvestment": 0.5,
+    "employability12m": 72,
+    "vetModel": "liceus",
+    "vetModelLabel": "Liceus técnico-profissionais"
+  },
+  {
+    "country": "Colômbia",
+    "iso3": "COL",
+    "vetEnrollmentRate": 22.0,
+    "publicInvestment": 0.6,
+    "employability12m": 65,
+    "vetModel": "sena",
+    "vetModelLabel": "SENA + educação média técnica"
+  },
+  {
+    "country": "Singapura",
+    "iso3": "SGP",
+    "vetEnrollmentRate": 55.0,
+    "publicInvestment": 1.3,
+    "employability12m": 93,
+    "vetModel": "ite",
+    "vetModelLabel": "ITE (Institute of Technical Education)"
+  },
+  {
+    "country": "Brasil",
+    "iso3": "BRA",
+    "vetEnrollmentRate": 11.8,
+    "publicInvestment": 0.5,
+    "employability12m": 68,
+    "vetModel": "subsequente",
+    "vetModelLabel": "Predominantemente subsequente"
+  },
+  {
+    "country": "Média OCDE",
+    "iso3": "OCDE",
+    "vetEnrollmentRate": 44.0,
+    "publicInvestment": 1.0,
+    "employability12m": 82,
+    "vetModel": "variado",
+    "vetModelLabel": "Diversos modelos"
+  }
+]

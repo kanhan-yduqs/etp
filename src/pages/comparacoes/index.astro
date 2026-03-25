@@ -1,0 +1,143 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/Container.astro';
+import BigNumber from '../../components/BigNumber.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import SourceNote from '../../components/SourceNote.astro';
+import BarChart from '../../components/charts/BarChart.astro';
+import { getComparacoesInternacionais, formatPercent } from '../../lib/data';
+
+const comparacoes = getComparacoesInternacionais();
+const brasil = comparacoes.find(c => c.iso3 === 'BRA')!;
+const ocde = comparacoes.find(c => c.iso3 === 'OCDE')!;
+const paises = comparacoes.filter(c => c.iso3 !== 'OCDE').sort((a, b) => b.vetEnrollmentRate - a.vetEnrollmentRate);
+const destaques = comparacoes.filter(c => ['DEU', 'CHE', 'AUS'].includes(c.iso3));
+
+// Chart: enrollment rates
+const enrollChart = JSON.stringify({
+  labels: paises.map(c => c.country),
+  datasets: [{
+    label: '% jovens em VET',
+    data: paises.map(c => c.vetEnrollmentRate),
+    backgroundColor: paises.map(c => c.iso3 === 'BRA' ? '#476800' : '#0D3B4C'),
+    borderRadius: 4,
+  }],
+});
+---
+
+<BaseLayout title="Comparações Internacionais" activePage="comparacoes">
+  <section class="py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Comparações Internacionais"
+        subtitle="Como o Brasil se posiciona frente aos sistemas de educação profissional e tecnológica da OCDE e de países de referência."
+      />
+
+      <!-- Big numbers: Brasil vs OCDE -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <BigNumber
+          value={`${formatPercent(brasil.vetEnrollmentRate, 1)}`}
+          label="Jovens em VET — Brasil"
+          trend="down"
+          trendValue={`vs ${formatPercent(ocde.vetEnrollmentRate, 0)} média OCDE`}
+        />
+        <BigNumber
+          value={`${formatPercent(brasil.employability12m, 0)}`}
+          label="Empregabilidade 12m — Brasil"
+          trendValue={`vs ${formatPercent(ocde.employability12m, 0)} média OCDE`}
+        />
+        <BigNumber
+          value={`${brasil.publicInvestment}%`}
+          label="Investimento Público (% PIB)"
+          trendValue={`vs ${ocde.publicInvestment}% média OCDE`}
+        />
+      </div>
+    </Container>
+  </section>
+
+  <!-- Modelos de referência -->
+  <section class="bg-surface-container-low dark:bg-dark-surface-container-low py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        label="Modelos de Referência"
+        title="Sistemas de VET pelo Mundo"
+      />
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {destaques.map(c => (
+          <div class="bg-surface-container-lowest dark:bg-dark-surface-container p-6 rounded-xl">
+            <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">{c.country}</span>
+            <h3 class="text-lg font-semibold text-primary mt-2">{c.vetModelLabel}</h3>
+            <div class="mt-4 space-y-2">
+              <div class="flex justify-between">
+                <span class="text-sm text-on-surface-variant">Jovens em VET</span>
+                <span class="font-label font-semibold text-primary">{formatPercent(c.vetEnrollmentRate, 1)}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-sm text-on-surface-variant">Empregabilidade 12m</span>
+                <span class="font-label font-semibold text-primary">{c.employability12m}%</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-sm text-on-surface-variant">Investimento (% PIB)</span>
+                <span class="font-label font-semibold text-primary">{c.publicInvestment}%</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Ranking chart -->
+  <section class="py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Taxa de Matrícula em VET"
+        subtitle="Percentual de jovens do ensino médio em programas de educação profissional por país."
+      />
+
+      <div class="bg-surface-container-lowest dark:bg-dark-surface-container p-4 md:p-8 rounded-xl">
+        <BarChart chartId="enrollment-intl" chartData={enrollChart} horizontal={true} height="420px" />
+      </div>
+
+      <SourceNote source="OECD Education at a Glance 2024, UNESCO UIS" note="Dados aproximados para fins comparativos" />
+    </Container>
+  </section>
+
+  <!-- Tabela ranking completa -->
+  <section class="bg-surface-container-low dark:bg-dark-surface-container-low py-16 md:py-24">
+    <Container>
+      <SectionHeader title="Tabela Comparativa" />
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm bg-surface-container-lowest dark:bg-dark-surface-container rounded-xl overflow-hidden">
+          <thead>
+            <tr class="bg-surface-container-high dark:bg-dark-surface-container">
+              <th class="text-left py-3 px-4 font-label font-semibold text-primary">País</th>
+              <th class="text-left py-3 px-4 font-label font-semibold text-primary">Modelo VET</th>
+              <th class="text-right py-3 px-4 font-label font-semibold text-primary">% em VET</th>
+              <th class="text-right py-3 px-4 font-label font-semibold text-primary">Invest. (% PIB)</th>
+              <th class="text-right py-3 px-4 font-label font-semibold text-primary">Empreg. 12m</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paises.map(c => (
+              <tr class:list={[
+                'border-t border-surface-container-high',
+                c.iso3 === 'BRA' ? 'bg-secondary/5 font-semibold' : ''
+              ]}>
+                <td class="py-3 px-4">{c.country}</td>
+                <td class="py-3 px-4 text-on-surface-variant text-xs">{c.vetModelLabel}</td>
+                <td class="py-3 px-4 text-right font-label">{formatPercent(c.vetEnrollmentRate, 1)}</td>
+                <td class="py-3 px-4 text-right font-label">{c.publicInvestment}%</td>
+                <td class="py-3 px-4 text-right font-label">{c.employability12m}%</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <SourceNote source="OECD Education at a Glance, UNESCO UIS, BIBB, NCVER" note="Valores aproximados para fins de comparação" />
+    </Container>
+  </section>
+</BaseLayout>
