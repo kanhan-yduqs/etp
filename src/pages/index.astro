@@ -7,15 +7,19 @@ import SourceNote from '../components/SourceNote.astro';
 import LineChart from '../components/charts/LineChart.astro';
 import BarChart from '../components/charts/BarChart.astro';
 import ChoroplethMap from '../components/charts/ChoroplethMap.astro';
+import AnalysisCard from '../components/AnalysisCard.astro';
+import PolicyCard from '../components/PolicyCard.astro';
 import {
   getSerieTemporal,
   getMatriculasPorRegiao,
   getMatriculasPorUF,
   getLatestYear,
+  getComparacoesInternacionais,
   formatNumber,
   formatPercent,
   calcGrowthPercent,
 } from '../lib/data';
+import { getCollection } from 'astro:content';
 
 // --- Dados calculados em build time ---
 const serie = getSerieTemporal();
@@ -81,6 +85,17 @@ const barChartData = JSON.stringify({
     },
   ],
 });
+
+// --- Content collections ---
+const analises = await getCollection('analises');
+const recentAnalises = analises.sort((a, b) => a.data.date > b.data.date ? -1 : 1).slice(0, 3);
+const politicas = await getCollection('politicas');
+const politicasAtivas = politicas.filter(p => p.data.status !== 'encerrada').slice(0, 3);
+
+// --- Comparações ---
+const comparacoes = getComparacoesInternacionais();
+const brasil = comparacoes.find(c => c.iso3 === 'BRA')!;
+const ocde = comparacoes.find(c => c.iso3 === 'OCDE')!;
 
 // --- Mapa: dados por UF ---
 const ufsMap = getMatriculasPorUF(latestYear);
@@ -203,31 +218,82 @@ const mapData = JSON.stringify(mapDataObj);
     </Container>
   </section>
 
-  <!-- Análises preview -->
+  <!-- Políticas em andamento -->
+  <section class="bg-surface-container-low py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        label="Políticas Públicas"
+        title="Monitoramento de Políticas"
+      >
+        <a href="/politicas/" class="font-label text-sm text-secondary hover:underline">Ver todas →</a>
+      </SectionHeader>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {politicasAtivas.map(p => (
+          <PolicyCard
+            title={p.data.title}
+            status={p.data.status}
+            excerpt={p.data.excerpt}
+            href={`/politicas/${p.id}/`}
+            progressLabel={p.data.progressLabel}
+            progressValue={p.data.progressValue}
+          />
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Comparações internacionais teaser -->
+  <section class="py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        label="Contexto Internacional"
+        title="Brasil no Cenário Global"
+      >
+        <a href="/comparacoes/" class="font-label text-sm text-secondary hover:underline">Ver comparações →</a>
+      </SectionHeader>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <BigNumber
+          value={`${formatPercent(brasil.vetEnrollmentRate, 1)}`}
+          label="Jovens em VET — Brasil"
+          trend="down"
+          trendValue={`vs ${formatPercent(ocde.vetEnrollmentRate, 0)} média OCDE`}
+        />
+        <BigNumber
+          value={`${formatPercent(brasil.employability12m, 0)}`}
+          label="Empregabilidade 12m"
+        />
+        <BigNumber
+          value={`${brasil.publicInvestment}% PIB`}
+          label="Investimento Público"
+          trendValue={`vs ${ocde.publicInvestment}% OCDE`}
+        />
+      </div>
+    </Container>
+  </section>
+
+  <!-- Análises -->
   <section class="bg-surface-container-low py-16 md:py-24">
     <Container>
       <SectionHeader
         label="Análises em Destaque"
         title="Aprofunde sua Pesquisa"
-        subtitle="Explore nossas análises e white papers sobre o ensino técnico e profissionalizante no Brasil."
-      />
+      >
+        <a href="/analises/" class="font-label text-sm text-secondary hover:underline">Ver todas →</a>
+      </SectionHeader>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-surface-container-lowest p-6 rounded-xl">
-          <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Em breve</span>
-          <h3 class="text-lg font-semibold text-primary mt-2">Panorama Nacional da EPT</h3>
-          <p class="text-sm text-on-surface-variant mt-2">Análise completa do cenário atual do ensino técnico no Brasil.</p>
-        </div>
-        <div class="bg-surface-container-lowest p-6 rounded-xl">
-          <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Em breve</span>
-          <h3 class="text-lg font-semibold text-primary mt-2">Comparações Internacionais</h3>
-          <p class="text-sm text-on-surface-variant mt-2">Como o Brasil se posiciona frente a modelos de VET da OCDE.</p>
-        </div>
-        <div class="bg-surface-container-lowest p-6 rounded-xl">
-          <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Em breve</span>
-          <h3 class="text-lg font-semibold text-primary mt-2">Impacto do Pé-de-Meia</h3>
-          <p class="text-sm text-on-surface-variant mt-2">Monitoramento do programa de incentivo financeiro para o ensino médio técnico.</p>
-        </div>
+        {recentAnalises.map(a => (
+          <AnalysisCard
+            title={a.data.title}
+            category={a.data.category}
+            date={a.data.date}
+            excerpt={a.data.excerpt}
+            href={`/analises/${a.id}/`}
+            readTime={a.data.readTime}
+          />
+        ))}
       </div>
     </Container>
   </section>

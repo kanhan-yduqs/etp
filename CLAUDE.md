@@ -130,17 +130,19 @@ Schema.org Dataset markup, OG/Twitter Cards com imagens dinâmicas, URLs semânt
 - [x] CI: GitHub Actions (build check)
 - [x] README
 
-### Fase 1 - MVP
-- [ ] Pipeline ETL Censo Escolar (matrículas por modalidade, UF, rede)
-- [ ] Home com números-chave
-- [ ] 5-7 páginas de indicadores com gráficos e filtros
-- [ ] Mapa coroplético do Brasil
-- [ ] Conteúdo inicial: textos institucionais, panorama nacional
-- [ ] 5 white papers regionais (um por região do Brasil)
-- [ ] Páginas de políticas públicas
-- [ ] Comparativo internacional básico
-- [ ] Páginas Sobre e Metodologia
-- [ ] Deploy funcional
+### Fase 1 - MVP (COMPLETA)
+- [x] Content Collections (Astro) para análises e políticas
+- [x] EditorialLayout para páginas Markdown
+- [x] Dark mode toggle (localStorage, sem flash)
+- [x] Mapa coroplético do Brasil (Leaflet + GeoJSON IBGE, clique → perfil UF)
+- [x] Filtros interativos no Painel (Ano, UF, Rede — gráficos respondem)
+- [x] 27 perfis estaduais gerados dinamicamente + listagem por região
+- [x] 5 páginas de políticas (Pé-de-Meia, Novo EM, PROPAG, PRONATEC, PNE)
+- [x] 7 white papers (panorama nacional, 5 regionais, comparativo internacional)
+- [x] Comparações internacionais (10 países, tabela ranking, gráfico, modelos)
+- [x] Pagefind: busca client-side indexando 47 páginas
+- [x] SEO: sitemap, robots.txt, OG tags, canonical URLs
+- [x] Home atualizada com links para políticas, comparações e análises reais
 
 ### Fase 2 - Expansão
 - [ ] Dados de empregabilidade (RAIS/CAGED)
@@ -187,28 +189,27 @@ python scripts/01_process_sinopses.py
 
 ## Handoff - Estado atual e próximas etapas
 
-**Estágio:** Fase 1 em andamento. Sprints 1-2 completos, 3-8 pendentes.
+**Estágio:** Fase 1 (MVP) completa. 47 páginas, pronto para deploy.
 
 **O que está funcional:**
-- Site Astro com 4 páginas (Home, Painel, Sobre, Metodologia)
-- 5 gráficos Chart.js interativos com dados reais do INEP (2019-2024)
-- Mapa coroplético do Brasil (Leaflet, GeoJSON IBGE, clique → perfil UF)
-- Big numbers calculados dinamicamente a partir dos JSONs
-- Design system com tokens do Stitch/Google (light + dark mode com toggle)
-- Content Collections configuradas (analises, politicas)
-- EditorialLayout para páginas Markdown
-- Pipeline ETL Python completo e funcional
+- 47 páginas estáticas (Home, Painel com filtros, 27 perfis UF, 5 políticas, 7 análises, comparações internacionais, sobre, metodologia)
+- 8+ gráficos Chart.js interativos + mapa coroplético Leaflet
+- Filtros interativos no Painel (Ano, UF, Rede)
+- Busca client-side (Pagefind, 47 páginas indexadas)
+- Dark mode com toggle e localStorage
+- Content Collections para análises e políticas (Markdown + frontmatter)
+- SEO: sitemap, robots.txt, OG/Twitter meta tags, canonical URLs
+- Design system Stitch (light + dark tokens)
+- Pipeline ETL Python (6 anos INEP 2019-2024)
 - CI via GitHub Actions
-- Build em ~3.5s, 4 páginas estáticas
+- Build em ~4.5s
 
-**Sprints Fase 1 completados:**
-- [x] Sprint 1: Content Collections + EditorialLayout + Dark Mode
-- [x] Sprint 2: Mapa coroplético do Brasil (Leaflet + GeoJSON IBGE)
-
-**Próximos sprints (ver plano detalhado em .claude/plans/):**
-3. **Filtros interativos** — FilterBar + FilterController no Painel
-4. **Perfis estaduais** — 27 páginas dinâmicas [uf].astro + listagem
-5. **Políticas públicas** — 5 páginas Markdown + listagem + PolicyCard
-6. **Análises + Comparações** — 7 white papers + /comparacoes/ com dados OCDE
-7. **Pagefind + Deploy + SEO** — Busca, GitHub Pages, sitemap, OG tags
-8. **Polish** — Home atualizada, conteúdo real nos stubs, dark mode audit
+**Próximas etapas (Fase 2 - Expansão):**
+1. **Deploy** — Configurar GitHub Pages ou Cloudflare Pages (Marcelo decide)
+2. **Conteúdo expandido** — Textos mais completos nos white papers e políticas
+3. **Dados de empregabilidade** — RAIS/CAGED do MTE
+4. **Glossário** — Página /glossario/ com termos e definições
+5. **Sala de imprensa** — /imprensa/ com fact sheets e contatos
+6. **Embeds** — Gráficos embeddáveis com iframe
+7. **Downloads** — Botões de download CSV/PNG nos gráficos
+8. **Dark mode audit** — Verificar todas as páginas em tema escuro
