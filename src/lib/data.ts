@@ -125,3 +125,60 @@ export const MODALIDADE_COLORS: Record<string, string> = {
   subsequente: '#4a6d00',
   integrada_eja: '#2d6195',
 };
+
+// --- Helpers para Perfis Estaduais ---
+
+/** Todos os anos de uma UF */
+export function getUFData(sigla: string): MatriculaUF[] {
+  return (porUf as MatriculaUF[]).filter(d => d.sigla_uf === sigla.toUpperCase());
+}
+
+/** Último ano de uma UF */
+export function getUFLatest(sigla: string): MatriculaUF | undefined {
+  const data = getUFData(sigla);
+  const latest = getLatestYear();
+  return data.find(d => d.ano === latest);
+}
+
+/** Lista de todas as siglas UF (lowercase, para slugs) */
+export function getAllUFSlugs(): string[] {
+  const siglas = new Set((porUf as MatriculaUF[]).map(d => d.sigla_uf));
+  return [...siglas].sort().map(s => s.toLowerCase());
+}
+
+/** Média regional para um ano */
+export function getRegionAverage(regiao: string, ano: number): { total: number; publica: number; privada: number } {
+  const ufs = (porUf as MatriculaUF[]).filter(d => d.regiao === regiao && d.ano === ano);
+  if (ufs.length === 0) return { total: 0, publica: 0, privada: 0 };
+  return {
+    total: Math.round(ufs.reduce((s, u) => s + u.total, 0) / ufs.length),
+    publica: Math.round(ufs.reduce((s, u) => s + u.publica, 0) / ufs.length),
+    privada: Math.round(ufs.reduce((s, u) => s + u.privada, 0) / ufs.length),
+  };
+}
+
+/** Média nacional para um ano */
+export function getNationalAverage(ano: number): { total: number; publica: number; privada: number } {
+  const ufs = (porUf as MatriculaUF[]).filter(d => d.ano === ano);
+  if (ufs.length === 0) return { total: 0, publica: 0, privada: 0 };
+  return {
+    total: Math.round(ufs.reduce((s, u) => s + u.total, 0) / ufs.length),
+    publica: Math.round(ufs.reduce((s, u) => s + u.publica, 0) / ufs.length),
+    privada: Math.round(ufs.reduce((s, u) => s + u.privada, 0) / ufs.length),
+  };
+}
+
+/** Modalidade dominante de uma UF */
+export function getDominantModalidade(uf: MatriculaUF): string {
+  const mods = uf.modalidades;
+  const technicalMods = ['integrada', 'concomitante', 'subsequente', 'integrada_eja'];
+  let max = 0;
+  let dominant = 'subsequente';
+  for (const mod of technicalMods) {
+    if ((mods[mod] || 0) > max) {
+      max = mods[mod] || 0;
+      dominant = mod;
+    }
+  }
+  return MODALIDADE_LABELS[dominant] || dominant;
+}

@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/Container.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import {
+  getMatriculasPorUF,
+  getLatestYear,
+  formatNumber,
+  formatPercent,
+  calcGrowthPercent,
+} from '../../lib/data';
+
+const latestYear = getLatestYear();
+const ufsLatest = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total);
+const ufsPrevious = getMatriculasPorUF(latestYear - 1);
+
+const regioes = ['Norte', 'Nordeste', 'Centro-Oeste', 'Sudeste', 'Sul'];
+
+function getGrowth(sigla: string): number {
+  const curr = ufsLatest.find(u => u.sigla_uf === sigla);
+  const prev = ufsPrevious.find(u => u.sigla_uf === sigla);
+  if (!curr || !prev) return 0;
+  return calcGrowthPercent(curr.total, prev.total);
+}
+---
+
+<BaseLayout title="Perfis Estaduais" activePage="perfis">
+  <section class="py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Perfis Estaduais"
+        subtitle={`Dados da Educação Profissional por Unidade da Federação em ${latestYear}. Selecione um estado para ver seu perfil completo.`}
+      />
+
+      {regioes.map(regiao => {
+        const ufsRegiao = ufsLatest.filter(u => u.regiao === regiao);
+        return (
+          <div class="mb-12">
+            <h3 class="font-label text-xs font-medium uppercase tracking-[0.2em] text-on-surface-variant mb-4">{regiao}</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {ufsRegiao.map(uf => {
+                const growth = getGrowth(uf.sigla_uf);
+                const publicaPct = (uf.publica / uf.total) * 100;
+                return (
+                  <a
+                    href={`/perfis/${uf.sigla_uf.toLowerCase()}/`}
+                    class="group bg-surface-container-lowest dark:bg-dark-surface-container p-5 rounded-xl hover:shadow-md transition-all"
+                  >
+                    <div class="flex justify-between items-start">
+                      <div>
+                        <span class="text-2xl font-bold text-primary tracking-tighter font-label">{uf.sigla_uf}</span>
+                        <p class="text-sm text-on-surface-variant mt-1">{uf.nome_uf}</p>
+                      </div>
+                      <span class="text-xl font-bold text-secondary dark:text-secondary-fixed font-label tracking-tighter">
+                        {formatNumber(uf.total)}
+                      </span>
+                    </div>
+
+                    {/* Proportion bar */}
+                    <div class="mt-4 flex rounded-sm overflow-hidden h-2">
+                      <div class="bg-primary" style={`width: ${publicaPct}%`}></div>
+                      <div class="bg-outline-variant" style={`width: ${100 - publicaPct}%`}></div>
+                    </div>
+                    <div class="flex justify-between mt-1">
+                      <span class="font-label text-[10px] text-on-surface-variant">Pública {formatPercent(publicaPct, 0)}</span>
+                      <span class:list={['font-label text-[10px]', growth >= 0 ? 'text-secondary' : 'text-error']}>
+                        {growth >= 0 ? '↑' : '↓'} {formatPercent(Math.abs(growth))}
+                      </span>
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
+    </Container>
+  </section>
+</BaseLayout>

@@ -1,0 +1,206 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/Container.astro';
+import BigNumber from '../../components/BigNumber.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import SourceNote from '../../components/SourceNote.astro';
+import LineChart from '../../components/charts/LineChart.astro';
+import BarChart from '../../components/charts/BarChart.astro';
+import {
+  getUFData,
+  getUFLatest,
+  getAllUFSlugs,
+  getLatestYear,
+  getRegionAverage,
+  getNationalAverage,
+  getDominantModalidade,
+  formatNumber,
+  formatPercent,
+  calcGrowthPercent,
+  MODALIDADE_LABELS,
+  MODALIDADE_COLORS,
+} from '../../lib/data';
+
+export function getStaticPaths() {
+  return getAllUFSlugs().map(slug => ({
+    params: { uf: slug },
+  }));
+}
+
+const { uf } = Astro.params;
+const sigla = uf!.toUpperCase();
+const allYears = getUFData(sigla);
+const latest = getUFLatest(sigla);
+
+if (!latest) {
+  return Astro.redirect('/perfis/');
+}
+
+const latestYear = getLatestYear();
+const previousYear = allYears.find(d => d.ano === latestYear - 1);
+const growthYoY = previousYear ? calcGrowthPercent(latest.total, previousYear.total) : 0;
+
+// Regional and national averages for comparison
+const regionAvg = getRegionAverage(latest.regiao, latestYear);
+const nationalAvg = getNationalAverage(latestYear);
+
+// Time series chart
+const lineData = JSON.stringify({
+  labels: allYears.map(d => d.ano.toString()),
+  datasets: [{
+    label: latest.nome_uf,
+    data: allYears.map(d => d.total),
+    borderColor: '#0D3B4C',
+    backgroundColor: 'rgba(13, 59, 76, 0.1)',
+    fill: true,
+    tension: 0.3,
+    borderWidth: 2.5,
+    pointRadius: 4,
+    pointBackgroundColor: '#0D3B4C',
+  }],
+});
+
+// Modalidade breakdown
+const technicalMods = ['integrada', 'concomitante', 'subsequente', 'integrada_eja'];
+const modData = JSON.stringify({
+  labels: technicalMods.map(m => MODALIDADE_LABELS[m] || m),
+  datasets: [{
+    label: `Matrículas ${latestYear}`,
+    data: technicalMods.map(m => latest.modalidades[m] || 0),
+    backgroundColor: technicalMods.map(m => MODALIDADE_COLORS[m]),
+    borderRadius: 4,
+  }],
+});
+
+// Rede distribution
+const redeData = JSON.stringify({
+  labels: ['Federal', 'Estadual', 'Municipal', 'Privada'],
+  datasets: [{
+    label: latest.nome_uf,
+    data: [latest.federal, latest.estadual, latest.municipal, latest.privada],
+    backgroundColor: ['#0D3B4C', '#476800', '#2d6195', '#8da1b9'],
+    borderRadius: 4,
+  }],
+});
+
+// Comparison: UF vs region avg vs national avg
+const compData = JSON.stringify({
+  labels: [latest.nome_uf, `Média ${latest.regiao}`, 'Média Brasil'],
+  datasets: [{
+    label: `Matrículas ${latestYear}`,
+    data: [latest.total, regionAvg.total, nationalAvg.total],
+    backgroundColor: ['#0D3B4C', '#476800', '#8da1b9'],
+    borderRadius: 4,
+  }],
+});
+---
+
+<BaseLayout title={`Perfil: ${latest.nome_uf}`} activePage="perfis">
+  <section class="py-12 md:py-20">
+    <Container>
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 text-sm text-on-surface-variant mb-8">
+        <a href="/" class="hover:text-primary transition-colors">Brasil</a>
+        <span>/</span>
+        <a href="/perfis/" class="hover:text-primary transition-colors">Perfis Estaduais</a>
+        <span>/</span>
+        <span class="text-primary font-semibold">{latest.nome_uf}</span>
+      </nav>
+
+      <!-- Header -->
+      <div class="flex flex-col md:flex-row justify-between items-start gap-8 mb-12">
+        <div>
+          <span class="font-label text-xs font-medium uppercase tracking-[0.2em] text-on-surface-variant">{latest.regiao}</span>
+          <h1 class="text-4xl md:text-5xl font-bold text-primary mt-2">
+            Perfil de Educação Profissional: {latest.nome_uf}
+          </h1>
+          <p class="mt-4 text-on-surface-variant text-lg leading-relaxed max-w-2xl">
+            Análise detalhada do ecossistema de Ensino Técnico e Profissionalizante no estado de {latest.nome_uf}, abrangendo redes pública, privada e o Sistema S.
+          </p>
+        </div>
+        <div class="text-6xl md:text-7xl font-bold text-primary/10 font-label tracking-tighter">
+          {sigla}
+        </div>
+      </div>
+
+      <!-- Big numbers -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <BigNumber
+          value={formatNumber(latest.total)}
+          label="Total Matrículas"
+          trend={growthYoY >= 0 ? 'up' : 'down'}
+          trendValue={`${growthYoY >= 0 ? '+' : ''}${formatPercent(growthYoY)} vs ${latestYear - 1}`}
+        />
+        <BigNumber
+          value={formatPercent((latest.publica / latest.total) * 100, 0)}
+          label="Rede Pública"
+        />
+        <BigNumber
+          value={getDominantModalidade(latest)}
+          label="Modalidade Dominante"
+        />
+        <BigNumber
+          value={formatNumber(latest.estadual)}
+          label="Rede Estadual"
+          source="maior rede pública"
+        />
+      </div>
+    </Container>
+  </section>
+
+  <!-- Evolução temporal -->
+  <section class="bg-surface-container-low dark:bg-dark-surface-container-low py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title={`Evolução de Matrículas — ${latest.nome_uf}`}
+        subtitle="Série temporal de matrículas na Educação Profissional."
+      />
+      <div class="bg-surface-container-lowest dark:bg-dark-surface-container p-4 md:p-8 rounded-xl">
+        <LineChart chartId={`serie-${uf}`} chartData={lineData} yLabel="Matrículas" />
+      </div>
+      <SourceNote source="Sinopses Estatísticas — INEP/MEC" year={`${allYears[0].ano}–${latestYear}`} />
+    </Container>
+  </section>
+
+  <!-- Modalidades -->
+  <section class="py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Matrículas por Modalidade"
+        subtitle={`Distribuição das modalidades técnicas em ${latestYear}.`}
+      />
+      <div class="bg-surface-container-lowest dark:bg-dark-surface-container p-4 md:p-8 rounded-xl">
+        <BarChart chartId={`mod-${uf}`} chartData={modData} horizontal={true} height="300px" />
+      </div>
+      <SourceNote source="Sinopses Estatísticas — INEP/MEC" year={latestYear} />
+    </Container>
+  </section>
+
+  <!-- Rede -->
+  <section class="bg-surface-container-low dark:bg-dark-surface-container-low py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Distribuição por Rede"
+        subtitle="Matrículas por dependência administrativa."
+      />
+      <div class="bg-surface-container-lowest dark:bg-dark-surface-container p-4 md:p-8 rounded-xl">
+        <BarChart chartId={`rede-${uf}`} chartData={redeData} height="300px" />
+      </div>
+      <SourceNote source="Sinopses Estatísticas — INEP/MEC" year={latestYear} />
+    </Container>
+  </section>
+
+  <!-- Comparação -->
+  <section class="py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Performance vs. Brasil"
+        subtitle={`${latest.nome_uf} comparado à média da região ${latest.regiao} e à média nacional.`}
+      />
+      <div class="bg-surface-container-lowest dark:bg-dark-surface-container p-4 md:p-8 rounded-xl">
+        <BarChart chartId={`comp-${uf}`} chartData={compData} height="300px" />
+      </div>
+      <SourceNote source="Sinopses Estatísticas — INEP/MEC" year={latestYear} />
+    </Container>
+  </section>
+</BaseLayout>
