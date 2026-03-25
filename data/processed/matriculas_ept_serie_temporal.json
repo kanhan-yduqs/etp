@@ -1,0 +1,56 @@
+[
+  {
+    "ano": 2019,
+    "total": 1914749,
+    "publica": 1125313,
+    "privada": 789436,
+    "federal": 357179,
+    "estadual": 733528,
+    "municipal": 34606
+  },
+  {
+    "ano": 2020,
+    "total": 1936094,
+    "publica": 1200287,
+    "privada": 735807,
+    "federal": 360623,
+    "estadual": 806637,
+    "municipal": 33027
+  },
+  {
+    "ano": 2021,
+    "total": 1892458,
+    "publica": 1179132,
+    "privada": 713326,
+    "federal": 332727,
+    "estadual": 806307,
+    "municipal": 40098
+  },
+  {
+    "ano": 2022,
+    "total": 2152506,
+    "publica": 1245743,
+    "privada": 906763,
+    "federal": 334545,
+    "estadual": 853901,
+    "municipal": 57297
+  },
+  {
+    "ano": 2023,
+    "total": 2413825,
+    "publica": 1341981,
+    "privada": 1071844,
+    "federal": 331037,
+    "estadual": 921248,
+    "municipal": 89696
+  },
+  {
+    "ano": 2024,
+    "total": 2576293,
+    "publica": 1570993,
+    "privada": 1005300,
+    "federal": 335557,
+    "estadual": 1168027,
+    "municipal": 67409
+  }
+]

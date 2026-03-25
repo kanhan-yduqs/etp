@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Perfil de Educação Profissional: São Paulo | Observatório Nacional ETP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#b9f54f",
+                        "brand-dark": "#001a24",
+                        "brand-dark-elevated": "#0a2631",
+                        "on-primary": "#002532",
+                        "on-surface": "#fbfaf1",
+                        "on-surface-variant": "#c1c7cc",
+                        "surface-container-low": "#0a2631",
+                        "surface-container-lowest": "#002532",
+                        "outline-variant": "#41484c",
+                        "secondary": "#b9f54f",
+                        "error": "#ffb4ab",
+                        "outline": "#8b9297"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-shadow {
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .glass-panel {
+            background: rgba(10, 38, 49, 0.8);
+            backdrop-filter: blur(20px);
+        }
+        body {
+            background-color: #001a24;
+            color: #fbfaf1;
+        }
+        .map-glow {
+            filter: invert(1) brightness(1.2) contrast(1.1);
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-on-surface font-body selection:bg-primary/30 selection:text-on-primary">
+<!-- TopAppBar -->
+<header class="bg-brand-dark/95 backdrop-blur-md sticky top-0 z-50 border-b border-white/10">
+<div class="flex justify-between items-center w-full px-8 py-4 max-w-[1440px] mx-auto">
+<div class="text-xl font-bold tracking-tighter text-on-surface">
+            Observatório Nacional ETP
+        </div>
+<nav class="hidden md:flex items-center gap-8 font-semibold text-sm tracking-tight">
+<a class="text-secondary border-b-2 border-secondary pb-1" href="#">Dados</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors duration-200" href="#">Políticas</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors duration-200" href="#">Análises</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors duration-200" href="#">Sobre</a>
+</nav>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface cursor-pointer">contrast</span>
+<span class="material-symbols-outlined text-on-surface cursor-pointer">info</span>
+</div>
+</div>
+</header>
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col gap-2 pt-12 pb-8 px-0 bg-brand-dark-elevated border-r border-white/5 w-64">
+<div class="px-6 mb-8">
+<h3 class="font-label text-xs font-medium uppercase tracking-widest text-secondary">Filtros do Observatório</h3>
+<p class="text-[10px] text-on-surface-variant opacity-70">Refine sua análise educacional</p>
+</div>
+<div class="flex flex-col">
+<a class="bg-white/10 text-secondary font-bold rounded-r-xl flex items-center gap-4 px-6 py-3 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined text-sm">map</span>
+<span class="font-label text-xs uppercase tracking-widest">UF (Estado)</span>
+</a>
+<a class="text-on-surface-variant hover:bg-white/5 flex items-center gap-4 px-6 py-3 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined text-sm">lan</span>
+<span class="font-label text-xs uppercase tracking-widest">Rede</span>
+</a>
+<a class="text-on-surface-variant hover:bg-white/5 flex items-center gap-4 px-6 py-3 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined text-sm">school</span>
+<span class="font-label text-xs uppercase tracking-widest">Modalidade</span>
+</a>
+<a class="text-on-surface-variant hover:bg-white/5 flex items-center gap-4 px-6 py-3 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined text-sm">calendar_month</span>
+<span class="font-label text-xs uppercase tracking-widest">Período</span>
+</a>
+<a class="text-on-surface-variant hover:bg-white/5 flex items-center gap-4 px-6 py-3 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined text-sm">tune</span>
+<span class="font-label text-xs uppercase tracking-widest">Filtros Avançados</span>
+</a>
+</div>
+<div class="mt-auto px-4">
+<button class="w-full py-3 bg-secondary text-brand-dark rounded-xl font-label text-xs uppercase tracking-widest font-bold hover:brightness-110 transition-all">Aplicar Filtros</button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 pt-12 pb-12 px-8 lg:px-16 max-w-[1200px] mx-auto">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 mb-12 text-on-surface-variant font-label text-xs tracking-wider uppercase">
+<a class="hover:text-secondary transition-colors" href="#">Brasil</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<a class="hover:text-secondary transition-colors" href="#">Perfis Estaduais</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-secondary font-bold">São Paulo</span>
+</nav>
+<!-- Hero Section -->
+<section class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-20">
+<div class="max-w-2xl">
+<h1 class="text-on-surface font-headline text-5xl md:text-6xl font-extrabold tracking-tighter leading-none mb-6">
+                    Perfil de Educação Profissional: <span class="text-secondary">São Paulo</span>
+</h1>
+<p class="text-on-surface-variant text-lg max-w-xl leading-relaxed">
+                    Análise detalhada do ecossistema de Ensino Técnico e Profissionalizante no estado de São Paulo, abrangendo redes públicas, privadas e o Sistema S.
+                </p>
+</div>
+<div class="bg-brand-dark-elevated p-8 rounded-full editorial-shadow flex items-center justify-center aspect-square w-48 border border-white/10">
+<img alt="Mapa de São Paulo" class="w-full h-full object-contain map-glow" data-alt="minimalist dark navy vector outline map of the state of sao paulo on a clean neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnNh7Du61okROMPY4X8mHSRkMimOMVFMPZMgw4Nfm-CHqi_JzhpD2BecQu9_11buqZsPx7eq-mtAnNGpfxaVctzfu09unOlQBdEZ0tfvmlPUjYSCgifL_AzuDKHvTCgTmLk7Uj8Iggj6W_Wwmj-ufoIyux85_RZgoADMl9WuoX0fLhbHPeVPr70ZhdhFVUrGpDyBX164CFJA_--kGPJ0kS8NqtZGfQ_NqtgNemHBr320Pmr8xHRMKfcWGlO4r5sPgig83ZIzk6FQWT"/>
+</div>
+</section>
+<!-- Key Metrics -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-24">
+<div class="flex flex-col">
+<span class="font-label text-xs font-medium uppercase tracking-[0.2em] text-on-surface-variant mb-2">Vagas Ofertadas</span>
+<div class="text-secondary font-headline text-6xl font-bold tracking-tighter">482k</div>
+<div class="mt-4 flex items-center gap-2 text-secondary text-sm font-label">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>+12% vs ano anterior</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-xs font-medium uppercase tracking-[0.2em] text-on-surface-variant mb-2">Matrículas Ativas</span>
+<div class="text-secondary font-headline text-6xl font-bold tracking-tighter">395k</div>
+<div class="mt-4 h-1 bg-white/10 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[82%]"></div>
+</div>
+<span class="mt-2 font-label text-[10px] text-on-surface-variant uppercase">Taxa de Ocupação: 82%</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label text-xs font-medium uppercase tracking-[0.2em] text-on-surface-variant mb-2">Conclusões Est.</span>
+<div class="text-secondary font-headline text-6xl font-bold tracking-tighter">128k</div>
+<div class="mt-4 flex items-center gap-2 text-on-surface-variant text-sm font-label">
+<span class="material-symbols-outlined text-sm text-secondary">calendar_today</span>
+<span>Projeção para 2024</span>
+</div>
+</div>
+</section>
+<!-- Localized Map & Regional Data -->
+<section class="mb-24">
+<div class="bg-brand-dark-elevated rounded-xl p-1 overflow-hidden editorial-shadow border border-white/10">
+<div class="grid grid-cols-1 lg:grid-cols-12">
+<div class="lg:col-span-8 h-[500px] relative">
+<img alt="Mapa de Polos ETP" class="w-full h-full object-cover opacity-60" data-alt="high detail topographic map of sao paulo state showing urban hubs with glowing data points representing education centers" data-location="São Paulo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTp6gbTJ7dqHUlpUQapvMl43mH1FYL9aHfVYy3DsWNtRcIJnD7X8csvemICn1m4phawFfZLRbze5dSszWcwCjQ8LP3NCS8qRs1L87Yso0ARNkmDKqlyuvgNa4p7h6PFQBo6UfSOT_mm8hUlOc4LjUaYKq6ksfciu5P-2hEwrb4kka8R2UOjaElAIh6HJ80BiCk95N8PulZvz_ZonKnt0-hQ9I8JgqLMtMjcaAiWZ19DLI9u81C9ztMJ6PU8QbH_Nv4IOtWGbaj4Kw9"/>
+<div class="absolute top-6 left-6 glass-panel p-4 rounded-xl editorial-shadow border border-white/10">
+<h4 class="font-headline font-bold text-on-surface text-sm mb-1">Polos de Educação Profissional</h4>
+<p class="font-label text-[10px] text-secondary uppercase tracking-wider">Distribuição por Mesorregião</p>
+</div>
+</div>
+<div class="lg:col-span-4 p-8 flex flex-col justify-center">
+<h3 class="font-headline text-2xl font-bold text-on-surface mb-6">Principais Hubs Regionais</h3>
+<div class="space-y-8">
+<div class="flex items-start justify-between">
+<div>
+<div class="font-label text-xs font-bold text-secondary mb-1">METROPOLITANA</div>
+<div class="text-on-surface-variant text-sm">185 Instituições</div>
+</div>
+<div class="text-secondary font-bold font-label">46%</div>
+</div>
+<div class="flex items-start justify-between">
+<div>
+<div class="font-label text-xs font-bold text-secondary mb-1">CAMPINAS</div>
+<div class="text-on-surface-variant text-sm">92 Instituições</div>
+</div>
+<div class="text-secondary font-bold font-label">23%</div>
+</div>
+<div class="flex items-start justify-between">
+<div>
+<div class="font-label text-xs font-bold text-secondary mb-1">S. JOSÉ DOS CAMPOS</div>
+<div class="text-on-surface-variant text-sm">44 Instituições</div>
+</div>
+<div class="text-secondary font-bold font-label">11%</div>
+</div>
+<div class="flex items-start justify-between">
+<div>
+<div class="font-label text-xs font-bold text-secondary mb-1">RIBEIRÃO PRETO</div>
+<div class="text-on-surface-variant text-sm">38 Instituições</div>
+</div>
+<div class="text-secondary font-bold font-label">9%</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Comparison & Charts Grid -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24">
+<!-- Comparison Chart -->
+<div>
+<div class="flex justify-between items-baseline mb-8">
+<h3 class="font-headline text-2xl font-bold text-on-surface">Performance vs. Brasil</h3>
+<span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Benchmark Nacional</span>
+</div>
+<div class="space-y-12">
+<div class="relative pt-6">
+<span class="absolute top-0 left-0 font-label text-xs text-on-surface-variant uppercase tracking-widest">Matrículas ETP / Ensino Médio</span>
+<div class="h-4 w-full bg-white/5 rounded-full mt-2 relative overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-secondary w-[28%] z-20"></div>
+<div class="absolute top-0 left-0 h-full bg-white/20 w-[19%] z-10"></div>
+</div>
+<div class="flex justify-between mt-2 font-label text-[10px] uppercase tracking-wider">
+<div class="flex items-center gap-2"><div class="w-2 h-2 bg-secondary rounded-full"></div> São Paulo (28%)</div>
+<div class="flex items-center gap-2"><div class="w-2 h-2 bg-white/20 rounded-full"></div> Brasil (19%)</div>
+</div>
+</div>
+<div class="relative pt-6">
+<span class="absolute top-0 left-0 font-label text-xs text-on-surface-variant uppercase tracking-widest">Investimento per capita (R$)</span>
+<div class="h-4 w-full bg-white/5 rounded-full mt-2 relative overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-secondary w-[92%] z-20"></div>
+<div class="absolute top-0 left-0 h-full bg-white/20 w-[75%] z-10"></div>
+</div>
+<div class="flex justify-between mt-2 font-label text-[10px] uppercase tracking-wider">
+<div class="flex items-center gap-2"><div class="w-2 h-2 bg-secondary rounded-full"></div> São Paulo (R$ 4.2k)</div>
+<div class="flex items-center gap-2"><div class="w-2 h-2 bg-white/20 rounded-full"></div> Brasil (R$ 3.1k)</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Top Courses Chart -->
+<div>
+<div class="flex justify-between items-baseline mb-8">
+<h3 class="font-headline text-2xl font-bold text-on-surface">Eixos Tecnológicos</h3>
+<span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Top 5 Demandas</span>
+</div>
+<div class="space-y-6">
+<div class="flex items-center gap-4">
+<span class="w-32 font-label text-[10px] text-on-surface-variant leading-tight">GESTÃO E NEGÓCIOS</span>
+<div class="flex-1 h-8 bg-brand-dark-elevated rounded-sm relative group overflow-hidden border border-white/5">
+<div class="absolute top-0 left-0 h-full bg-secondary/80 w-[85%] transition-all group-hover:bg-secondary"></div>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 font-label font-bold text-[10px] text-on-surface">112k</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="w-32 font-label text-[10px] text-on-surface-variant leading-tight">INFORMAÇÃO E COMUNICAÇÃO</span>
+<div class="flex-1 h-8 bg-brand-dark-elevated rounded-sm relative group overflow-hidden border border-white/5">
+<div class="absolute top-0 left-0 h-full bg-secondary/80 w-[72%] transition-all group-hover:bg-secondary"></div>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 font-label font-bold text-[10px] text-on-surface">95k</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="w-32 font-label text-[10px] text-on-surface-variant leading-tight">PRODUÇÃO INDUSTRIAL</span>
+<div class="flex-1 h-8 bg-brand-dark-elevated rounded-sm relative group overflow-hidden border border-white/5">
+<div class="absolute top-0 left-0 h-full bg-secondary/80 w-[58%] transition-all group-hover:bg-secondary"></div>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 font-label font-bold text-[10px] text-on-surface">78k</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="w-32 font-label text-[10px] text-on-surface-variant leading-tight">AMBIENTE E SAÚDE</span>
+<div class="flex-1 h-8 bg-brand-dark-elevated rounded-sm relative group overflow-hidden border border-white/5">
+<div class="absolute top-0 left-0 h-full bg-secondary/80 w-[45%] transition-all group-hover:bg-secondary"></div>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 font-label font-bold text-[10px] text-on-surface">62k</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="w-32 font-label text-[10px] text-on-surface-variant leading-tight">INFRAESTRUTURA</span>
+<div class="flex-1 h-8 bg-brand-dark-elevated rounded-sm relative group overflow-hidden border border-white/5">
+<div class="absolute top-0 left-0 h-full bg-secondary/80 w-[32%] transition-all group-hover:bg-secondary"></div>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 font-label font-bold text-[10px] text-on-surface">44k</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- Footer -->
+<footer class="bg-brand-dark-elevated text-on-surface w-full border-t border-white/5 px-12 py-16 flex flex-col md:flex-row justify-between items-start gap-8 font-['Inter'] text-sm leading-relaxed">
+<div class="max-w-xs">
+<div class="text-lg font-bold text-on-surface mb-4">Observatório Nacional ETP</div>
+<p class="opacity-70">A plataforma de inteligência para monitoramento e análise da Educação Profissional e Tecnológica no Brasil.</p>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-bold text-secondary text-xs uppercase tracking-widest">Acesso Rápido</h4>
+<div class="grid grid-cols-2 gap-x-12 gap-y-2">
+<a class="text-on-surface-variant hover:text-on-surface transition-opacity" href="#">Metodologia</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-opacity" href="#">Glossário</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-opacity" href="#">Imprensa</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-opacity" href="#">Privacidade</a>
+</div>
+</div>
+<div class="text-xs opacity-60 flex flex-col items-end gap-2">
+<div>© 2024 Observatório Nacional ETP.</div>
+<div class="flex items-center gap-2">Apoio Institucional: <span class="text-secondary font-bold">Estácio.</span></div>
+</div>
+</footer>
+</body></html>

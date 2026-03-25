@@ -1,0 +1,122 @@
+[
+  {
+    "ano": 2019,
+    "modalidade": "integrada",
+    "total": 558956
+  },
+  {
+    "ano": 2019,
+    "modalidade": "concomitante",
+    "total": 252221
+  },
+  {
+    "ano": 2019,
+    "modalidade": "subsequente",
+    "total": 962825
+  },
+  {
+    "ano": 2019,
+    "modalidade": "integrada_eja",
+    "total": 36750
+  },
+  {
+    "ano": 2020,
+    "modalidade": "integrada",
+    "total": 620563
+  },
+  {
+    "ano": 2020,
+    "modalidade": "concomitante",
+    "total": 236320
+  },
+  {
+    "ano": 2020,
+    "modalidade": "subsequente",
+    "total": 936547
+  },
+  {
+    "ano": 2020,
+    "modalidade": "integrada_eja",
+    "total": 39921
+  },
+  {
+    "ano": 2021,
+    "modalidade": "integrada",
+    "total": 674245
+  },
+  {
+    "ano": 2021,
+    "modalidade": "concomitante",
+    "total": 248066
+  },
+  {
+    "ano": 2021,
+    "modalidade": "subsequente",
+    "total": 836040
+  },
+  {
+    "ano": 2021,
+    "modalidade": "integrada_eja",
+    "total": 40444
+  },
+  {
+    "ano": 2022,
+    "modalidade": "integrada",
+    "total": 750125
+  },
+  {
+    "ano": 2022,
+    "modalidade": "concomitante",
+    "total": 287320
+  },
+  {
+    "ano": 2022,
+    "modalidade": "subsequente",
+    "total": 947905
+  },
+  {
+    "ano": 2022,
+    "modalidade": "integrada_eja",
+    "total": 39591
+  },
+  {
+    "ano": 2023,
+    "modalidade": "integrada",
+    "total": 782129
+  },
+  {
+    "ano": 2023,
+    "modalidade": "concomitante",
+    "total": 331514
+  },
+  {
+    "ano": 2023,
+    "modalidade": "subsequente",
+    "total": 1078193
+  },
+  {
+    "ano": 2023,
+    "modalidade": "integrada_eja",
+    "total": 38313
+  },
+  {
+    "ano": 2024,
+    "modalidade": "integrada",
+    "total": 985923
+  },
+  {
+    "ano": 2024,
+    "modalidade": "concomitante",
+    "total": 313866
+  },
+  {
+    "ano": 2024,
+    "modalidade": "subsequente",
+    "total": 993442
+  },
+  {
+    "ano": 2024,
+    "modalidade": "integrada_eja",
+    "total": 58852
+  }
+]

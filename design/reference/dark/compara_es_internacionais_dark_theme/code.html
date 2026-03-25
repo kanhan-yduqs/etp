@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Comparações Internacionais | Observatório de Educação</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&amp;family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#b9f54f",
+              "brand-dark": "#001a24",
+              "brand-dark-elevated": "#0a2631",
+              "background-dark": "#001a24",
+              "secondary": "#b9f54f",
+              "on-primary": "#002532",
+              "on-surface": "#fbfaf1",
+              "on-surface-variant": "#c1c7cc",
+              "surface-container-low": "#0a2631",
+              "surface-container-lowest": "#002532",
+              "outline-variant": "#41484c",
+              "secondary-fixed": "#b9f54f",
+              // Preservation of some semantic naming for compatibility with original structure
+              "surface": "#001a24",
+              "surface-container": "#0a2631",
+              "surface-container-high": "#12303b",
+              "surface-container-highest": "#1a3a46",
+              "inverse-surface": "#fbfaf1"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-effect {
+        backdrop-filter: blur(16px);
+        background: rgba(10, 38, 49, 0.8);
+      }
+      .map-glow {
+        filter: invert(1) brightness(1.5) opacity(0.15);
+      }
+      body {
+        background-color: #001a24;
+        color: #fbfaf1;
+      }
+    </style>
+</head>
+<body class="bg-brand-dark font-body text-on-surface-variant leading-relaxed selection:bg-secondary/30">
+<!-- TopAppBar -->
+<header class="docked full-width top-0 sticky z-50 flex justify-between items-center px-12 h-20 w-full max-w-none border-b border-white/5 bg-brand-dark/95 backdrop-blur-md transition-colors">
+<div class="text-2xl font-black text-on-surface font-headline tracking-tight">Observatório de Educação</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant hover:text-on-surface transition-all scale-95 duration-200" href="#">Dashboard</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-all scale-95 duration-200" href="#">Policies</a>
+<a class="text-secondary border-b-2 border-secondary pb-1 font-headline font-bold tracking-tight" href="#">Analysis</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-all scale-95 duration-200" href="#">Profiles</a>
+</nav>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface cursor-pointer hover:bg-white/10 p-2 rounded-full transition-all">language</span>
+<span class="material-symbols-outlined text-on-surface cursor-pointer hover:bg-white/10 p-2 rounded-full transition-all">notifications</span>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border border-white/10">
+<img alt="User profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaLpW1vvwce3PcM2d80ZvFm--AVPaSU_j5bxuvHS1L6oGBv2bGtCoXKwIs_ppVUM7Sdm0xOf4jQ0n_42WCRD36g-LlNnBve6tHUupH2JkCFSclxqq1HrqLz_6SYd-8SXgvAuWtoSfQHYRyLytI1NQ2wSVDM2EjeamRbpV5ci3xPereuaDRmwRpxt7q5G1ikRlgapwGNRJs_K0kv0Bz5uBxZTp5luOGVUhijtEOJVaB7lMBbAmd5o3-1rHnA7zgumTUmSzPrBbTZj54"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-20 h-[calc(100vh-5rem)] w-72 bg-brand-dark border-r border-white/5 flex flex-col py-8 hidden lg:flex">
+<div class="px-8 mb-10">
+<div class="font-label text-sm uppercase tracking-widest text-on-surface mb-1">Global Data</div>
+<div class="text-xs text-on-surface-variant opacity-60">International Comparisons</div>
+</div>
+<nav class="flex-1">
+<a class="flex items-center gap-4 text-on-surface-variant px-6 py-4 hover:translate-x-1 hover:text-on-surface transition-all font-label text-sm uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined">public</span> Global View
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant px-6 py-4 hover:translate-x-1 hover:text-on-surface transition-all font-label text-sm uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined">leaderboard</span> Rankings
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant px-6 py-4 hover:translate-x-1 hover:text-on-surface transition-all font-label text-sm uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined">payments</span> VET Investment
+</a>
+<a class="flex items-center gap-4 bg-brand-dark-elevated text-secondary font-bold rounded-l-xl ml-4 px-6 py-4 hover:translate-x-1 transition-all font-label text-sm uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined">compare_arrows</span> Country Compare
+</a>
+</nav>
+<div class="px-8 pt-8 border-t border-white/5">
+<button class="w-full py-3 bg-secondary text-brand-dark rounded-xl font-label text-xs tracking-widest uppercase hover:brightness-110 transition-all font-bold">Export Report</button>
+</div>
+</aside>
+<main class="lg:ml-72 min-h-screen">
+<!-- Hero Section -->
+<section class="px-12 py-24 bg-brand-dark relative overflow-hidden">
+<div class="max-w-6xl mx-auto relative z-10">
+<div class="flex flex-col md:flex-row justify-between items-end gap-12">
+<div class="max-w-2xl">
+<span class="font-label text-secondary font-bold tracking-[0.2em] uppercase text-sm mb-4 block">Editorial Analysis</span>
+<h1 class="text-7xl font-black text-on-surface leading-tight font-headline tracking-tighter mb-8">Comparações <br/>Internacionais</h1>
+<p class="text-xl text-on-surface-variant leading-relaxed font-body">
+                            Uma análise profunda da posição do Brasil frente aos sistemas de Educação e Treinamento Profissional (ETP) mais resilientes do mundo. Benchmarkings baseados em dados do OCDE, UNESCO e Banco Mundial.
+                        </p>
+</div>
+<div class="text-right">
+<div class="font-label text-xs uppercase tracking-widest text-on-surface-variant opacity-50 mb-2">Global VET Index</div>
+<div class="text-9xl font-black text-secondary font-headline leading-none">81<span class="text-5xl">k</span></div>
+<div class="font-label text-sm font-bold text-on-surface mt-2">Entrevistas Globais Consolidadas</div>
+</div>
+</div>
+</div>
+<!-- Decorative Element -->
+<div class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-brand-dark-elevated/50 to-transparent pointer-events-none"></div>
+</section>
+<!-- Filters & Global Map -->
+<section class="px-12 py-20 bg-brand-dark">
+<div class="max-w-6xl mx-auto">
+<!-- Filters Shell -->
+<div class="flex flex-wrap items-center gap-12 mb-16 pb-8 border-b border-white/5">
+<div class="group">
+<label class="font-label text-[10px] uppercase tracking-tighter text-on-surface-variant block mb-2">Global Region</label>
+<select class="bg-transparent border-none p-0 pr-8 font-headline font-bold text-on-surface focus:ring-0 cursor-pointer">
+<option class="bg-brand-dark-elevated">All Territories</option>
+<option class="bg-brand-dark-elevated">Latin America</option>
+<option class="bg-brand-dark-elevated">European Union</option>
+<option class="bg-brand-dark-elevated">East Asia</option>
+</select>
+</div>
+<div>
+<label class="font-label text-[10px] uppercase tracking-tighter text-on-surface-variant block mb-2">Economic Tier</label>
+<select class="bg-transparent border-none p-0 pr-8 font-headline font-bold text-on-surface focus:ring-0 cursor-pointer">
+<option class="bg-brand-dark-elevated">OECD Countries</option>
+<option class="bg-brand-dark-elevated">G20 Nations</option>
+<option class="bg-brand-dark-elevated">Emerging Markets</option>
+</select>
+</div>
+<div>
+<label class="font-label text-[10px] uppercase tracking-tighter text-on-surface-variant block mb-2">Primary Indicator</label>
+<select class="bg-transparent border-none p-0 pr-8 font-headline font-bold text-on-surface focus:ring-0 cursor-pointer">
+<option class="bg-brand-dark-elevated">Enrollment Rate (%)</option>
+<option class="bg-brand-dark-elevated">Public Investment</option>
+<option class="bg-brand-dark-elevated">Graduate Employability</option>
+</select>
+</div>
+</div>
+<!-- Map Canvas -->
+<div class="relative bg-brand-dark-elevated rounded-3xl p-8 h-[600px] flex items-center justify-center group overflow-hidden border border-white/5">
+<div class="absolute inset-0 bg-cover bg-center map-glow" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDHeiiyMFh10rP1O862-7kGa40QqQfwJZgWSIZBB2PXQULxsrG6Fys5SBQYpLu5hsDtDWt-zObwp4joyAlcF8Nz8_E4lNJYBa-NR9GsNFUtILIwYRkPGlM4ZSR0qsZbxwa6mxVvO0s3qoH_4O_43rXkTUqkA1Pzgo5OiKo0YKLzq7SKfX6ghU98EhsJJ-X5xBS7t7S4f5oCxU88lA29DqVc0-V3b1uFI5-3SkClpoXWVzFLs_61XO0Xo27KNK9s7tzXDow-2-36nk7J')"></div>
+<!-- Floating Map Overlay -->
+<div class="relative z-10 glass-effect p-8 rounded-2xl border border-white/10 max-w-sm ml-auto mr-12 shadow-2xl">
+<h3 class="font-headline font-extrabold text-on-surface text-2xl mb-2">Concentração Global</h3>
+<p class="text-sm text-on-surface-variant mb-6">Matrículas em ETP no ensino médio técnico por país (2023).</p>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-secondary"></div>
+<span class="font-label text-xs uppercase tracking-widest text-on-surface font-bold">Switzerland</span>
+</div>
+<span class="font-label font-bold text-secondary">64.2%</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-secondary/60"></div>
+<span class="font-label text-xs uppercase tracking-widest text-on-surface font-bold">Germany</span>
+</div>
+<span class="font-label font-bold text-secondary">47.8%</span>
+</div>
+<div class="flex items-center justify-between opacity-50">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-outline-variant"></div>
+<span class="font-label text-xs uppercase tracking-widest text-on-surface font-bold">Brazil</span>
+</div>
+<span class="font-label font-bold text-secondary">11.1%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Benchmarking Cards -->
+<section class="px-12 py-20 bg-brand-dark-elevated">
+<div class="max-w-6xl mx-auto">
+<div class="flex justify-between items-center mb-16">
+<h2 class="text-4xl font-black text-on-surface font-headline tracking-tighter">Modelos de Referência</h2>
+<a class="text-secondary font-label font-bold text-sm uppercase tracking-widest flex items-center gap-2 hover:underline" href="#">Ver todos os sistemas <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Germany Card -->
+<div class="bg-brand-dark p-10 rounded-3xl group hover:shadow-xl transition-all duration-500 border border-white/5">
+<div class="flex justify-between items-start mb-12">
+<span class="font-label text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.2em]">SISTEMA DUAL</span>
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity">school</span>
+</div>
+<h3 class="text-3xl font-black text-on-surface mb-4 font-headline tracking-tight">Alemanha</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed mb-10">Forte integração entre empresas e escolas técnicas. 50% dos jovens ingressam no sistema dual.</p>
+<div class="pt-8 border-t border-white/5">
+<div class="text-xs font-label uppercase text-on-surface-variant opacity-60 mb-2">Empregabilidade 12m</div>
+<div class="text-4xl font-black text-secondary font-headline">94.2%</div>
+</div>
+</div>
+<!-- Switzerland Card -->
+<div class="bg-surface-container-highest border border-secondary/20 p-10 rounded-3xl group shadow-2xl transition-all duration-500">
+<div class="flex justify-between items-start mb-12">
+<span class="font-label text-[10px] font-bold text-secondary uppercase tracking-[0.2em]">PERMEABILIDADE</span>
+<span class="material-symbols-outlined text-secondary">star_rate</span>
+</div>
+<h3 class="text-3xl font-black text-on-surface mb-4 font-headline tracking-tight">Suíça</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed mb-10">O padrão-ouro global. Sistema que permite trânsito livre entre técnico e universidade.</p>
+<div class="pt-8 border-t border-white/10">
+<div class="text-xs font-label uppercase text-on-surface-variant opacity-60 mb-2">Status de Elite</div>
+<div class="text-4xl font-black text-secondary font-headline">TOP 1</div>
+</div>
+</div>
+<!-- South Korea Card -->
+<div class="bg-brand-dark p-10 rounded-3xl group hover:shadow-xl transition-all duration-500 border border-white/5">
+<div class="flex justify-between items-start mb-12">
+<span class="font-label text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.2em]">TECH INNOVATION</span>
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity">memory</span>
+</div>
+<h3 class="text-3xl font-black text-on-surface mb-4 font-headline tracking-tight">Coreia do Sul</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed mb-10">Foco em Meister Schools e tecnologias críticas (IA, Semicondutores) com apoio estatal massivo.</p>
+<div class="pt-8 border-t border-white/5">
+<div class="text-xs font-label uppercase text-on-surface-variant opacity-60 mb-2">Crescimento 5 anos</div>
+<div class="text-4xl font-black text-secondary font-headline">+18.5%</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Ranking Table -->
+<section class="px-12 py-32 bg-brand-dark">
+<div class="max-w-6xl mx-auto">
+<div class="grid lg:grid-cols-12 gap-20">
+<div class="lg:col-span-4">
+<h2 class="text-5xl font-black text-on-surface font-headline tracking-tighter mb-8 leading-[0.9]">Performance Global por Eixo</h2>
+<p class="text-on-surface-variant text-lg mb-12">O ranking reflete a eficiência do investimento público convertido em taxas reais de ocupação no mercado de trabalho.</p>
+<div class="p-8 bg-brand-dark-elevated rounded-2xl border border-white/5">
+<h4 class="font-label text-xs font-bold uppercase tracking-widest text-secondary mb-4">Métrica Atual</h4>
+<p class="text-sm text-on-surface-variant">Eficiência de Investimento (USD por aluno vs. Taxa de Retorno Salarial)</p>
+</div>
+</div>
+<div class="lg:col-span-8">
+<div class="space-y-0">
+<!-- Table Header -->
+<div class="grid grid-cols-12 py-4 px-6 font-label text-[10px] uppercase tracking-widest text-on-surface-variant/60 border-b border-white/5">
+<div class="col-span-1">Pos</div>
+<div class="col-span-5">País</div>
+<div class="col-span-3">Investimento</div>
+<div class="col-span-3 text-right">Empregabilidade</div>
+</div>
+<!-- Rows -->
+<div class="grid grid-cols-12 py-8 px-6 items-center border-b border-white/5 hover:bg-brand-dark-elevated transition-colors group">
+<div class="col-span-1 font-headline font-black text-on-surface-variant opacity-20 group-hover:opacity-100 transition-opacity">01</div>
+<div class="col-span-5 flex items-center gap-4">
+<div class="w-8 h-6 bg-surface-container-highest rounded-sm flex items-center justify-center font-label text-[10px] text-on-surface">NOR</div>
+<span class="font-headline font-bold text-on-surface">Noruega</span>
+</div>
+<div class="col-span-3 font-label text-sm font-bold text-on-surface-variant">15.2k USD</div>
+<div class="col-span-3 text-right font-headline font-black text-secondary">96%</div>
+</div>
+<div class="grid grid-cols-12 py-8 px-6 items-center border-b border-white/5 hover:bg-brand-dark-elevated transition-colors group">
+<div class="col-span-1 font-headline font-black text-on-surface-variant opacity-20 group-hover:opacity-100 transition-opacity">02</div>
+<div class="col-span-5 flex items-center gap-4">
+<div class="w-8 h-6 bg-surface-container-highest rounded-sm flex items-center justify-center font-label text-[10px] text-on-surface">AUT</div>
+<span class="font-headline font-bold text-on-surface">Áustria</span>
+</div>
+<div class="col-span-3 font-label text-sm font-bold text-on-surface-variant">12.8k USD</div>
+<div class="col-span-3 text-right font-headline font-black text-secondary">92%</div>
+</div>
+<div class="grid grid-cols-12 py-8 px-6 items-center border-b border-white/5 hover:bg-brand-dark-elevated transition-colors group">
+<div class="col-span-1 font-headline font-black text-on-surface-variant opacity-20 group-hover:opacity-100 transition-opacity">03</div>
+<div class="col-span-5 flex items-center gap-4">
+<div class="w-8 h-6 bg-surface-container-highest rounded-sm flex items-center justify-center font-label text-[10px] text-on-surface">DNK</div>
+<span class="font-headline font-bold text-on-surface">Dinamarca</span>
+</div>
+<div class="col-span-3 font-label text-sm font-bold text-on-surface-variant">14.1k USD</div>
+<div class="col-span-3 text-right font-headline font-black text-secondary">89%</div>
+</div>
+<div class="grid grid-cols-12 py-8 px-6 items-center border-b border-white/5 hover:bg-brand-dark-elevated transition-colors group">
+<div class="col-span-1 font-headline font-black text-on-surface-variant opacity-20 group-hover:opacity-100 transition-opacity">04</div>
+<div class="col-span-5 flex items-center gap-4">
+<div class="w-8 h-6 bg-surface-container-highest rounded-sm flex items-center justify-center font-label text-[10px] text-on-surface">FIN</div>
+<span class="font-headline font-bold text-on-surface">Finlândia</span>
+</div>
+<div class="col-span-3 font-label text-sm font-bold text-on-surface-variant">11.5k USD</div>
+<div class="col-span-3 text-right font-headline font-black text-secondary">87%</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Insight Section -->
+<section class="px-12 py-32 bg-brand-dark-elevated">
+<div class="max-w-6xl mx-auto rounded-[3rem] overflow-hidden bg-brand-dark flex flex-col md:flex-row border border-white/5">
+<div class="md:w-1/2 relative h-80 md:h-auto overflow-hidden">
+<img alt="Modern architecture glass building" class="w-full h-full object-cover" data-alt="architectural close up of a contemporary academic building with reflective glass facade and sharp angles at dusk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRajlZ-CeFYrnPMIRxvJTDp9aLMCJ-4juLTQ6vj-tHle-LJOidcvtBgUJVDeOpOVp1Zj-bf3HfMTEo9pFN9BxAfnCmSF0W_IkLvVbb4YARuqU70cqLVCBoKC-9y6EacgrMyaCVSQ8pvyIYI3nJ08IMlGYG2h7N11jg5RT1kJDd3FBlcge8m_vvSuFtou5juvr0pxrVFUU6XvabePAHKiXRg5Ndar3fJyEhxiIauFEE-AaviHm5EpiIsGJrUvQwljeXoSn1eLF-26kJ"/>
+<div class="absolute inset-0 bg-brand-dark/40 mix-blend-multiply"></div>
+</div>
+<div class="md:w-1/2 p-16 md:p-24 flex flex-col justify-center">
+<span class="font-label text-secondary font-bold tracking-[0.3em] uppercase text-xs mb-8 block">Destaque Observatório</span>
+<h2 class="text-5xl font-black text-on-surface font-headline leading-tight tracking-tighter mb-8">O que o Brasil pode aprender com a Permeabilidade Suíça?</h2>
+<p class="text-on-surface-variant text-lg leading-relaxed mb-12 opacity-80">
+                        O modelo suíço prova que a educação técnica não precisa ser um fim de linha. Analisamos como a "Passerelle" acadêmica remove o estigma do ensino profissionalizante e garante capital humano de alta performance.
+                    </p>
+<div>
+<button class="bg-secondary text-brand-dark px-10 py-5 rounded-xl font-label text-sm font-bold uppercase tracking-widest hover:brightness-110 transition-all">Ler Artigo Completo</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#00151d] pt-24 pb-12 px-12 text-on-surface border-t border-white/5">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16 mb-24">
+<div class="md:col-span-1">
+<div class="text-2xl font-black font-headline tracking-tighter mb-8">Observatório<br/>de Educação</div>
+<p class="text-sm opacity-50 font-body leading-relaxed max-w-xs">Inteligência de dados aplicada à política pública de educação profissional no Brasil.</p>
+</div>
+<div class="md:col-span-1">
+<h5 class="font-label text-xs uppercase tracking-[0.2em] font-bold mb-10 text-secondary">Navegação</h5>
+<ul class="space-y-4 font-body text-sm opacity-80">
+<li><a class="hover:text-secondary transition-colors" href="#">Dashboards Nacionais</a></li>
+<li><a class="hover:text-secondary transition-colors" href="#">Pesquisas e Publicações</a></li>
+<li><a class="hover:text-secondary transition-colors" href="#">Metodologias</a></li>
+<li><a class="hover:text-secondary transition-colors" href="#">Microdados</a></li>
+</ul>
+</div>
+<div class="md:col-span-1">
+<h5 class="font-label text-xs uppercase tracking-[0.2em] font-bold mb-10 text-secondary">Institucional</h5>
+<ul class="space-y-4 font-body text-sm opacity-80">
+<li><a class="hover:text-secondary transition-colors" href="#">Sobre o Observatório</a></li>
+<li><a class="hover:text-secondary transition-colors" href="#">Parceiros Globais</a></li>
+<li><a class="hover:text-secondary transition-colors" href="#">Equipe Técnica</a></li>
+<li><a class="hover:text-secondary transition-colors" href="#">Contato</a></li>
+</ul>
+</div>
+<div class="md:col-span-1">
+<h5 class="font-label text-xs uppercase tracking-[0.2em] font-bold mb-10 text-secondary">Newsletter</h5>
+<p class="text-sm opacity-50 mb-6 font-body">Receba os novos comparativos internacionais mensalmente.</p>
+<div class="flex">
+<input class="bg-brand-dark-elevated border-none text-on-surface text-sm w-full py-3 px-4 rounded-l-lg focus:ring-1 focus:ring-secondary" placeholder="Email institucional" type="email"/>
+<button class="bg-secondary text-brand-dark px-4 rounded-r-lg hover:brightness-110 transition-all"><span class="material-symbols-outlined">send</span></button>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 text-[10px] font-label uppercase tracking-widest opacity-30">
+<div>© 2024 Observatório Nacional ETP. Todos os direitos reservados.</div>
+<div class="flex gap-8">
+<a href="#">Privacidade</a>
+<a href="#">Termos de Uso</a>
+<a href="#">Acessibilidade</a>
+</div>
+</div>
+</footer>
+</body></html>

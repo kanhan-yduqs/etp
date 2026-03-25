@@ -1,0 +1,452 @@
+[
+  {
+    "ano": 2019,
+    "regiao": "Norte",
+    "total": 126658,
+    "modalidades": {
+      "integrada": 33093,
+      "normal_magisterio": 700,
+      "concomitante": 16610,
+      "subsequente": 71543,
+      "integrada_eja": 2061,
+      "fic_concomitante": 2097,
+      "fic_eja_fundamental": 292,
+      "fic_eja_medio": 262
+    }
+  },
+  {
+    "ano": 2019,
+    "regiao": "Nordeste",
+    "total": 568564,
+    "modalidades": {
+      "integrada": 243581,
+      "normal_magisterio": 5251,
+      "concomitante": 48583,
+      "subsequente": 229424,
+      "integrada_eja": 27311,
+      "fic_concomitante": 1213,
+      "fic_eja_fundamental": 9093,
+      "fic_eja_medio": 4108
+    }
+  },
+  {
+    "ano": 2019,
+    "regiao": "Sudeste",
+    "total": 794948,
+    "modalidades": {
+      "integrada": 171530,
+      "normal_magisterio": 26931,
+      "concomitante": 140178,
+      "subsequente": 444851,
+      "integrada_eja": 2841,
+      "fic_concomitante": 6840,
+      "fic_eja_fundamental": 1504,
+      "fic_eja_medio": 273
+    }
+  },
+  {
+    "ano": 2019,
+    "regiao": "Sul",
+    "total": 329434,
+    "modalidades": {
+      "integrada": 81802,
+      "normal_magisterio": 31168,
+      "concomitante": 33463,
+      "subsequente": 169144,
+      "integrada_eja": 1788,
+      "fic_concomitante": 11361,
+      "fic_eja_fundamental": 569,
+      "fic_eja_medio": 139
+    }
+  },
+  {
+    "ano": 2019,
+    "regiao": "Centro-Oeste",
+    "total": 95145,
+    "modalidades": {
+      "integrada": 28950,
+      "normal_magisterio": 172,
+      "concomitante": 13387,
+      "subsequente": 47863,
+      "integrada_eja": 2749,
+      "fic_concomitante": 1622,
+      "fic_eja_fundamental": 341,
+      "fic_eja_medio": 61
+    }
+  },
+  {
+    "ano": 2020,
+    "regiao": "Norte",
+    "total": 107742,
+    "modalidades": {
+      "integrada": 33798,
+      "normal_magisterio": 306,
+      "concomitante": 7627,
+      "subsequente": 61441,
+      "integrada_eja": 1751,
+      "fic_concomitante": 2305,
+      "fic_eja_fundamental": 277,
+      "fic_eja_medio": 237
+    }
+  },
+  {
+    "ano": 2020,
+    "regiao": "Nordeste",
+    "total": 594138,
+    "modalidades": {
+      "integrada": 271918,
+      "normal_magisterio": 3662,
+      "concomitante": 47371,
+      "subsequente": 228941,
+      "integrada_eja": 29719,
+      "fic_concomitante": 1576,
+      "fic_eja_fundamental": 6749,
+      "fic_eja_medio": 4202
+    }
+  },
+  {
+    "ano": 2020,
+    "regiao": "Sudeste",
+    "total": 815029,
+    "modalidades": {
+      "integrada": 195249,
+      "normal_magisterio": 31598,
+      "concomitante": 129467,
+      "subsequente": 447288,
+      "integrada_eja": 2963,
+      "fic_concomitante": 6448,
+      "fic_eja_fundamental": 1733,
+      "fic_eja_medio": 283
+    }
+  },
+  {
+    "ano": 2020,
+    "regiao": "Sul",
+    "total": 323216,
+    "modalidades": {
+      "integrada": 88326,
+      "normal_magisterio": 31906,
+      "concomitante": 39247,
+      "subsequente": 152362,
+      "integrada_eja": 3201,
+      "fic_concomitante": 7969,
+      "fic_eja_fundamental": 151,
+      "fic_eja_medio": 54
+    }
+  },
+  {
+    "ano": 2020,
+    "regiao": "Centro-Oeste",
+    "total": 95969,
+    "modalidades": {
+      "integrada": 31272,
+      "normal_magisterio": 654,
+      "concomitante": 12608,
+      "subsequente": 46515,
+      "integrada_eja": 2287,
+      "fic_concomitante": 2002,
+      "fic_eja_fundamental": 418,
+      "fic_eja_medio": 213
+    }
+  },
+  {
+    "ano": 2021,
+    "regiao": "Norte",
+    "total": 105869,
+    "modalidades": {
+      "integrada": 35103,
+      "normal_magisterio": 29,
+      "concomitante": 8714,
+      "subsequente": 58243,
+      "integrada_eja": 1952,
+      "fic_concomitante": 1419,
+      "fic_eja_fundamental": 197,
+      "fic_eja_medio": 212
+    }
+  },
+  {
+    "ano": 2021,
+    "regiao": "Nordeste",
+    "total": 612181,
+    "modalidades": {
+      "integrada": 293048,
+      "normal_magisterio": 3424,
+      "concomitante": 47007,
+      "subsequente": 213938,
+      "integrada_eja": 31463,
+      "fic_concomitante": 2437,
+      "fic_eja_fundamental": 14729,
+      "fic_eja_medio": 6135
+    }
+  },
+  {
+    "ano": 2021,
+    "regiao": "Sudeste",
+    "total": 772775,
+    "modalidades": {
+      "integrada": 229965,
+      "normal_magisterio": 23020,
+      "concomitante": 124821,
+      "subsequente": 384422,
+      "integrada_eja": 3044,
+      "fic_concomitante": 5914,
+      "fic_eja_fundamental": 1392,
+      "fic_eja_medio": 197
+    }
+  },
+  {
+    "ano": 2021,
+    "regiao": "Sul",
+    "total": 306315,
+    "modalidades": {
+      "integrada": 83026,
+      "normal_magisterio": 25647,
+      "concomitante": 55546,
+      "subsequente": 133678,
+      "integrada_eja": 1688,
+      "fic_concomitante": 5610,
+      "fic_eja_fundamental": 1057,
+      "fic_eja_medio": 63
+    }
+  },
+  {
+    "ano": 2021,
+    "regiao": "Centro-Oeste",
+    "total": 95318,
+    "modalidades": {
+      "integrada": 33103,
+      "normal_magisterio": 626,
+      "concomitante": 11978,
+      "subsequente": 45759,
+      "integrada_eja": 2297,
+      "fic_concomitante": 1036,
+      "fic_eja_fundamental": 292,
+      "fic_eja_medio": 227
+    }
+  },
+  {
+    "ano": 2022,
+    "regiao": "Norte",
+    "total": 119037,
+    "modalidades": {
+      "integrada": 39398,
+      "normal_magisterio": 150,
+      "concomitante": 12817,
+      "subsequente": 60332,
+      "integrada_eja": 2007,
+      "fic_concomitante": 2098,
+      "fic_eja_fundamental": 1433,
+      "fic_eja_medio": 802
+    }
+  },
+  {
+    "ano": 2022,
+    "regiao": "Nordeste",
+    "total": 685683,
+    "modalidades": {
+      "integrada": 307232,
+      "normal_magisterio": 4315,
+      "concomitante": 36583,
+      "subsequente": 254831,
+      "integrada_eja": 29159,
+      "fic_concomitante": 3206,
+      "fic_eja_fundamental": 30675,
+      "fic_eja_medio": 19682
+    }
+  },
+  {
+    "ano": 2022,
+    "regiao": "Sudeste",
+    "total": 918842,
+    "modalidades": {
+      "integrada": 264297,
+      "normal_magisterio": 19802,
+      "concomitante": 169207,
+      "subsequente": 447754,
+      "integrada_eja": 5414,
+      "fic_concomitante": 9412,
+      "fic_eja_fundamental": 1801,
+      "fic_eja_medio": 1155
+    }
+  },
+  {
+    "ano": 2022,
+    "regiao": "Sul",
+    "total": 328297,
+    "modalidades": {
+      "integrada": 107607,
+      "normal_magisterio": 19680,
+      "concomitante": 56832,
+      "subsequente": 133735,
+      "integrada_eja": 1305,
+      "fic_concomitante": 7741,
+      "fic_eja_fundamental": 822,
+      "fic_eja_medio": 575
+    }
+  },
+  {
+    "ano": 2022,
+    "regiao": "Centro-Oeste",
+    "total": 100647,
+    "modalidades": {
+      "integrada": 31591,
+      "normal_magisterio": 883,
+      "concomitante": 11881,
+      "subsequente": 51253,
+      "integrada_eja": 1706,
+      "fic_concomitante": 2277,
+      "fic_eja_fundamental": 457,
+      "fic_eja_medio": 599
+    }
+  },
+  {
+    "ano": 2023,
+    "regiao": "Norte",
+    "total": 152699,
+    "modalidades": {
+      "integrada": 47063,
+      "normal_magisterio": 362,
+      "concomitante": 17965,
+      "subsequente": 79714,
+      "integrada_eja": 2142,
+      "fic_concomitante": 3062,
+      "fic_eja_fundamental": 1746,
+      "fic_eja_medio": 645
+    }
+  },
+  {
+    "ano": 2023,
+    "regiao": "Nordeste",
+    "total": 774627,
+    "modalidades": {
+      "integrada": 316754,
+      "normal_magisterio": 5317,
+      "concomitante": 42348,
+      "subsequente": 279936,
+      "integrada_eja": 30894,
+      "fic_concomitante": 29543,
+      "fic_eja_fundamental": 33912,
+      "fic_eja_medio": 35923
+    }
+  },
+  {
+    "ano": 2023,
+    "regiao": "Sudeste",
+    "total": 1004150,
+    "modalidades": {
+      "integrada": 264221,
+      "normal_magisterio": 18476,
+      "concomitante": 173336,
+      "subsequente": 524319,
+      "integrada_eja": 2877,
+      "fic_concomitante": 16153,
+      "fic_eja_fundamental": 1340,
+      "fic_eja_medio": 3428
+    }
+  },
+  {
+    "ano": 2023,
+    "regiao": "Sul",
+    "total": 369926,
+    "modalidades": {
+      "integrada": 124655,
+      "normal_magisterio": 15928,
+      "concomitante": 79457,
+      "subsequente": 135350,
+      "integrada_eja": 1087,
+      "fic_concomitante": 8229,
+      "fic_eja_fundamental": 941,
+      "fic_eja_medio": 4279
+    }
+  },
+  {
+    "ano": 2023,
+    "regiao": "Centro-Oeste",
+    "total": 112423,
+    "modalidades": {
+      "integrada": 29436,
+      "normal_magisterio": 1375,
+      "concomitante": 18408,
+      "subsequente": 58874,
+      "integrada_eja": 1313,
+      "fic_concomitante": 2017,
+      "fic_eja_fundamental": 577,
+      "fic_eja_medio": 423
+    }
+  },
+  {
+    "ano": 2024,
+    "regiao": "Norte",
+    "total": 151587,
+    "modalidades": {
+      "integrada": 45399,
+      "normal_magisterio": 408,
+      "concomitante": 22962,
+      "subsequente": 74751,
+      "integrada_eja": 2434,
+      "fic_concomitante": 3377,
+      "fic_eja_fundamental": 2069,
+      "fic_eja_medio": 187
+    }
+  },
+  {
+    "ano": 2024,
+    "regiao": "Nordeste",
+    "total": 797942,
+    "modalidades": {
+      "integrada": 379710,
+      "normal_magisterio": 5335,
+      "concomitante": 41941,
+      "subsequente": 246803,
+      "integrada_eja": 50660,
+      "fic_concomitante": 8244,
+      "fic_eja_fundamental": 30794,
+      "fic_eja_medio": 34455
+    }
+  },
+  {
+    "ano": 2024,
+    "regiao": "Sudeste",
+    "total": 1030183,
+    "modalidades": {
+      "integrada": 366477,
+      "normal_magisterio": 18312,
+      "concomitante": 152339,
+      "subsequente": 476561,
+      "integrada_eja": 2991,
+      "fic_concomitante": 9615,
+      "fic_eja_fundamental": 1218,
+      "fic_eja_medio": 2670
+    }
+  },
+  {
+    "ano": 2024,
+    "regiao": "Sul",
+    "total": 411103,
+    "modalidades": {
+      "integrada": 160515,
+      "normal_magisterio": 12538,
+      "concomitante": 80179,
+      "subsequente": 137277,
+      "integrada_eja": 1399,
+      "fic_concomitante": 13947,
+      "fic_eja_fundamental": 758,
+      "fic_eja_medio": 4490
+    }
+  },
+  {
+    "ano": 2024,
+    "regiao": "Centro-Oeste",
+    "total": 185478,
+    "modalidades": {
+      "integrada": 33822,
+      "normal_magisterio": 778,
+      "concomitante": 16445,
+      "subsequente": 58050,
+      "integrada_eja": 1368,
+      "fic_concomitante": 70466,
+      "fic_eja_fundamental": 188,
+      "fic_eja_medio": 4361
+    }
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "fonte": "Sinopses Estatísticas da Educação Básica - INEP/MEC",
+  "url_fonte": "https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/sinopses-estatisticas",
+  "data_processamento": "2026-03-25T16:19:03",
+  "anos_cobertos": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "total_registros_uf": 162,
+  "total_registros_regiao": 30,
+  "modalidades_incluidas": [
+    "integrada",
+    "concomitante",
+    "subsequente",
+    "integrada_eja"
+  ],
+  "notas": [
+    "Dados extraídos da aba de Educação Profissional das Sinopses Estatísticas",
+    "Modalidades técnicas: integrada, concomitante, subsequente, integrada_eja",
+    "Redes: federal, estadual, municipal, privada",
+    "Pública = federal + estadual + municipal"
+  ]
+}

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Análises e White Papers | Observatório Nacional ETP</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#b9f54f",
+              "brand-dark": "#001a24",
+              "brand-dark-elevated": "#0a2631",
+              "on-primary": "#002532",
+              "on-surface": "#fbfaf1",
+              "on-surface-variant": "#c1c7cc",
+              "outline-variant": "#41484c",
+              "surface-container": "#0a2631",
+              "surface-container-low": "#0a2631",
+              "surface-container-high": "#12303c",
+              "surface-container-highest": "#1a3a47",
+              "surface-container-lowest": "#002532",
+              "secondary": "#b9f54f"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .editorial-shadow {
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      }
+      body { background-color: #001a24; }
+    </style>
+</head>
+<body class="bg-brand-dark font-body text-on-surface selection:bg-primary/30">
+<!-- TopAppBar -->
+<header class="bg-brand-dark/95 backdrop-blur-md border-b border-white/10 sticky top-0 z-50">
+<div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
+<div class="text-xl font-bold text-on-surface tracking-[-0.04em] font-['Plus_Jakarta_Sans']">
+            Observatório Nacional ETP
+        </div>
+<nav class="hidden md:flex items-center gap-8 font-['Plus_Jakarta_Sans'] font-bold tracking-tight">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Início</a>
+<a class="text-primary border-b-2 border-primary pb-1" href="#">Pesquisas</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Metodologia</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors" href="#">Publicações</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="bg-surface-container border-none rounded-full pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary w-64 text-on-surface placeholder:text-on-surface-variant/50" placeholder="Pesquisar análise..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-primary scale-95 active:duration-100">account_circle</button>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="hidden lg:flex fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 flex-col p-6 gap-4 overflow-y-auto bg-brand-dark border-r border-white/5 font-['Inter'] text-sm font-medium">
+<div class="mb-6">
+<h2 class="text-primary font-headline font-bold text-lg">Categorias</h2>
+<p class="text-on-surface-variant/50 text-xs uppercase tracking-wider">Filtrar Análises</p>
+</div>
+<nav class="flex flex-col gap-2">
+<button class="flex items-center gap-3 px-4 py-3 bg-surface-container-high text-on-surface font-bold rounded-lg transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined text-primary">apps</span>
+<span>Todos</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined">school</span>
+<span>Educação Básica</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined">engineering</span>
+<span>Ensino Técnico</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined">trending_up</span>
+<span>Mercado de Trabalho</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container transition-all duration-200 ease-in-out">
+<span class="material-symbols-outlined">public</span>
+<span>Socioeconômico</span>
+</button>
+</nav>
+</aside>
+<main class="lg:ml-64 px-6 md:px-12 py-12 max-w-7xl mx-auto space-y-16">
+<!-- Page Header -->
+<section class="max-w-4xl">
+<h1 class="font-headline text-on-surface text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
+            Análises e <span class="text-primary">White Papers</span>
+</h1>
+<p class="font-body text-xl text-on-surface-variant leading-relaxed opacity-90">
+            Mergulhe em pesquisas fundamentadas e dados técnicos que moldam o futuro do Ensino Técnico e Profissional no Brasil. Curadoria editorial para formuladores de políticas e acadêmicos.
+        </p>
+</section>
+<!-- Featured Analysis -->
+<section class="relative group overflow-hidden bg-surface-container-lowest rounded-xl editorial-shadow border border-white/5">
+<div class="flex flex-col lg:flex-row min-h-[500px]">
+<div class="lg:w-3/5 relative h-80 lg:h-auto overflow-hidden">
+<img alt="Industry 4.0 Research" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80" data-alt="Modern high-tech industrial laboratory with clean lighting and blue accents focusing on automated machinery and precision engineering tools" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsQMAFj-t6zcmGx_x6cFos8Aru7m02Y_IiX0FzvXXa8xvbxtzdel3BU5jLzXh_YtFu6iFXh_kfdVr-RMZlWvy1o2oaclZGC0D9sij4LCeo7wEjHFZQGYJhIArzGclHXurCCqfbo507tIuPWJrDPc0TCTlWt5yb3EcqTiHMLO899gQ2hxbqEo4YuitZrfL22Cw6fr406OVLv47EJ6oqrIVUFVCZVKKRkIQIhlLZw24i2kJMfnBM2P9GtrFMVkUNQhknnKfhbsp6A7FN"/>
+<div class="absolute inset-0 bg-gradient-to-r from-brand-dark/60 to-transparent"></div>
+</div>
+<div class="lg:w-2/5 p-8 md:p-12 flex flex-col justify-center space-y-6 bg-brand-dark-elevated">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 bg-primary text-brand-dark text-[10px] font-bold tracking-widest uppercase rounded-sm">Featured White Paper</span>
+<span class="text-xs text-on-surface-variant font-medium">Outubro 2024</span>
+</div>
+<h2 class="font-headline text-3xl font-bold text-on-surface leading-tight">
+                    Impacto da Indústria 4.0 nos Currículos Técnicos: Uma Análise Estrutural
+                </h2>
+<p class="text-on-surface-variant font-body leading-relaxed">
+                    Este estudo explora a lacuna entre as competências ensinadas e as demandas da automação industrial, propondo um novo framework metodológico para atualização curricular.
+                </p>
+<div class="pt-4">
+<button class="px-8 py-4 bg-primary text-brand-dark font-bold rounded-xl flex items-center gap-3 hover:scale-[1.02] transition-transform editorial-shadow">
+                        Ler Análise Completa
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Filter Bar & Search -->
+<section class="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-white/10 pb-8">
+<div class="flex flex-wrap gap-3">
+<span class="text-xs font-bold text-primary uppercase tracking-tighter self-center mr-2">Filtros:</span>
+<button class="px-4 py-1.5 rounded-full bg-surface-container-highest text-on-surface text-sm font-medium border border-transparent hover:border-primary transition-all">Políticas Públicas</button>
+<button class="px-4 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant text-sm font-medium hover:bg-surface-container-high transition-all">Mercado de Trabalho</button>
+<button class="px-4 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant text-sm font-medium hover:bg-surface-container-high transition-all">Metodologia</button>
+<button class="px-4 py-1.5 rounded-full bg-surface-container-low text-on-surface-variant text-sm font-medium hover:bg-surface-container-high transition-all">Internacional</button>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs text-on-surface-variant font-medium">Ordenar por:</span>
+<select class="bg-transparent border-none text-sm font-bold text-primary focus:ring-0 cursor-pointer appearance-none">
+<option class="bg-brand-dark">Mais Recentes</option>
+<option class="bg-brand-dark">Mais Lidos</option>
+<option class="bg-brand-dark">Relevância</option>
+</select>
+<span class="material-symbols-outlined text-primary text-sm">expand_more</span>
+</div>
+</section>
+<!-- Content Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+<!-- Card 1 -->
+<article class="flex flex-col space-y-5 group">
+<div class="aspect-[16/10] overflow-hidden rounded-lg bg-surface-container-high relative border border-white/5">
+<img alt="Research 1" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500" data-alt="Group of diverse students working collaboratively around a laptop in a bright, modern university setting with blurred background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoVsE8IyCac53B1DVzBs9itPlI23E8Pg2RYNzWcOOM3y-hMzSUmU8iDYMi7CRKttzVvr2SCCLpb76HUAmF4ag1xj3nBHxWmCc2SdK4t4Z8PQj7i12URncHcObIKOXfKIyZjEeBtOlylMbl-t9n70qkCgKVud5El2CP3qWFttC-uQJUVo1RzsterSAxHDBGH5LuHX1TgVS3p1-2Jz1gmDjaKm-Ct2l0WjhcdSvZ7BTIkT9CF1lC-10hksuMl-PQ18pzKnqP1iS7BMsE"/>
+<div class="absolute top-4 left-4">
+<span class="px-2 py-1 bg-brand-dark/90 backdrop-blur-sm text-primary text-[10px] font-black uppercase tracking-widest rounded-sm border border-primary/20">Nota Técnica</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center text-[11px] font-bold text-on-surface-variant uppercase tracking-widest">
+<span>14 Out 2024</span>
+<span>12 min read</span>
+</div>
+<h3 class="font-headline text-xl font-bold text-on-surface leading-tight group-hover:text-primary transition-colors">
+                    Evasão no Ensino Médio Integrado: Um Estudo de Caso Longitudinal
+                </h3>
+<p class="text-on-surface-variant text-sm leading-relaxed line-clamp-3">
+                    Análise profunda sobre os fatores socioeconômicos que contribuem para a desistência escolar em cursos técnicos integrados.
+                </p>
+<a class="inline-flex items-center gap-2 text-primary text-xs font-black uppercase tracking-widest hover:gap-4 transition-all" href="#">
+                    Read More
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="flex flex-col space-y-5 group">
+<div class="aspect-[16/10] overflow-hidden rounded-lg bg-surface-container-high relative border border-white/5">
+<img alt="Research 2" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500" data-alt="Close-up of a person analyzing complex financial charts and data on a tablet in a minimalist workspace with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAY9yGmUJmS4ibmywH2N2AeTNreUzWLD0Y_9JOl52P6mS8FvLGzgJfS7mRTkGGfcXoiYcBo8M5PmxmjVw2FboDGR49584fE5gfNK_zD3cZTKBvCVzAx7YqsDflIhufF19GVPmQlT4eImaZvn465tTkRHMToGxkIbRW4JI0kyNbY7aFKAigGvnBH4h7Vh8vKBE--PQ2wAOvBVTz4z4hn4xG32i2aN7IXisujYxRJz3m1axsOZYTXVLFF_UgsKExVCwKnQJv5Wc-fFWqt"/>
+<div class="absolute top-4 left-4">
+<span class="px-2 py-1 bg-brand-dark/90 backdrop-blur-sm text-primary text-[10px] font-black uppercase tracking-widest rounded-sm border border-primary/20">White Paper</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center text-[11px] font-bold text-on-surface-variant uppercase tracking-widest">
+<span>08 Out 2024</span>
+<span>18 min read</span>
+</div>
+<h3 class="font-headline text-xl font-bold text-on-surface leading-tight group-hover:text-primary transition-colors">
+                    Financiamento do ETP no Brasil: Desafios e Oportunidades 2025
+                </h3>
+<p class="text-on-surface-variant text-sm leading-relaxed line-clamp-3">
+                    Projeções orçamentárias e análise de eficiência do gasto público na educação profissional para o próximo triênio.
+                </p>
+<a class="inline-flex items-center gap-2 text-primary text-xs font-black uppercase tracking-widest hover:gap-4 transition-all" href="#">
+                    Read More
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- Card 3 -->
+<article class="flex flex-col space-y-5 group">
+<div class="aspect-[16/10] overflow-hidden rounded-lg bg-surface-container-high relative border border-white/5">
+<img alt="Research 3" class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500" data-alt="Modern office meeting room with clean lines and large windows where a group of professionals are brainstorming ideas on a clear glass board" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYqQ3eirG68tiZqmzEacc0eyFQ7n8wbHRplU_5GNjgsBGdRSLY9owC5P_-lCVHYUsZwupYhkOWyB-ty8rzjvC1O7eUpa0LbH4uYwo6eaYDh0FEaUFnnYBlGJk2Rf-yoXbABi1TeTb1wMv8FOWosVFmigbCei22d8f67U7brmAZIwf_HVtw0sTV-RjCiXbzGdblQZoPheMYxWoXHuU8TZone1hyA_MJM0T1y-96bmCoQjy_KobrSVK1fGHQP8e2c8qM2rGZtQRcY_iP"/>
+<div class="absolute top-4 left-4">
+<span class="px-2 py-1 bg-brand-dark/90 backdrop-blur-sm text-primary text-[10px] font-black uppercase tracking-widest rounded-sm border border-primary/20">Análise de Dados</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center text-[11px] font-bold text-on-surface-variant uppercase tracking-widest">
+<span>22 Set 2024</span>
+<span>15 min read</span>
+</div>
+<h3 class="font-headline text-xl font-bold text-on-surface leading-tight group-hover:text-primary transition-colors">
+                    O Papel das Mulheres em Carreiras STEM de Nível Técnico
+                </h3>
+<p class="text-on-surface-variant text-sm leading-relaxed line-clamp-3">
+                    Dados inéditos sobre a participação feminina em cursos de tecnologia e engenharias, e as barreiras para inserção no mercado.
+                </p>
+<a class="inline-flex items-center gap-2 text-primary text-xs font-black uppercase tracking-widest hover:gap-4 transition-all" href="#">
+                    Read More
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</article>
+</section>
+<!-- Newsletter Section -->
+<section class="bg-brand-dark-elevated rounded-xl p-10 md:p-16 text-center space-y-8 border border-white/5 editorial-shadow">
+<div class="max-w-2xl mx-auto space-y-4">
+<span class="text-primary font-black text-xs uppercase tracking-[0.3em]">Knowledge First</span>
+<h2 class="font-headline text-3xl md:text-4xl font-extrabold text-on-surface">Receba as novas análises em primeira mão</h2>
+<p class="text-on-surface-variant text-lg">Inscreva-se em nossa curadoria mensal de white papers e dados técnicos.</p>
+</div>
+<form class="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
+<input class="flex-1 px-6 py-4 rounded-xl border-none bg-brand-dark text-on-surface focus:ring-2 focus:ring-primary shadow-sm" placeholder="seu@email.com.br" type="email"/>
+<button class="px-8 py-4 bg-primary text-brand-dark font-bold rounded-xl hover:brightness-110 transition-colors" type="submit">Inscrever</button>
+</form>
+<p class="text-[10px] text-on-surface-variant/50 uppercase tracking-widest">Respeitamos sua privacidade. Cancele a qualquer momento.</p>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-brand-dark border-t border-white/5 py-12">
+<div class="w-full flex flex-col md:flex-row justify-between items-center px-12 gap-8 max-w-7xl mx-auto">
+<div class="flex flex-col gap-2">
+<span class="text-on-surface font-bold text-lg tracking-tight font-headline">Observatório Nacional ETP</span>
+<p class="text-on-surface-variant/60 font-['Inter'] text-xs uppercase tracking-widest">© 2024 Observatório Nacional ETP. Todos os direitos reservados.</p>
+</div>
+<nav class="flex gap-8 font-['Inter'] text-xs uppercase tracking-widest">
+<a class="text-on-surface-variant hover:text-primary transition-all" href="#">Privacidade</a>
+<a class="text-on-surface-variant hover:text-primary transition-all" href="#">Termos de Uso</a>
+<a class="text-on-surface-variant hover:text-primary transition-all" href="#">Contato</a>
+<a class="text-on-surface-variant hover:text-primary transition-all" href="#">Expediente</a>
+</nav>
+</div>
+</footer>
+</body></html>

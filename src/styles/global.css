@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Chart colors as CSS custom properties (accessible by Chart.js) */
+    --chart-1: #0D3B4C;
+    --chart-2: #476800;
+    --chart-3: #4a6d00;
+    --chart-4: #2d6195;
+    --chart-5: #b9f54f;
+    --chart-6: #a4cce1;
+    --chart-7: #8da1b9;
+    --chart-8: #354e00;
+
+    /* Big number sizing */
+    --font-size-big-number: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #fbfaf1;
+    color: #1b1c17;
+    margin: 0;
+    padding: 0;
+  }
+
+  .dark body {
+    background-color: #121c20;
+    color: #e4e3db;
+  }
+}
+
+@layer components {
+  /* Editorial gradient (hero, CTAs) */
+  .editorial-gradient {
+    background: linear-gradient(135deg, #002532 0%, #0d3b4c 100%);
+  }
+
+  /* Glassmorphism for floating nav/tooltips */
+  .glass-nav {
+    backdrop-filter: blur(12px);
+    background-color: rgba(251, 250, 241, 0.8);
+  }
+
+  .dark .glass-nav {
+    background-color: rgba(18, 28, 32, 0.8);
+  }
+
+  /* Data font utility */
+  .data-font {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+  }
+
+  /* Prose styling for Markdown content */
+  .prose-etp {
+    @apply text-on-surface-variant leading-relaxed;
+  }
+
+  .prose-etp h1 {
+    @apply text-4xl font-bold text-primary mt-12 mb-6;
+  }
+
+  .prose-etp h2 {
+    @apply text-2xl font-bold text-primary mt-10 mb-4;
+  }
+
+  .prose-etp h3 {
+    @apply text-xl font-semibold text-primary mt-8 mb-3;
+  }
+
+  .prose-etp p {
+    @apply mb-4 text-base;
+  }
+
+  .prose-etp a {
+    @apply text-secondary underline hover:text-primary transition-colors;
+  }
+
+  .prose-etp ul, .prose-etp ol {
+    @apply mb-4 pl-6;
+  }
+
+  .prose-etp li {
+    @apply mb-2;
+  }
+
+  .prose-etp blockquote {
+    @apply border-l-4 border-secondary pl-4 italic text-on-surface-variant my-6;
+  }
+}

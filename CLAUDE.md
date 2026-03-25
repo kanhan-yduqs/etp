@@ -63,6 +63,8 @@ Dados como protagonista, progressive disclosure, mobile-first, paleta colorblind
 
 Componentes: big numbers + sparklines, mapas coropléticos (Leaflet/MapLibre), gráficos de linha/barras, small multiples, waffle charts, tabelas ordenáveis. Acessibilidade: keyboard nav, alt text, data tables, ARIA, prefers-reduced-motion.
 
+Referência de site "featured": https://www.anthropic.com/features/81k-interviews
+
 ## Stack técnica
 
 | Camada | Tecnologia |

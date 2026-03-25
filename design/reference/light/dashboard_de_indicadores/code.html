@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Painel de Indicadores - Observatório Nacional ETP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Space+Grotesk:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-fixed-dim": "#a4cce1",
+              "on-primary": "#ffffff",
+              "tertiary-fixed-dim": "#b4c9e1",
+              "on-secondary-fixed-variant": "#354e00",
+              "surface-bright": "#fbfaf1",
+              "surface-variant": "#e4e3db",
+              "on-tertiary-fixed": "#061d2f",
+              "secondary": "#476800",
+              "surface-container-lowest": "#ffffff",
+              "inverse-on-surface": "#f2f1e9",
+              "on-secondary-fixed": "#131f00",
+              "outline": "#71787c",
+              "on-tertiary-container": "#8da1b9",
+              "on-secondary-container": "#4a6d00",
+              "on-tertiary": "#ffffff",
+              "error": "#ba1a1a",
+              "on-primary-fixed-variant": "#224c5d",
+              "on-error": "#ffffff",
+              "outline-variant": "#c1c7cc",
+              "on-surface-variant": "#41484c",
+              "on-tertiary-fixed-variant": "#35495d",
+              "error-container": "#ffdad6",
+              "surface-dim": "#dbdad2",
+              "surface-tint": "#3c6376",
+              "surface-container": "#efeee6",
+              "primary-fixed": "#bfe9fe",
+              "secondary-fixed": "#b9f54f",
+              "on-primary-fixed": "#001f2a",
+              "on-background": "#1b1c17",
+              "tertiary-fixed": "#d0e5fe",
+              "surface-container-low": "#f5f4ec",
+              "background": "#fbfaf1",
+              "primary": "#002532",
+              "on-primary-container": "#7da5b9",
+              "primary-container": "#0d3b4c",
+              "surface": "#fbfaf1",
+              "inverse-surface": "#30312c",
+              "tertiary": "#0d2335",
+              "tertiary-container": "#24384b",
+              "on-error-container": "#93000a",
+              "on-surface": "#1b1c17",
+              "surface-container-highest": "#e4e3db",
+              "secondary-fixed-dim": "#9ed833",
+              "inverse-primary": "#a4cce1",
+              "secondary-container": "#b6f24c",
+              "on-secondary": "#ffffff",
+              "surface-container-high": "#e9e8e0"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .data-font { font-family: 'Space Grotesk', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-secondary selection:text-white">
+<!-- TopAppBar -->
+<header class="bg-[#fbfaf1] dark:bg-[#002532] docked full-width top-0 z-50 fixed w-full">
+<div class="flex justify-between items-center w-full px-8 py-4 max-w-[1440px] mx-auto">
+<div class="text-xl font-bold tracking-tighter text-[#002532] dark:text-[#fbfaf1] font-headline">
+                Observatório Nacional ETP
+            </div>
+<nav class="hidden md:flex gap-8 items-center font-['Inter'] font-semibold text-sm tracking-tight">
+<a class="text-[#41484c] dark:text-[#c1c7cc] hover:text-[#002532] transition-colors duration-200" href="#">Dados</a>
+<a class="text-[#41484c] dark:text-[#c1c7cc] hover:text-[#002532] transition-colors duration-200" href="#">Políticas</a>
+<a class="text-[#002532] dark:text-[#fbfaf1] border-b-2 border-[#476800] pb-1" href="#">Análises</a>
+<a class="text-[#41484c] dark:text-[#c1c7cc] hover:text-[#002532] transition-colors duration-200" href="#">Sobre</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="hidden lg:flex items-center bg-surface-container rounded-full px-4 py-1.5 gap-2 border border-outline-variant/20">
+<span class="material-symbols-outlined text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-xs w-48 font-label" placeholder="Buscar indicadores..." type="text"/>
+</div>
+<button class="material-symbols-outlined p-2 hover:bg-[#f5f4ec] dark:hover:bg-[#0d3b4c] transition-colors duration-200 rounded-full text-[#002532] dark:text-[#fbfaf1]">contrast</button>
+<button class="material-symbols-outlined p-2 hover:bg-[#f5f4ec] dark:hover:bg-[#0d3b4c] transition-colors duration-200 rounded-full text-[#002532] dark:text-[#fbfaf1]">info</button>
+</div>
+</div>
+<div class="bg-[#f5f4ec] dark:bg-[#0d3b4c] h-[1px] w-full"></div>
+</header>
+<div class="flex min-h-screen pt-16">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col fixed left-0 h-full w-64 bg-[#f5f4ec] dark:bg-[#0d2335] pt-12 pb-8 px-0 z-40 transition-all duration-300 ease-out border-r-0">
+<div class="px-6 py-8">
+<h2 class="font-['Space_Grotesk'] text-xs font-medium uppercase tracking-widest text-[#002532] dark:text-[#fbfaf1]">Filtros do Observatório</h2>
+<p class="text-[10px] text-on-surface-variant mt-1">Refine sua análise educacional</p>
+</div>
+<nav class="flex flex-col gap-1 overflow-y-auto">
+<button class="flex items-center gap-4 px-6 py-3 bg-[#e9e8e0] dark:bg-[#0d3b4c] text-[#476800] font-bold rounded-r-xl transition-all duration-300 ease-out">
+<span class="material-symbols-outlined">map</span>
+<span class="font-['Space_Grotesk'] text-xs font-medium uppercase tracking-widest">UF (Estado)</span>
+</button>
+<button class="flex items-center gap-4 px-6 py-3 text-[#41484c] dark:text-[#c1c7cc] hover:bg-[#e4e3db] dark:hover:bg-[#1a3a4a] transition-all duration-300 ease-out">
+<span class="material-symbols-outlined">lan</span>
+<span class="font-['Space_Grotesk'] text-xs font-medium uppercase tracking-widest">Rede</span>
+</button>
+<button class="flex items-center gap-4 px-6 py-3 text-[#41484c] dark:text-[#c1c7cc] hover:bg-[#e4e3db] dark:hover:bg-[#1a3a4a] transition-all duration-300 ease-out">
+<span class="material-symbols-outlined">school</span>
+<span class="font-['Space_Grotesk'] text-xs font-medium uppercase tracking-widest">Modalidade</span>
+</button>
+<button class="flex items-center gap-4 px-6 py-3 text-[#41484c] dark:text-[#c1c7cc] hover:bg-[#e4e3db] dark:hover:bg-[#1a3a4a] transition-all duration-300 ease-out">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-['Space_Grotesk'] text-xs font-medium uppercase tracking-widest">Período</span>
+</button>
+<button class="flex items-center gap-4 px-6 py-3 text-[#41484c] dark:text-[#c1c7cc] hover:bg-[#e4e3db] dark:hover:bg-[#1a3a4a] transition-all duration-300 ease-out">
+<span class="material-symbols-outlined">tune</span>
+<span class="font-['Space_Grotesk'] text-xs font-medium uppercase tracking-widest">Filtros Avançados</span>
+</button>
+</nav>
+<div class="mt-auto px-6">
+<button class="w-full bg-primary hover:bg-primary-container text-white py-3 rounded-xl font-label text-xs uppercase tracking-widest transition-all duration-150 active:scale-95 shadow-lg shadow-primary/20">
+                    Aplicar Filtros
+                </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 p-8 lg:p-12 max-w-[1200px]">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-16">
+<div>
+<h1 class="text-5xl font-extrabold text-primary tracking-tighter font-headline leading-tight">Painel de Indicadores Nacionais</h1>
+<p class="text-on-surface-variant mt-4 text-lg max-w-2xl leading-relaxed">Exploração analítica dos dados da Educação Profissional e Tecnológica no Brasil.</p>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-low p-2 rounded-xl">
+<button class="px-4 py-2 bg-white shadow-sm rounded-lg text-xs font-bold font-label flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-sm">show_chart</span> Chart
+                    </button>
+<button class="px-4 py-2 hover:bg-surface-container-high transition-colors rounded-lg text-xs font-medium font-label flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">table_chart</span> Table
+                    </button>
+</div>
+</div>
+<!-- Row 1: Big Numbers -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+<div class="bg-surface-container-low p-8 rounded-xl border-l-4 border-secondary transition-all hover:bg-surface-container-high group">
+<span class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2 group-hover:text-secondary transition-colors">Matrículas por Rede</span>
+<div class="flex items-baseline gap-2">
+<span class="text-6xl font-bold text-secondary font-headline tracking-tighter">2.4M</span>
+<span class="text-xs text-secondary font-label font-bold flex items-center">+4.2% <span class="material-symbols-outlined text-xs">trending_up</span></span>
+</div>
+</div>
+<div class="bg-surface-container-low p-8 rounded-xl border-l-4 border-primary transition-all hover:bg-surface-container-high group">
+<span class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2 group-hover:text-primary transition-colors">Eixo Tecnológico</span>
+<div class="flex items-baseline gap-2">
+<span class="text-6xl font-bold text-primary font-headline tracking-tighter">12</span>
+<span class="text-xs text-on-surface-variant font-label">Áreas principais</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-8 rounded-xl border-l-4 border-tertiary transition-all hover:bg-surface-container-high group">
+<span class="block font-label text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2 group-hover:text-tertiary transition-colors">Empregabilidade</span>
+<div class="flex items-baseline gap-2">
+<span class="text-6xl font-bold text-tertiary font-headline tracking-tighter">78%</span>
+<span class="text-xs text-on-surface-variant font-label">Média nacional</span>
+</div>
+</div>
+</div>
+<!-- Row 2: Large Evolution Chart -->
+<section class="mb-16">
+<div class="flex justify-between items-center mb-8">
+<h3 class="font-headline font-bold text-2xl text-primary">Evolução de Matrículas Técnicas (2014-2024)</h3>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-surface-container rounded-lg transition-colors"><span class="material-symbols-outlined text-on-surface-variant">download</span></button>
+<button class="p-2 hover:bg-surface-container rounded-lg transition-colors"><span class="material-symbols-outlined text-on-surface-variant">share</span></button>
+</div>
+</div>
+<div class="bg-surface-container-lowest h-[400px] w-full rounded-xl p-8 flex flex-col justify-end relative overflow-hidden">
+<!-- Stylized SVG Chart Placeholder -->
+<svg class="w-full h-full absolute inset-0 opacity-10" preserveaspectratio="none" viewbox="0 0 1000 400">
+<path class="text-primary" d="M0,350 Q250,300 500,200 T1000,50" fill="none" stroke="currentColor" stroke-width="2"></path>
+<path class="text-secondary" d="M0,380 Q250,350 500,280 T1000,150" fill="none" stroke="currentColor" stroke-width="2"></path>
+</svg>
+<div class="relative z-10 flex items-end justify-between h-full w-full gap-4">
+<!-- Bar chart markers -->
+<div class="w-full bg-surface-container-high h-[40%] rounded-t-lg transition-all hover:h-[45%] hover:bg-primary-container group relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-primary text-white text-[10px] px-2 py-1 rounded font-label">1.8M</div>
+</div>
+<div class="w-full bg-surface-container-high h-[45%] rounded-t-lg transition-all hover:h-[50%] hover:bg-primary-container"></div>
+<div class="w-full bg-surface-container-high h-[42%] rounded-t-lg transition-all hover:h-[47%] hover:bg-primary-container"></div>
+<div class="w-full bg-surface-container-high h-[55%] rounded-t-lg transition-all hover:h-[60%] hover:bg-primary-container"></div>
+<div class="w-full bg-surface-container-high h-[62%] rounded-t-lg transition-all hover:h-[67%] hover:bg-primary-container"></div>
+<div class="w-full bg-primary h-[70%] rounded-t-lg transition-all hover:h-[75%] hover:bg-secondary"></div>
+<div class="w-full bg-primary h-[75%] rounded-t-lg transition-all hover:h-[80%] hover:bg-secondary"></div>
+<div class="w-full bg-primary h-[82%] rounded-t-lg transition-all hover:h-[87%] hover:bg-secondary"></div>
+<div class="w-full bg-primary h-[88%] rounded-t-lg transition-all hover:h-[93%] hover:bg-secondary"></div>
+<div class="w-full bg-secondary h-[95%] rounded-t-lg transition-all hover:h-[100%]"></div>
+</div>
+<div class="flex justify-between mt-4 font-label text-[10px] text-on-surface-variant border-t border-outline-variant/20 pt-4">
+<span>2014</span><span>2015</span><span>2016</span><span>2017</span><span>2018</span><span>2019</span><span>2020</span><span>2021</span><span>2022</span><span>2024</span>
+</div>
+</div>
+</section>
+<!-- Row 3: Mixed Charts -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+<!-- Bar Chart: Matrículas por UF -->
+<div class="bg-surface-container-low p-8 rounded-xl">
+<h3 class="font-headline font-bold text-xl text-primary mb-8">Matrículas por UF</h3>
+<div class="space-y-4">
+<div class="flex items-center gap-4">
+<span class="w-8 font-label text-[10px] font-bold">SP</span>
+<div class="flex-1 h-3 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[85%] rounded-full"></div>
+</div>
+<span class="w-12 font-label text-[10px] text-right">850k</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="w-8 font-label text-[10px] font-bold">MG</span>
+<div class="flex-1 h-3 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[65%] rounded-full"></div>
+</div>
+<span class="w-12 font-label text-[10px] text-right">620k</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="w-8 font-label text-[10px] font-bold">RJ</span>
+<div class="flex-1 h-3 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[55%] rounded-full"></div>
+</div>
+<span class="w-12 font-label text-[10px] text-right">540k</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="w-8 font-label text-[10px] font-bold">BA</span>
+<div class="flex-1 h-3 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[40%] rounded-full"></div>
+</div>
+<span class="w-12 font-label text-[10px] text-right">390k</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="w-8 font-label text-[10px] font-bold">PR</span>
+<div class="flex-1 h-3 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[35%] rounded-full"></div>
+</div>
+<span class="w-12 font-label text-[10px] text-right">310k</span>
+</div>
+</div>
+</div>
+<!-- Waffle Chart: Distribuição por Eixo -->
+<div class="bg-surface-container-low p-8 rounded-xl">
+<h3 class="font-headline font-bold text-xl text-primary mb-8">Distribuição por Eixo Tecnológico</h3>
+<div class="grid grid-cols-10 gap-1.5 aspect-square max-w-[300px] mx-auto mb-8">
+<!-- Simulated Waffle (100 squares) -->
+<div class="bg-primary rounded-sm transition-transform hover:scale-110"></div>
+<div class="bg-primary rounded-sm"></div><div class="bg-primary rounded-sm"></div><div class="bg-primary rounded-sm"></div><div class="bg-primary rounded-sm"></div>
+<div class="bg-primary rounded-sm"></div><div class="bg-primary rounded-sm"></div><div class="bg-primary rounded-sm"></div><div class="bg-primary rounded-sm"></div><div class="bg-primary rounded-sm"></div>
+<div class="bg-primary rounded-sm"></div><div class="bg-primary rounded-sm"></div><div class="bg-primary rounded-sm"></div><div class="bg-primary rounded-sm"></div><div class="bg-primary rounded-sm"></div>
+<div class="bg-primary rounded-sm"></div><div class="bg-primary rounded-sm"></div><div class="bg-primary rounded-sm"></div><div class="bg-primary rounded-sm"></div><div class="bg-primary rounded-sm"></div>
+<div class="bg-secondary rounded-sm"></div><div class="bg-secondary rounded-sm"></div><div class="bg-secondary rounded-sm"></div><div class="bg-secondary rounded-sm"></div><div class="bg-secondary rounded-sm"></div>
+<div class="bg-secondary rounded-sm"></div><div class="bg-secondary rounded-sm"></div><div class="bg-secondary rounded-sm"></div><div class="bg-secondary rounded-sm"></div><div class="bg-secondary rounded-sm"></div>
+<div class="bg-secondary rounded-sm"></div><div class="bg-secondary rounded-sm"></div><div class="bg-secondary rounded-sm"></div><div class="bg-secondary rounded-sm"></div><div class="bg-secondary rounded-sm"></div>
+<div class="bg-secondary rounded-sm"></div><div class="bg-secondary rounded-sm"></div><div class="bg-secondary rounded-sm"></div><div class="bg-tertiary rounded-sm"></div><div class="bg-tertiary rounded-sm"></div>
+<div class="bg-tertiary rounded-sm"></div><div class="bg-tertiary rounded-sm"></div><div class="bg-tertiary rounded-sm"></div><div class="bg-tertiary rounded-sm"></div><div class="bg-tertiary rounded-sm"></div>
+<div class="bg-tertiary rounded-sm"></div><div class="bg-tertiary rounded-sm"></div><div class="bg-tertiary rounded-sm"></div><div class="bg-surface-variant rounded-sm"></div><div class="bg-surface-variant rounded-sm"></div>
+<!-- ... (truncated for space) -->
+<div class="bg-surface-variant rounded-sm"></div><div class="bg-surface-variant rounded-sm"></div><div class="bg-surface-variant rounded-sm"></div><div class="bg-surface-variant rounded-sm"></div><div class="bg-surface-variant rounded-sm"></div>
+<div class="bg-surface-variant rounded-sm"></div><div class="bg-surface-variant rounded-sm"></div><div class="bg-surface-variant rounded-sm"></div><div class="bg-surface-variant rounded-sm"></div><div class="bg-surface-variant rounded-sm"></div>
+</div>
+<div class="flex flex-wrap gap-4 font-label text-[10px]">
+<div class="flex items-center gap-2"><span class="w-3 h-3 bg-primary rounded-full"></span> Gestão &amp; Negócios</div>
+<div class="flex items-center gap-2"><span class="w-3 h-3 bg-secondary rounded-full"></span> Informação &amp; Comunicação</div>
+<div class="flex items-center gap-2"><span class="w-3 h-3 bg-tertiary rounded-full"></span> Saúde</div>
+<div class="flex items-center gap-2"><span class="w-3 h-3 bg-surface-variant rounded-full"></span> Outros</div>
+</div>
+</div>
+</div>
+<!-- Action Section -->
+<div class="flex flex-col md:flex-row justify-between items-center bg-primary text-white p-12 rounded-2xl gap-8 overflow-hidden relative">
+<div class="relative z-10">
+<h2 class="text-3xl font-bold font-headline mb-4">Aprofunde sua Pesquisa</h2>
+<p class="text-primary-fixed-dim max-w-md leading-relaxed">Baixe o conjunto completo de dados brutos ou gere um relatório PDF personalizado com os filtros atuais.</p>
+</div>
+<div class="flex flex-wrap gap-4 relative z-10">
+<button class="bg-secondary hover:bg-on-secondary-container text-white px-8 py-4 rounded-xl font-label text-sm uppercase tracking-widest transition-all duration-300 flex items-center gap-2 group">
+<span class="material-symbols-outlined group-hover:rotate-12 transition-transform">download</span> Exportar CSV
+                    </button>
+<button class="bg-transparent border border-outline-variant/30 hover:bg-white/10 text-white px-8 py-4 rounded-xl font-label text-sm uppercase tracking-widest transition-all duration-300 flex items-center gap-2">
+<span class="material-symbols-outlined">description</span> Gerar PDF
+                    </button>
+</div>
+<div class="absolute right-0 top-0 w-64 h-64 bg-secondary/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
+</div>
+</main>
+</div>
+<!-- Footer -->
+<footer class="bg-[#002532] dark:bg-[#001a24] text-[#fbfaf1] w-full px-12 py-16 flex flex-col md:flex-row justify-between items-start gap-8 font-['Inter'] text-sm leading-relaxed">
+<div class="max-w-sm">
+<div class="text-lg font-bold text-[#fbfaf1] mb-4">Observatório Nacional ETP</div>
+<p class="text-[#c1c7cc]">Uma iniciativa para transparência e análise estratégica da Educação Profissional e Tecnológica no Brasil. Monitorando avanços e desafios para o futuro do trabalho.</p>
+</div>
+<div class="grid grid-cols-2 gap-16">
+<div class="flex flex-col gap-3">
+<span class="font-label text-xs uppercase tracking-widest text-primary-fixed-dim font-bold mb-2">Plataforma</span>
+<a class="text-[#c1c7cc] hover:text-[#fbfaf1] transition-all" href="#">Metodologia</a>
+<a class="text-[#c1c7cc] hover:text-[#fbfaf1] transition-all" href="#">Glossário</a>
+<a class="text-[#c1c7cc] hover:text-[#fbfaf1] transition-all" href="#">Indicadores</a>
+</div>
+<div class="flex flex-col gap-3">
+<span class="font-label text-xs uppercase tracking-widest text-primary-fixed-dim font-bold mb-2">Institucional</span>
+<a class="text-[#c1c7cc] hover:text-[#fbfaf1] transition-all" href="#">Imprensa</a>
+<a class="text-[#c1c7cc] hover:text-[#fbfaf1] transition-all" href="#">Privacidade</a>
+<a class="text-[#c1c7cc] hover:text-[#fbfaf1] transition-all" href="#">Contato</a>
+</div>
+</div>
+<div class="w-full md:w-auto mt-8 md:mt-0 flex flex-col items-end">
+<div class="flex gap-4 mb-8">
+<div class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-secondary transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-sm">share</span>
+</div>
+<div class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-secondary transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-sm">alternate_email</span>
+</div>
+</div>
+<div class="text-[#c1c7cc] text-xs text-right">
+                © 2024 Observatório Nacional ETP. <br/>
+                Apoio Institucional: Estácio.
+            </div>
+</div>
+</footer>
+</body></html>

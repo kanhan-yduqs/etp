@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/Container.astro';
+import BigNumber from '../components/BigNumber.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import SourceNote from '../components/SourceNote.astro';
+---
+
+<BaseLayout title="Home">
+  <!-- Hero Section -->
+  <section class="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+    <Container class="py-16 md:py-20 relative z-10 w-full">
+      <div class="max-w-5xl mx-auto space-y-8 text-center flex flex-col items-center">
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-primary leading-[1.05]">
+          O futuro do Ensino Técnico no Brasil, <span class="text-secondary">em dados.</span>
+        </h1>
+        <p class="text-lg md:text-xl text-on-surface-variant leading-relaxed max-w-3xl">
+          Traduzimos a complexidade da Educação Profissional e Tecnológica em conhecimento estratégico para transformar políticas públicas em realidade nacional.
+        </p>
+        <div class="pt-6 flex flex-wrap justify-center gap-4">
+          <a href="/painel/" class="px-8 py-4 editorial-gradient text-on-primary font-semibold rounded-md hover:opacity-90 transition-all shadow-lg">
+            Explorar Dados Atuais
+          </a>
+          <a href="/metodologia/" class="px-8 py-4 border border-outline-variant text-primary font-semibold rounded-md hover:bg-surface-container-low transition-all">
+            Ver Metodologia
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Big Numbers -->
+  <section class="bg-surface-container-low py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        label="Indicadores Nacionais"
+        title="Panorama Estratégico"
+      >
+        <div class="text-on-surface-variant font-label text-sm italic">
+          Última atualização: Censo Escolar 2024
+        </div>
+      </SectionHeader>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <BigNumber value="2.6M" label="Total Matrículas EPT" trend="up" trendValue="+6.7% vs 2023" />
+        <BigNumber value="1.6M" label="Rede Pública" trend="up" trendValue="+17.1% vs 2023" />
+        <BigNumber value="27" label="Estados com Dados" />
+        <BigNumber value="+34%" label="Crescimento 2019–2024" trend="up" trendValue="5 anos" />
+      </div>
+
+      <SourceNote source="Sinopses Estatísticas da Educação Básica — INEP/MEC" year="2019–2024" />
+    </Container>
+  </section>
+
+  <!-- Charts placeholder -->
+  <section class="py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Evolução de Matrículas Técnicas"
+        subtitle="Série temporal de matrículas na Educação Profissional e Tecnológica por tipo de rede."
+      />
+
+      <div class="bg-surface-container-lowest p-6 md:p-8 rounded-xl min-h-[400px] flex items-center justify-center">
+        <p class="text-on-surface-variant font-label text-sm">Gráfico de evolução temporal (Sprint 0D)</p>
+      </div>
+
+      <SourceNote source="Sinopses Estatísticas da Educação Básica — INEP/MEC" year="2019–2024" />
+    </Container>
+  </section>
+
+  <!-- Analyses preview -->
+  <section class="bg-surface-container-low py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        label="Análises em Destaque"
+        title="Aprofunde sua Pesquisa"
+        subtitle="Explore nossas análises e white papers sobre o ensino técnico e profissionalizante no Brasil."
+      />
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-surface-container-lowest p-6 rounded-xl">
+          <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Em breve</span>
+          <h3 class="text-lg font-semibold text-primary mt-2">Panorama Nacional da EPT</h3>
+          <p class="text-sm text-on-surface-variant mt-2">Análise completa do cenário atual do ensino técnico no Brasil.</p>
+        </div>
+        <div class="bg-surface-container-lowest p-6 rounded-xl">
+          <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Em breve</span>
+          <h3 class="text-lg font-semibold text-primary mt-2">Comparações Internacionais</h3>
+          <p class="text-sm text-on-surface-variant mt-2">Como o Brasil se posiciona frente a modelos de VET da OCDE.</p>
+        </div>
+        <div class="bg-surface-container-lowest p-6 rounded-xl">
+          <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Em breve</span>
+          <h3 class="text-lg font-semibold text-primary mt-2">Impacto do Pé-de-Meia</h3>
+          <p class="text-sm text-on-surface-variant mt-2">Monitoramento do programa de incentivo financeiro para o ensino médio técnico.</p>
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

@@ -1,0 +1,16 @@
+---
+interface Props {
+  source: string;
+  year?: string | number;
+  note?: string;
+}
+
+const { source, year, note } = Astro.props;
+---
+
+<div class="mt-6 pt-4">
+  <p class="font-label text-[11px] text-on-surface-variant opacity-60">
+    Fonte: {source}{year ? ` (${year})` : ''}
+    {note ? ` — ${note}` : ''}
+  </p>
+</div>

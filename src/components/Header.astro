@@ -1,0 +1,78 @@
+---
+interface Props {
+  activePage?: 'dados' | 'politicas' | 'analises' | 'sobre';
+}
+
+const { activePage } = Astro.props;
+
+const navItems = [
+  { id: 'dados', label: 'Dados', href: '/painel/' },
+  { id: 'politicas', label: 'Políticas', href: '/politicas/' },
+  { id: 'analises', label: 'Análises', href: '/analises/' },
+  { id: 'sobre', label: 'Sobre', href: '/sobre/' },
+] as const;
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-surface dark:bg-primary-deep transition-colors duration-200">
+  <div class="flex justify-between items-center w-full px-6 md:px-8 py-4 max-w-[1440px] mx-auto">
+    <div class="flex items-center gap-8">
+      <a href="/" class="text-xl font-bold tracking-tighter text-primary dark:text-surface">
+        Observatório Nacional ETP
+      </a>
+      <nav class="hidden md:flex gap-6 items-center">
+        {navItems.map(item => (
+          <a
+            class:list={[
+              'font-display font-semibold text-sm tracking-tight transition-colors duration-200',
+              activePage === item.id
+                ? 'text-primary dark:text-surface border-b-2 border-secondary pb-1'
+                : 'text-on-surface-variant dark:text-outline-variant hover:text-primary dark:hover:text-surface'
+            ]}
+            href={item.href}
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </div>
+
+    <!-- Mobile menu button -->
+    <button
+      id="mobile-menu-btn"
+      class="md:hidden p-2 hover:bg-surface-container-low rounded-full transition-colors"
+      aria-label="Menu"
+    >
+      <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Subtle separator (no 1px border — tonal shift per design system) -->
+  <div class="bg-surface-container-low dark:bg-primary-container h-[1px] w-full"></div>
+
+  <!-- Mobile menu -->
+  <nav id="mobile-menu" class="hidden md:hidden bg-surface dark:bg-primary-deep border-t border-surface-container-low">
+    <div class="px-6 py-4 space-y-3">
+      {navItems.map(item => (
+        <a
+          class:list={[
+            'block py-2 font-display font-semibold text-sm',
+            activePage === item.id
+              ? 'text-primary dark:text-surface'
+              : 'text-on-surface-variant dark:text-outline-variant'
+          ]}
+          href={item.href}
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+  </nav>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  btn?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+</script>

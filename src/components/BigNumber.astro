@@ -1,0 +1,29 @@
+---
+interface Props {
+  value: string;
+  label: string;
+  trend?: 'up' | 'down' | 'flat';
+  trendValue?: string;
+  source?: string;
+}
+
+const { value, label, trend, trendValue, source } = Astro.props;
+
+const trendColor = trend === 'up' ? 'text-secondary' : trend === 'down' ? 'text-error' : 'text-on-surface-variant';
+const trendArrow = trend === 'up' ? '↑' : trend === 'down' ? '↓' : '→';
+---
+
+<div class="bg-surface-container-lowest p-6 md:p-8 rounded-xl hover:shadow-md transition-shadow">
+  <span class="font-label text-xs font-medium text-on-surface-variant uppercase tracking-widest">{label}</span>
+  <div class="flex items-baseline gap-2 mt-3">
+    <span class="text-4xl md:text-5xl font-bold text-secondary tracking-tighter">{value}</span>
+  </div>
+  {(trend || trendValue) && (
+    <div class:list={['mt-2 font-label text-sm font-medium', trendColor]}>
+      {trendArrow} {trendValue}
+    </div>
+  )}
+  {source && (
+    <p class="mt-4 font-label text-[10px] text-on-surface-variant opacity-50 uppercase tracking-wider">{source}</p>
+  )}
+</div>
