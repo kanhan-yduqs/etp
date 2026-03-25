@@ -187,32 +187,28 @@ python scripts/01_process_sinopses.py
 
 ## Handoff - Estado atual e próximas etapas
 
-**Estágio:** Fase 0 completa. Fase 1 (MVP) é a próxima.
+**Estágio:** Fase 1 em andamento. Sprints 1-2 completos, 3-8 pendentes.
 
 **O que está funcional:**
 - Site Astro com 4 páginas (Home, Painel, Sobre, Metodologia)
 - 5 gráficos Chart.js interativos com dados reais do INEP (2019-2024)
+- Mapa coroplético do Brasil (Leaflet, GeoJSON IBGE, clique → perfil UF)
 - Big numbers calculados dinamicamente a partir dos JSONs
-- Design system com tokens do Stitch/Google (light theme)
+- Design system com tokens do Stitch/Google (light + dark mode com toggle)
+- Content Collections configuradas (analises, politicas)
+- EditorialLayout para páginas Markdown
 - Pipeline ETL Python completo e funcional
 - CI via GitHub Actions
-- Build em ~2.5s, 4 páginas estáticas
+- Build em ~3.5s, 4 páginas estáticas
 
-**Decisões tomadas:**
-- Framework: Astro (islands architecture)
-- Design: Stitch/Google templates como referência (light + dark em design/reference/)
-- Dados: Sinopses Estatísticas INEP como fonte primária (pré-agregadas, fáceis de processar)
-- Conteúdo: AI-based (Claude Opus 4.6) com revisão humana
-- Deploy: a definir (GitHub Pages ou Cloudflare Pages)
-- Domínio: a definir (pode ser sub de kanhan.com.br)
+**Sprints Fase 1 completados:**
+- [x] Sprint 1: Content Collections + EditorialLayout + Dark Mode
+- [x] Sprint 2: Mapa coroplético do Brasil (Leaflet + GeoJSON IBGE)
 
-**Próximas etapas (Fase 1 - MVP):**
-1. **Mapas** — Mapa coroplético do Brasil com Leaflet/MapLibre (matrículas por UF)
-2. **Filtros interativos** — Dropdowns para UF, rede, modalidade, período nos gráficos
-3. **Conteúdo editorial** — White papers regionais (5), panorama nacional, comparativo internacional
-4. **Páginas de políticas** — Pé-de-Meia, Novo EM, PROPAG, PRONATEC, PNE
-5. **Comparações internacionais** — Dados OCDE/UNESCO
-6. **Perfis estaduais** — 27 páginas geradas a partir dos dados por UF
-7. **Deploy** — Configurar hospedagem e domínio
-8. **Pagefind** — Busca client-side
-9. **Dark mode** — Ativar com base nos templates dark do Stitch
+**Próximos sprints (ver plano detalhado em .claude/plans/):**
+3. **Filtros interativos** — FilterBar + FilterController no Painel
+4. **Perfis estaduais** — 27 páginas dinâmicas [uf].astro + listagem
+5. **Políticas públicas** — 5 páginas Markdown + listagem + PolicyCard
+6. **Análises + Comparações** — 7 white papers + /comparacoes/ com dados OCDE
+7. **Pagefind + Deploy + SEO** — Busca, GitHub Pages, sitemap, OG tags
+8. **Polish** — Home atualizada, conteúdo real nos stubs, dark mode audit
