@@ -1,0 +1,74 @@
+---
+interface Props {
+  embedPath: string;
+  height?: number;
+}
+
+const { embedPath, height = 450 } = Astro.props;
+const embedId = embedPath.replace(/\//g, '-').replace(/^-|-$/g, '');
+---
+
+<button
+  class="embed-trigger font-label text-[10px] text-on-surface-variant hover:text-primary px-2 py-1 rounded transition-colors"
+  data-embed-id={embedId}
+  aria-label="Código para embed"
+  title="Incorporar este gráfico"
+>
+  &lt;/&gt;
+</button>
+
+<div id={`embed-modal-${embedId}`} class="fixed inset-0 z-[90] hidden" role="dialog">
+  <div class="absolute inset-0 bg-primary-deep/50 backdrop-blur-sm embed-backdrop"></div>
+  <div class="relative max-w-lg mx-auto mt-32 px-4">
+    <div class="bg-surface dark:bg-dark-surface rounded-xl shadow-2xl p-6">
+      <div class="flex justify-between items-center mb-4">
+        <span class="font-label text-xs uppercase tracking-widest text-on-surface-variant">Incorporar gráfico</span>
+        <button class="embed-close text-on-surface-variant hover:text-primary" aria-label="Fechar">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <p class="text-sm text-on-surface-variant mb-3">Copie o código abaixo e cole em seu site ou blog:</p>
+      <div class="relative">
+        <pre class="bg-surface-container-low dark:bg-dark-surface-container-low p-4 rounded-xl text-xs font-mono text-on-surface overflow-x-auto"><code id={`embed-code-${embedId}`}>&lt;iframe src="{Astro.site}{embedPath}" width="100%" height="{height}" frameborder="0" style="border:none;border-radius:12px" loading="lazy"&gt;&lt;/iframe&gt;</code></pre>
+        <button
+          class="embed-copy absolute top-2 right-2 font-label text-[10px] bg-primary text-on-primary px-3 py-1 rounded-full hover:bg-primary/90 transition-colors"
+          data-code-id={`embed-code-${embedId}`}
+        >
+          Copiar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  // Delegate events for embed modals
+  document.addEventListener('click', function(e) {
+    const trigger = e.target.closest('.embed-trigger');
+    if (trigger) {
+      const id = trigger.dataset.embedId;
+      document.getElementById('embed-modal-' + id)?.classList.remove('hidden');
+    }
+    const close = e.target.closest('.embed-close');
+    if (close) {
+      close.closest('[role="dialog"]')?.classList.add('hidden');
+    }
+    const backdrop = e.target.closest('.embed-backdrop');
+    if (backdrop) {
+      backdrop.closest('[role="dialog"]')?.classList.add('hidden');
+    }
+    const copy = e.target.closest('.embed-copy');
+    if (copy) {
+      const codeId = copy.dataset.codeId;
+      const code = document.getElementById(codeId)?.textContent;
+      if (code) {
+        navigator.clipboard.writeText(code).then(function() {
+          copy.textContent = 'Copiado!';
+          setTimeout(function() { copy.textContent = 'Copiar'; }, 2000);
+        });
+      }
+    }
+  });
+</script>

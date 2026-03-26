@@ -1,0 +1,15 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+import BarChart from '../../components/charts/BarChart.astro';
+import { getEmpregabilidadeLatest } from '../../lib/data';
+
+const emp = getEmpregabilidadeLatest();
+const chartData = JSON.stringify({
+  labels: ['Ensino Médio', 'Ensino Técnico', 'Ensino Superior'],
+  datasets: [{ label: `Salário médio ${emp.ano}`, data: [emp.salario_medio_medio, emp.salario_medio_tecnico, emp.salario_medio_superior], backgroundColor: ['#8da1b9', '#476800', '#0D3B4C'], borderRadius: 4 }],
+});
+---
+<EmbedLayout title="Salários por Escolaridade">
+  <h3 class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">Salário Médio por Escolaridade ({emp.ano})</h3>
+  <BarChart chartId="embed-salarios" chartData={chartData} height="300px" />
+</EmbedLayout>

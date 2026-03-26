@@ -1,0 +1,16 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+import BarChart from '../../components/charts/BarChart.astro';
+import { getComparacoesInternacionais } from '../../lib/data';
+
+const comparacoes = getComparacoesInternacionais();
+const paises = comparacoes.filter(c => c.iso3 !== 'OCDE').sort((a, b) => b.vetEnrollmentRate - a.vetEnrollmentRate);
+const chartData = JSON.stringify({
+  labels: paises.map(c => c.country),
+  datasets: [{ label: '% jovens em VET', data: paises.map(c => c.vetEnrollmentRate), backgroundColor: paises.map(c => c.iso3 === 'BRA' ? '#476800' : '#0D3B4C'), borderRadius: 4 }],
+});
+---
+<EmbedLayout title="Comparações Internacionais VET">
+  <h3 class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">Taxa de Matrícula em VET por País</h3>
+  <BarChart chartId="embed-vet" chartData={chartData} horizontal={true} height="350px" />
+</EmbedLayout>

@@ -1,0 +1,19 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+import LineChart from '../../components/charts/LineChart.astro';
+import { getSerieTemporal } from '../../lib/data';
+
+const serie = getSerieTemporal();
+const chartData = JSON.stringify({
+  labels: serie.map(s => s.ano.toString()),
+  datasets: [
+    { label: 'Total', data: serie.map(s => s.total), borderColor: '#0D3B4C', backgroundColor: 'rgba(13,59,76,0.1)', fill: true, tension: 0.3, borderWidth: 2.5, pointRadius: 4, pointBackgroundColor: '#0D3B4C' },
+    { label: 'Rede Pública', data: serie.map(s => s.publica), borderColor: '#476800', backgroundColor: 'rgba(71,104,0,0.05)', fill: true, tension: 0.3, borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#476800' },
+    { label: 'Rede Privada', data: serie.map(s => s.privada), borderColor: '#2d6195', backgroundColor: 'rgba(45,97,149,0.05)', fill: true, tension: 0.3, borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#2d6195' },
+  ],
+});
+---
+<EmbedLayout title="Evolução de Matrículas EPT">
+  <h3 class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">Evolução de Matrículas EPT (2019–2024)</h3>
+  <LineChart chartId="embed-serie" chartData={chartData} yLabel="Matrículas" height="350px" />
+</EmbedLayout>

@@ -1,0 +1,14 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+import ChoroplethMap from '../../components/charts/ChoroplethMap.astro';
+import { getMatriculasPorUF, getLatestYear } from '../../lib/data';
+
+const latestYear = getLatestYear();
+const ufs = getMatriculasPorUF(latestYear);
+const mapDataObj: Record<string, number> = {};
+ufs.forEach(u => { mapDataObj[u.sigla_uf] = u.total; });
+---
+<EmbedLayout title="Mapa de Matrículas EPT">
+  <h3 class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">Matrículas EPT por UF ({latestYear})</h3>
+  <ChoroplethMap mapId="embed-mapa" mapData={JSON.stringify(mapDataObj)} legendLabel="Matrículas" height="420px" />
+</EmbedLayout>

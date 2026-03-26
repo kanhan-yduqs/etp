@@ -1,0 +1,16 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+import BarChart from '../../components/charts/BarChart.astro';
+import { getMatriculasPorRegiao, getLatestYear } from '../../lib/data';
+
+const latestYear = getLatestYear();
+const regioes = getMatriculasPorRegiao(latestYear).sort((a, b) => b.total - a.total);
+const chartData = JSON.stringify({
+  labels: regioes.map(r => r.regiao),
+  datasets: [{ label: `Matrículas ${latestYear}`, data: regioes.map(r => r.total), backgroundColor: ['#0D3B4C', '#476800', '#4a6d00', '#2d6195', '#8da1b9'], borderRadius: 4 }],
+});
+---
+<EmbedLayout title="Distribuição Regional EPT">
+  <h3 class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">Matrículas EPT por Região ({latestYear})</h3>
+  <BarChart chartId="embed-regional" chartData={chartData} horizontal={true} height="300px" />
+</EmbedLayout>

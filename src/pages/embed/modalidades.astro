@@ -1,0 +1,23 @@
+---
+import EmbedLayout from '../../layouts/EmbedLayout.astro';
+import BarChart from '../../components/charts/BarChart.astro';
+import { getMatriculasPorModalidade, MODALIDADE_LABELS, MODALIDADE_COLORS } from '../../lib/data';
+
+const modalidades = getMatriculasPorModalidade();
+const anos = [...new Set(modalidades.map(m => m.ano))].sort();
+const modNames = [...new Set(modalidades.map(m => m.modalidade))];
+
+const chartData = JSON.stringify({
+  labels: anos.map(a => a.toString()),
+  datasets: modNames.map(mod => ({
+    label: MODALIDADE_LABELS[mod] || mod,
+    data: anos.map(ano => modalidades.find(m => m.ano === ano && m.modalidade === mod)?.total || 0),
+    backgroundColor: MODALIDADE_COLORS[mod] || '#71787c',
+    borderRadius: 3,
+  })),
+});
+---
+<EmbedLayout title="Evolução por Modalidade EPT">
+  <h3 class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">Matrículas EPT por Modalidade</h3>
+  <BarChart chartId="embed-modalidades" chartData={chartData} height="350px" />
+</EmbedLayout>
