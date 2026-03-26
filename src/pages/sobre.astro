@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Container from '../components/Container.astro';
+import SectionHeader from '../components/SectionHeader.astro';
 ---
 
 <BaseLayout title="Sobre" activePage="sobre">
@@ -11,15 +12,64 @@ import Container from '../components/Container.astro';
         <h1 class="text-4xl md:text-5xl font-bold mt-2 text-primary">Observatório Nacional ETP</h1>
         <div class="mt-8 space-y-6 text-on-surface-variant text-lg leading-relaxed">
           <p>
-            O Observatório Nacional do Ensino Técnico e Profissionalizante é uma plataforma digital de referência que consolida, visualiza e analisa dados sobre a educação profissional técnica de nível médio no Brasil.
+            O Observatório Nacional do Ensino Técnico e Profissionalizante é a primeira plataforma digital brasileira que consolida, visualiza e analisa especificamente os dados da educação profissional técnica de nível médio.
           </p>
           <p>
-            Reunimos dados de fontes oficiais — INEP, IBGE, MTE, OCDE e outras — em um único lugar, com camada analítica e editorial, para informar decisões de política pública, práticas pedagógicas e cobertura jornalística.
+            Reunimos dados de fontes oficiais — INEP/MEC (Censo Escolar), IBGE (PNAD), MTE (RAIS/CAGED), OCDE e UNESCO — em um único lugar, com camada analítica e editorial, para informar decisões de política pública, práticas pedagógicas e cobertura jornalística.
           </p>
           <p>
-            Projeto de <strong class="text-primary">Marcelo Kanhan</strong>, executivo de comunicação, computational social scientist e pesquisador em tecnologia e inovação, com apoio institucional da <strong class="text-primary">Estácio</strong>.
+            Nossa missão é traduzir a complexidade da Educação Profissional e Tecnológica em conhecimento acessível e acionável, contribuindo para o debate qualificado sobre o futuro do ensino técnico no Brasil.
           </p>
         </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Equipe -->
+  <section class="bg-surface-container-low dark:bg-dark-surface-container-low py-16 md:py-24">
+    <Container>
+      <div class="max-w-3xl">
+        <SectionHeader label="Equipe" title="Idealizador" />
+        <div class="bg-surface-container-lowest dark:bg-dark-surface-container p-6 md:p-8 rounded-xl">
+          <h3 class="text-xl font-bold text-primary">Marcelo Kanhan</h3>
+          <p class="text-on-surface-variant mt-2 leading-relaxed">
+            Executivo de comunicação, computational social scientist e pesquisador em tecnologia e inovação. Concebeu o Observatório Nacional ETP como ferramenta de transparência e evidência para a educação profissional brasileira.
+          </p>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Apoio Institucional -->
+  <section class="py-16 md:py-24">
+    <Container>
+      <div class="max-w-3xl">
+        <SectionHeader label="Parceiros" title="Apoio Institucional" />
+        <div class="bg-surface-container-lowest dark:bg-dark-surface-container p-6 md:p-8 rounded-xl">
+          <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+            <div class="bg-white rounded-lg px-6 py-3 shrink-0">
+              <img src="/img/parceiros/logo-instituto-yduqs-estacio.png" alt="Instituto Yduqs e Estácio" class="h-12 md:h-14 w-auto" />
+            </div>
+            <div>
+              <p class="text-on-surface-variant leading-relaxed">
+                O Observatório Nacional ETP conta com o apoio institucional do <strong class="text-primary">Instituto Yduqs</strong> e da <strong class="text-primary">Estácio</strong>, que reconhecem a importância da transparência de dados e da análise baseada em evidências para o avanço da educação profissional e tecnológica no Brasil.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Fontes e metodologia -->
+  <section class="bg-surface-container-low dark:bg-dark-surface-container-low py-16 md:py-24">
+    <Container>
+      <div class="max-w-3xl">
+        <SectionHeader label="Transparência" title="Fontes e Metodologia" />
+        <p class="text-on-surface-variant leading-relaxed mb-4">
+          Todos os dados apresentados no Observatório são de fontes públicas e oficiais. Os scripts de processamento são open source e replicáveis.
+        </p>
+        <a href="/metodologia/" class="font-label text-sm text-secondary font-medium hover:underline">Ver metodologia completa →</a>
       </div>
     </Container>
   </section>
