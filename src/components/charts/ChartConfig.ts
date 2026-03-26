@@ -44,6 +44,7 @@ Chart.defaults.plugins.tooltip.bodyFont = { family: "'Space Grotesk', system-ui"
 Chart.defaults.plugins.tooltip.cornerRadius = 6;
 Chart.defaults.plugins.tooltip.padding = 10;
 Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.pointStyle = 'rect';
 Chart.defaults.plugins.legend.labels.pointStyleWidth = 10;
 Chart.defaults.plugins.legend.labels.padding = 16;
 Chart.defaults.responsive = true;

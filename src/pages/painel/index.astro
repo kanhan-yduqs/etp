@@ -77,41 +77,40 @@ const ufsTop10 = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total
         />
       </div>
 
-      <!-- Filters -->
+    </Container>
+  </section>
+
+  <!-- Mapa + Top UFs side-by-side com filtros -->
+  <section class="bg-surface-container-low py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Distribuição por Estado"
+        subtitle="Explore as matrículas por UF. Clique no mapa para ver o perfil detalhado."
+      />
+
+      <!-- Filtros acima dos gráficos que controlam -->
       <FilterBar
         anos={meta.anos_cobertos}
         ufs={ufList}
         showUF={true}
         showRede={true}
       />
-    </Container>
-  </section>
 
-  <!-- Mapa -->
-  <section class="bg-surface-container-low dark:bg-dark-surface-container-low py-16 md:py-24">
-    <Container>
-      <SectionHeader
-        title="Distribuição por Estado"
-        subtitle="Clique em um estado para ver seu perfil detalhado."
-      />
-      <ChoroplethMap mapId="painel-mapa" mapData={JSON.stringify(mapDataObj)} legendLabel="Matrículas" height="480px" />
-      <SourceNote source="Sinopses Estatísticas — INEP/MEC" year={latestYear} />
-    </Container>
-  </section>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Mapa (esquerda) -->
+        <div class="bg-surface-container-lowest p-4 rounded-xl">
+          <ChoroplethMap mapId="painel-mapa" mapData={JSON.stringify(mapDataObj)} legendLabel="Matrículas" height="450px" />
+        </div>
 
-  <!-- Top UFs (filterable) -->
-  <section class="py-16 md:py-24">
-    <Container>
-      <SectionHeader
-        title="Top 10 Estados por Matrículas"
-        subtitle="Unidades da Federação com maior número de matrículas."
-        id="top-ufs-section"
-      />
-      <div class="bg-surface-container-lowest dark:bg-dark-surface-container p-4 md:p-8 rounded-xl">
-        <div class="relative" style="height: 420px">
-          <canvas id="chart-top-ufs"></canvas>
+        <!-- Top 10 UFs (direita, filterable) -->
+        <div class="bg-surface-container-lowest p-4 md:p-6 rounded-xl">
+          <h3 class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">Top 10 Estados</h3>
+          <div class="relative" style="height: 400px">
+            <canvas id="chart-top-ufs"></canvas>
+          </div>
         </div>
       </div>
+
       <SourceNote source="Sinopses Estatísticas — INEP/MEC" year={latestYear} />
     </Container>
   </section>

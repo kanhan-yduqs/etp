@@ -207,37 +207,34 @@ const mapData = JSON.stringify(mapDataObj);
     </Container>
   </section>
 
-  <!-- Matrículas por Região -->
+  <!-- Distribuição Territorial + Regional (side-by-side) -->
   <section class="bg-surface-container-low py-16 md:py-24">
     <Container>
       <SectionHeader
-        title="Distribuição Regional"
-        subtitle={`Matrículas da Educação Profissional por região do Brasil em ${latestYear}.`}
-      />
-
-      <div class="bg-surface-container-lowest p-4 md:p-8 rounded-xl">
-        <BarChart chartId="por-regiao" chartData={barChartData} horizontal={true} height="320px" />
-        <ChartActions chartId="por-regiao" csvData={barChartData} csvFilename="distribuicao-regional-ept.csv" embedPath="embed/distribuicao-regional" />
-      </div>
-
-      <SourceNote source="Sinopses Estatísticas da Educação Básica — INEP/MEC" year={latestYear} />
-    </Container>
-  </section>
-
-  <!-- Mapa Nacional -->
-  <section class="py-16 md:py-24">
-    <Container>
-      <SectionHeader
         title="Distribuição Territorial da ETP"
-        subtitle={`Matrículas da Educação Profissional por Unidade da Federação em ${latestYear}. Clique em um estado para ver seu perfil.`}
+        subtitle={`Matrículas por Unidade da Federação e por região em ${latestYear}. Clique em um estado para ver seu perfil.`}
       />
 
-      <ChoroplethMap
-        mapId="mapa-brasil"
-        mapData={mapData}
-        legendLabel="Matrículas"
-        height="520px"
-      />
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Mapa (esquerda) -->
+        <div class="bg-surface-container-lowest p-4 rounded-xl">
+          <ChoroplethMap
+            mapId="mapa-brasil"
+            mapData={mapData}
+            legendLabel="Matrículas"
+            height="420px"
+          />
+        </div>
+
+        <!-- Gráfico regional (direita) -->
+        <div class="bg-surface-container-lowest p-4 md:p-6 rounded-xl flex flex-col">
+          <h3 class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">Por Região</h3>
+          <div class="flex-1">
+            <BarChart chartId="por-regiao" chartData={barChartData} horizontal={true} height="360px" />
+          </div>
+          <ChartActions chartId="por-regiao" csvData={barChartData} csvFilename="distribuicao-regional-ept.csv" embedPath="embed/distribuicao-regional" />
+        </div>
+      </div>
 
       <SourceNote source="Sinopses Estatísticas da Educação Básica — INEP/MEC" year={latestYear} />
     </Container>

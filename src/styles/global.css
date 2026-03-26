@@ -25,14 +25,15 @@
   }
 
   .dark {
-    --chart-1: #a4cce1;
-    --chart-2: #b9f54f;
-    --chart-3: #9ed833;
+    /* Verde luminoso como cor primária de dados no dark mode */
+    --chart-1: #b9f54f;
+    --chart-2: #9ed833;
+    --chart-3: #a4cce1;
     --chart-4: #b4c9e1;
-    --chart-5: #476800;
-    --chart-6: #0D3B4C;
-    --chart-7: #71787c;
-    --chart-8: #4a6d00;
+    --chart-5: #4a6d00;
+    --chart-6: #8da1b9;
+    --chart-7: #c1c7cc;
+    --chart-8: #476800;
 
     /* Chart grid/text colors for dark mode */
     --chart-grid: rgba(255, 255, 255, 0.08);
@@ -103,6 +104,35 @@
 
   .prose-etp blockquote {
     @apply border-l-4 border-secondary pl-4 italic text-on-surface-variant my-6;
+  }
+
+  /* Dark mode — global text color overrides for Tailwind utility classes */
+  .dark .text-primary {
+    color: #a4cce1;
+  }
+  .dark .text-secondary {
+    color: #b9f54f;
+  }
+  .dark .text-on-surface {
+    color: #e4e3db;
+  }
+  .dark .text-on-surface-variant {
+    color: #c1c7cc;
+  }
+  .dark .bg-surface-container-low {
+    background-color: #1a2a30;
+  }
+  .dark .bg-surface-container-lowest {
+    background-color: #1e3040;
+  }
+  .dark .bg-surface-container-high {
+    background-color: #243a45;
+  }
+  .dark .border-surface-container-high {
+    border-color: #243a45;
+  }
+  .dark .border-outline-variant {
+    border-color: #41484c;
   }
 
   /* Dark mode prose overrides */

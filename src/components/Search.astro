@@ -59,15 +59,16 @@
     document.getElementById('search-modal')?.classList.add('hidden');
   }
 
-  // Open from header button
-  document.getElementById('search-trigger')?.addEventListener('click', openSearch);
-  // Close
-  document.getElementById('search-close')?.addEventListener('click', closeSearch);
-  document.getElementById('search-backdrop')?.addEventListener('click', closeSearch);
-  // Esc key
+  // Event delegation — works regardless of DOM order
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#search-trigger')) openSearch();
+    if (e.target.closest('#search-close')) closeSearch();
+    if (e.target.closest('#search-backdrop')) closeSearch();
+  });
+  // Keyboard shortcuts
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeSearch();
-    if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) {
+    if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(e.target?.tagName)) {
       e.preventDefault();
       openSearch();
     }
