@@ -189,27 +189,27 @@ python scripts/01_process_sinopses.py
 
 ## Handoff - Estado atual e próximas etapas
 
-**Estágio:** Fase 1 (MVP) completa. 47 páginas, pronto para deploy.
+**Estágio:** Fase 2 em andamento. Sprints 1-2 completos, 3-6 pendentes.
 
 **O que está funcional:**
-- 47 páginas estáticas (Home, Painel com filtros, 27 perfis UF, 5 políticas, 7 análises, comparações internacionais, sobre, metodologia)
+- 49 páginas estáticas (Home, Painel com filtros, 27 perfis UF, 5 políticas, 7 análises, comparações, glossário, imprensa, sobre, metodologia)
 - 8+ gráficos Chart.js interativos + mapa coroplético Leaflet
 - Filtros interativos no Painel (Ano, UF, Rede)
-- Busca client-side (Pagefind, 47 páginas indexadas)
-- Dark mode com toggle e localStorage
-- Content Collections para análises e políticas (Markdown + frontmatter)
+- Busca client-side (Pagefind, 49 páginas, 2165 palavras indexadas)
+- Dark mode auditado (charts com CSS custom properties, prose com dark overrides)
+- Conteúdo editorial expandido: 12 artigos substantivos com dados reais
+- Glossário com 45+ termos EPT, sala de imprensa com fact sheet
 - SEO: sitemap, robots.txt, OG/Twitter meta tags, canonical URLs
-- Design system Stitch (light + dark tokens)
 - Pipeline ETL Python (6 anos INEP 2019-2024)
 - CI via GitHub Actions
 - Build em ~4.5s
 
-**Próximas etapas (Fase 2 - Expansão):**
-1. **Deploy** — Configurar GitHub Pages ou Cloudflare Pages (Marcelo decide)
-2. **Conteúdo expandido** — Textos mais completos nos white papers e políticas
-3. **Dados de empregabilidade** — RAIS/CAGED do MTE
-4. **Glossário** — Página /glossario/ com termos e definições
-5. **Sala de imprensa** — /imprensa/ com fact sheets e contatos
-6. **Embeds** — Gráficos embeddáveis com iframe
-7. **Downloads** — Botões de download CSV/PNG nos gráficos
-8. **Dark mode audit** — Verificar todas as páginas em tema escuro
+**Fase 2 Sprints completados:**
+- [x] Sprint 1: Glossário + Imprensa + Dark Mode Audit
+- [x] Sprint 2: Conteúdo expandido (12 artigos com dados reais)
+
+**Próximos sprints (ver plano em .claude/plans/):**
+3. **Dados de empregabilidade** — RAIS/CAGED (dados curados + ETL + dashboard)
+4. **Gráficos embeddáveis** — EmbedLayout + 6 páginas /embed/ + EmbedModal
+5. **Downloads CSV/PNG** — ChartActions em todos os gráficos
+6. **Deploy + polish** — GitHub Pages, sitemap filter, CLAUDE.md final
