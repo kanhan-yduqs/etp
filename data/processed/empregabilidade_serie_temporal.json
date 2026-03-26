@@ -1,0 +1,57 @@
+[
+  {
+    "ano": 2019,
+    "empregados_tecnico": 4650000,
+    "empregados_medio": 17200000,
+    "empregados_superior": 11800000,
+    "salario_medio_tecnico": 2380,
+    "salario_medio_medio": 1780,
+    "salario_medio_superior": 5120,
+    "premio_salarial_pct": 33.7,
+    "fonte": "estimativa baseada em RAIS 2019 / DIEESE"
+  },
+  {
+    "ano": 2020,
+    "empregados_tecnico": 4520000,
+    "empregados_medio": 16500000,
+    "empregados_superior": 11600000,
+    "salario_medio_tecnico": 2420,
+    "salario_medio_medio": 1810,
+    "salario_medio_superior": 5250,
+    "premio_salarial_pct": 33.7,
+    "fonte": "estimativa baseada em RAIS 2020 / DIEESE"
+  },
+  {
+    "ano": 2021,
+    "empregados_tecnico": 4700000,
+    "empregados_medio": 17100000,
+    "empregados_superior": 12000000,
+    "salario_medio_tecnico": 2510,
+    "salario_medio_medio": 1870,
+    "salario_medio_superior": 5380,
+    "premio_salarial_pct": 34.2,
+    "fonte": "estimativa baseada em RAIS 2021 / DIEESE"
+  },
+  {
+    "ano": 2022,
+    "empregados_tecnico": 4950000,
+    "empregados_medio": 17800000,
+    "empregados_superior": 12400000,
+    "salario_medio_tecnico": 2650,
+    "salario_medio_medio": 1960,
+    "salario_medio_superior": 5600,
+    "premio_salarial_pct": 35.2,
+    "fonte": "estimativa baseada em RAIS 2022 / DIEESE"
+  },
+  {
+    "ano": 2023,
+    "empregados_tecnico": 5200000,
+    "empregados_medio": 18500000,
+    "empregados_superior": 12900000,
+    "salario_medio_tecnico": 2850,
+    "salario_medio_medio": 2100,
+    "salario_medio_superior": 5950,
+    "premio_salarial_pct": 35.7,
+    "fonte": "estimativa baseada em RAIS 2023 / DIEESE"
+  }
+]

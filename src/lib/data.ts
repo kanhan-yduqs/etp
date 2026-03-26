@@ -9,6 +9,7 @@ import porModalidade from '../../data/processed/matriculas_ept_por_modalidade.js
 import porRegiao from '../../data/processed/matriculas_ept_por_regiao.json';
 import metadata from '../../data/processed/metadata.json';
 import comparacoesData from '../../data/processed/comparacoes_internacionais.json';
+import empregabilidadeData from '../../data/processed/empregabilidade_serie_temporal.json';
 
 // --- Interfaces ---
 
@@ -126,6 +127,33 @@ export const MODALIDADE_COLORS: Record<string, string> = {
   subsequente: '#4a6d00',
   integrada_eja: '#2d6195',
 };
+
+// --- Empregabilidade ---
+
+export interface EmpregabilidadeSerie {
+  ano: number;
+  empregados_tecnico: number;
+  empregados_medio: number;
+  empregados_superior: number;
+  salario_medio_tecnico: number;
+  salario_medio_medio: number;
+  salario_medio_superior: number;
+  premio_salarial_pct: number;
+  fonte: string;
+}
+
+export function getEmpregabilidadeSerie(): EmpregabilidadeSerie[] {
+  return empregabilidadeData as EmpregabilidadeSerie[];
+}
+
+export function getEmpregabilidadeLatest(): EmpregabilidadeSerie {
+  const data = empregabilidadeData as EmpregabilidadeSerie[];
+  return data[data.length - 1];
+}
+
+export function formatCurrency(value: number): string {
+  return 'R$ ' + value.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
 
 // --- Comparações Internacionais ---
 

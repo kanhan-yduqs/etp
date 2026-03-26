@@ -17,6 +17,9 @@ import {
   MODALIDADE_LABELS,
   MODALIDADE_COLORS,
   getMetadata,
+  getEmpregabilidadeSerie,
+  getEmpregabilidadeLatest,
+  formatCurrency,
 } from '../../lib/data';
 
 const serie = getSerieTemporal();
@@ -35,6 +38,10 @@ const ufList = [...new Map(allUFs.map(u => [u.sigla_uf, { sigla: u.sigla_uf, nom
 // Map data for latest year
 const mapDataObj: Record<string, number> = {};
 getMatriculasPorUF(latestYear).forEach(u => { mapDataObj[u.sigla_uf] = u.total; });
+
+// Employment data
+const empSerie = getEmpregabilidadeSerie();
+const empLatest = getEmpregabilidadeLatest();
 
 // Pre-built chart data for initial render (latest year)
 const ufsTop10 = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total).slice(0, 10);
@@ -141,15 +148,63 @@ const ufsTop10 = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total
     </Container>
   </section>
 
+  <!-- Empregabilidade -->
+  <section class="bg-surface-container-low dark:bg-dark-surface-container-low py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Empregabilidade"
+        subtitle="Inserção no mercado de trabalho formal de trabalhadores com ensino médio técnico."
+        label="RAIS / MTE"
+      />
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <BigNumber
+          value={formatNumber(empLatest.empregados_tecnico)}
+          label="Técnicos empregados"
+          source={`RAIS ${empLatest.ano} (estimativa)`}
+        />
+        <BigNumber
+          value={formatCurrency(empLatest.salario_medio_tecnico)}
+          label="Salário médio técnico"
+          trend="up"
+          trendValue={`vs ${formatCurrency(empLatest.salario_medio_medio)} ensino médio`}
+        />
+        <BigNumber
+          value={`+${empLatest.premio_salarial_pct}%`}
+          label="Prêmio salarial"
+          source="técnico vs ensino médio"
+        />
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-surface-container-lowest dark:bg-dark-surface-container p-4 md:p-8 rounded-xl">
+          <h4 class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">Salário médio por escolaridade ({empLatest.ano})</h4>
+          <div class="relative" style="height: 280px">
+            <canvas id="chart-salarios"></canvas>
+          </div>
+        </div>
+        <div class="bg-surface-container-lowest dark:bg-dark-surface-container p-4 md:p-8 rounded-xl">
+          <h4 class="font-label text-xs uppercase tracking-widest text-on-surface-variant mb-4">Evolução do emprego técnico</h4>
+          <div class="relative" style="height: 280px">
+            <canvas id="chart-emprego-evolucao"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <SourceNote source="Estimativas baseadas em RAIS/DIEESE" year={empLatest.ano} note="Dados aproximados para fins analíticos" />
+    </Container>
+  </section>
+
   <!-- Embedded full data for client-side filtering -->
   <script type="application/json" id="painel-data-ufs" set:html={JSON.stringify(allUFs)} />
   <script type="application/json" id="painel-data-serie" set:html={JSON.stringify(serie)} />
   <script type="application/json" id="painel-data-modalidades" set:html={JSON.stringify(allModalidades)} />
+  <script type="application/json" id="painel-data-empregabilidade" set:html={JSON.stringify(empSerie)} />
 </BaseLayout>
 
 <script>
-  import { Chart, BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
-  Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend);
+  import { Chart, BarController, BarElement, LineController, LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend, Filler } from 'chart.js';
+  Chart.register(BarController, BarElement, LineController, LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend, Filler);
 
   // Chart defaults
   Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
@@ -319,4 +374,82 @@ const ufsTop10 = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total
     const { ano, uf, rede } = e.detail;
     buildCharts(ano, uf, rede);
   }) as EventListener);
+
+  // --- Employment charts (static, not filterable) ---
+  const empData = JSON.parse(document.getElementById('painel-data-empregabilidade')?.textContent || '[]');
+  const styles = getComputedStyle(document.documentElement);
+  const gridColor = styles.getPropertyValue('--chart-grid').trim() || 'rgba(0,0,0,0.04)';
+  const textColor = styles.getPropertyValue('--chart-text').trim() || '#41484c';
+
+  if (empData.length > 0) {
+    const empLatest = empData[empData.length - 1];
+
+    // Salary comparison bar chart
+    const salCanvas = document.getElementById('chart-salarios') as HTMLCanvasElement;
+    if (salCanvas) {
+      new Chart(salCanvas, {
+        type: 'bar',
+        data: {
+          labels: ['Ensino Médio', 'Ensino Técnico', 'Ensino Superior'],
+          datasets: [{
+            label: `Salário médio ${empLatest.ano}`,
+            data: [empLatest.salario_medio_medio, empLatest.salario_medio_tecnico, empLatest.salario_medio_superior],
+            backgroundColor: ['#8da1b9', '#476800', '#0D3B4C'],
+            borderRadius: 4,
+          }],
+        },
+        options: {
+          color: textColor,
+          scales: {
+            x: { grid: { color: gridColor }, ticks: { color: textColor } },
+            y: {
+              grid: { color: gridColor },
+              ticks: { color: textColor, callback: (v: any) => 'R$ ' + (v as number).toLocaleString('pt-BR') },
+            },
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx: any) => `R$ ${ctx.parsed.y.toLocaleString('pt-BR')}`,
+              },
+            },
+          },
+        },
+      });
+    }
+
+    // Employment evolution line chart
+    const evoCanvas = document.getElementById('chart-emprego-evolucao') as HTMLCanvasElement;
+    if (evoCanvas) {
+      new Chart(evoCanvas, {
+        type: 'line',
+        data: {
+          labels: empData.map((d: any) => d.ano.toString()),
+          datasets: [{
+            label: 'Técnicos empregados',
+            data: empData.map((d: any) => d.empregados_tecnico),
+            borderColor: '#476800',
+            backgroundColor: 'rgba(71, 104, 0, 0.1)',
+            fill: true,
+            tension: 0.3,
+            borderWidth: 2.5,
+            pointRadius: 4,
+            pointBackgroundColor: '#476800',
+          }],
+        },
+        options: {
+          color: textColor,
+          scales: {
+            x: { grid: { color: gridColor }, ticks: { color: textColor } },
+            y: { grid: { color: gridColor }, ticks: { color: textColor, callback: (v: any) => formatNum(v as number) } },
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: (ctx: any) => formatNum(ctx.parsed.y) + ' empregados' } },
+          },
+        },
+      });
+    }
+  }
 </script>
