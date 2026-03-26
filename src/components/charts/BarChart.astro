@@ -55,6 +55,9 @@ const { chartId, chartData, title, horizontal = false, height = '400px' } = Astr
       return value;
     };
 
+    // Override global default color for this chart instance (dark mode support)
+    Chart.defaults.color = textColor;
+
     new Chart(canvas, {
       type: 'bar',
       data: data,

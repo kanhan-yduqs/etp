@@ -49,6 +49,9 @@ const { chartId, chartData, title, xLabel, yLabel, height = '400px' } = Astro.pr
       });
     }
 
+    // Override global default color for this chart instance (dark mode support)
+    Chart.defaults.color = textColor;
+
     new Chart(canvas, {
       type: 'line',
       data: data,
@@ -77,7 +80,7 @@ const { chartId, chartData, title, xLabel, yLabel, height = '400px' } = Astro.pr
           },
         },
         plugins: {
-          legend: { position: 'bottom' },
+          legend: { position: 'bottom', labels: { color: textColor } },
           tooltip: {
             callbacks: {
               label: function(ctx: any) {

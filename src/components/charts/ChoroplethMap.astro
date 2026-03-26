@@ -55,7 +55,7 @@ const {
     const max = Math.max(...values);
     const getColor = createColorScale(min, max, colorLow, colorHigh);
 
-    // Initialize Leaflet map
+    // Initialize Leaflet map with fractional zoom for better fit
     const map = L.map(container, {
       zoomControl: false,
       attributionControl: false,
@@ -63,6 +63,8 @@ const {
       scrollWheelZoom: false,
       doubleClickZoom: false,
       touchZoom: false,
+      zoomSnap: 0.1,
+      zoomDelta: 0.1,
     });
 
     // Format number for tooltip
@@ -110,11 +112,17 @@ const {
       },
     }).addTo(map);
 
-    // Fit bounds to Brazil — minimal padding for maximum map visibility
-    map.fitBounds(geoLayer.getBounds(), { padding: [2, 2] });
+    // Fit bounds to Brazil — then zoom in slightly for maximum visibility
+    map.fitBounds(geoLayer.getBounds(), { padding: [0, 0] });
 
-    // Ensure map renders correctly in dynamically-sized containers
-    setTimeout(() => map.invalidateSize(), 200);
+    // Zoom in a bit more to fill the container better
+    setTimeout(() => {
+      map.invalidateSize();
+      map.fitBounds(geoLayer.getBounds(), { padding: [0, 0] });
+      // Increase zoom by 0.3 to make Brazil fill more of the frame
+      const currentZoom = map.getZoom();
+      map.setZoom(currentZoom + 0.3, { animate: false });
+    }, 250);
 
     // Legend
     const legend = L.control({ position: 'bottomright' });
