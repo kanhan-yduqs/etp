@@ -154,12 +154,18 @@ Schema.org Dataset markup, OG/Twitter Cards com imagens dinâmicas, URLs semânt
 - [x] Deploy: GitHub Pages workflow + .nojekyll
 - [x] SEO: sitemap filter (exclui /embed/), robots.txt
 
-### Fase 3 - Escala
-- [ ] Newsletter, SEO avançado, OG images dinâmicas
-- [ ] Multilíngue (EN/ES)
-- [ ] API de dados
-- [ ] Parcerias institucionais
-- [ ] Guia de cursos para estudantes
+### Fase 3 - Escala (PARCIAL)
+- [x] SEO avançado: Schema.org JSON-LD (Dataset, Organization, Article)
+- [x] Parcerias institucionais: logos Instituto Yduqs + Estácio no footer e Sobre
+- [x] Guia de cursos para estudantes: modalidades, 13 eixos CNCT, FAQ, empregabilidade
+
+### Futuro (não priorizado)
+- [ ] Newsletter (formulário de inscrição + integração email)
+- [ ] OG images dinâmicas (satori)
+- [ ] Multilíngue (EN/ES para conteúdos-chave)
+- [ ] API de dados pública (endpoint JSON para pesquisadores)
+- [ ] ChartActions em todos os gráficos (atualmente só na Home)
+- [ ] EmbedModal integrado em todas as páginas com gráficos
 
 ## Benchmarks
 
@@ -192,24 +198,22 @@ python scripts/01_process_sinopses.py
 
 ## Handoff - Estado atual e próximas etapas
 
-**Estágio:** Fase 2 (Expansão) completa. 55 páginas, pronto para deploy.
+**Estágio:** Fases 0-3 completas. 56 páginas. Pronto para revisão manual e deploy.
 
 **O que está funcional:**
-- 55 páginas (49 conteúdo + 6 embeds), build em ~5s
-- Home, Painel (filtros + empregabilidade), 27 perfis UF, 5 políticas, 7 análises, comparações, glossário, imprensa, sobre, metodologia
+- 56 páginas (50 conteúdo + 6 embeds), build em ~5s
+- Home, Painel (filtros + empregabilidade), 27 perfis UF, 5 políticas, 7 análises, comparações, glossário, imprensa, guia de cursos, sobre, metodologia
 - 10+ gráficos Chart.js + mapa Leaflet + filtros interativos
 - 6 gráficos embeddáveis (/embed/) com EmbedModal copy-to-clipboard
 - Downloads CSV/PNG nos gráficos (ChartActions)
-- Dados empregabilidade: RAIS/CAGED curados (2019-2023), prêmio salarial, evolução
-- Busca Pagefind (49 páginas, 2165+ palavras), dark mode auditado
-- Conteúdo editorial: 12 artigos com dados reais (~15.000 palavras total)
-- SEO: sitemap (exclui embeds), OG tags, canonical, robots.txt
+- Schema.org JSON-LD (Dataset, Organization, Article)
+- Logos Instituto Yduqs + Estácio no footer e página Sobre
+- Guia de cursos com 3 modalidades, 13 eixos CNCT, FAQ, empregabilidade
+- Busca Pagefind (50 páginas, 2261 palavras), dark mode auditado
+- SEO: sitemap, OG tags, canonical, robots.txt, Schema.org
 - Deploy: GitHub Pages workflow pronto
 
-**Próximas etapas (Fase 3 - Escala):**
-1. **Deploy efetivo** — Criar repo GitHub, push, ativar GitHub Pages
-2. **Newsletter** — Formulário de inscrição, integração com serviço de email
-3. **SEO avançado** — OG images dinâmicas, Schema.org Dataset
-4. **Multilíngue** — Resumos EN/ES para conteúdos-chave
-5. **API de dados** — Endpoint JSON público para pesquisadores
-6. **Guia de cursos** — Orientação para estudantes
+**Próximo passo:**
+1. **Revisão manual do Marcelo** — navegação completa, conteúdo, design, dark mode
+2. **Deploy efetivo** — criar repo GitHub, push, ativar GitHub Pages
+3. **Itens futuros** — newsletter, multilíngue, API, OG images dinâmicas
