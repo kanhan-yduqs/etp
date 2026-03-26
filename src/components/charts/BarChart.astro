@@ -30,6 +30,23 @@ const { chartId, chartData, title, horizontal = false, height = '400px' } = Astr
     const gridColorStrong = styles.getPropertyValue('--chart-grid-strong').trim() || 'rgba(0,0,0,0.06)';
     const textColor = styles.getPropertyValue('--chart-text').trim() || '#41484c';
 
+    // Override dataset colors with current theme's CSS variables
+    const chartColors = Array.from({length: 8}, (_, i) =>
+      styles.getPropertyValue(`--chart-${i + 1}`).trim()
+    ).filter(c => c);
+    if (chartColors.length && data.datasets) {
+      data.datasets.forEach((ds: any, i: number) => {
+        if (Array.isArray(ds.backgroundColor)) {
+          // Multi-color bars (e.g., one color per bar) — replace each
+          ds.backgroundColor = ds.backgroundColor.map((_: any, j: number) =>
+            chartColors[j % chartColors.length]
+          );
+        } else {
+          ds.backgroundColor = chartColors[i % chartColors.length];
+        }
+      });
+    }
+
     const formatTick = (value: any) => {
       if (typeof value === 'number') {
         if (value >= 1_000_000) return (value / 1_000_000).toFixed(1) + 'M';

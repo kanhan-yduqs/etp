@@ -220,11 +220,23 @@ const ufsTop10 = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total
     subsequente: 'Subsequente',
     integrada_eja: 'Integrada à EJA',
   };
+  // Read theme-aware colors from CSS custom properties
+  const _styles = getComputedStyle(document.documentElement);
+  const c1 = _styles.getPropertyValue('--chart-1').trim() || '#0D3B4C';
+  const c2 = _styles.getPropertyValue('--chart-2').trim() || '#476800';
+  const c3 = _styles.getPropertyValue('--chart-3').trim() || '#4a6d00';
+  const c4 = _styles.getPropertyValue('--chart-4').trim() || '#2d6195';
+  const c7 = _styles.getPropertyValue('--chart-7').trim() || '#8da1b9';
+  const textColor = _styles.getPropertyValue('--chart-text').trim() || '#41484c';
+  const gridColor = _styles.getPropertyValue('--chart-grid').trim() || 'rgba(0,0,0,0.04)';
+
+  Chart.defaults.color = textColor;
+
   const MODALIDADE_COLORS: Record<string, string> = {
-    integrada: '#0D3B4C',
-    concomitante: '#476800',
-    subsequente: '#4a6d00',
-    integrada_eja: '#2d6195',
+    integrada: c1,
+    concomitante: c2,
+    subsequente: c3,
+    integrada_eja: c4,
   };
 
   // Load embedded data
@@ -278,15 +290,15 @@ const ufsTop10 = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total
         datasets: [{
           label: `Matrículas ${ano}`,
           data: top10.map((u: any) => rede === 'total' ? u.total : (u[rede] || 0)),
-          backgroundColor: '#0D3B4C',
+          backgroundColor: c1,
           borderRadius: 4,
         }],
       },
       options: {
         indexAxis: 'y',
         scales: {
-          x: { ticks: { callback: tickFormat }, grid: { color: 'rgba(0,0,0,0.06)' } },
-          y: { grid: { color: 'rgba(0,0,0,0.04)' } },
+          x: { ticks: { callback: tickFormat }, grid: { color: gridColor } },
+          y: { grid: { color: gridColor } },
         },
         plugins: {
           legend: { display: false },
@@ -315,14 +327,14 @@ const ufsTop10 = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total
         datasets: [{
           label: `Matrículas ${ano}`,
           data: [redeData.federal, redeData.estadual, redeData.municipal, redeData.privada],
-          backgroundColor: ['#0D3B4C', '#476800', '#2d6195', '#8da1b9'],
+          backgroundColor: [c1, c2, c4, c7],
           borderRadius: 4,
         }],
       },
       options: {
         scales: {
-          x: { grid: { color: 'rgba(0,0,0,0.04)' } },
-          y: { ticks: { callback: tickFormat }, grid: { color: 'rgba(0,0,0,0.06)' } },
+          x: { grid: { color: gridColor } },
+          y: { ticks: { callback: tickFormat }, grid: { color: gridColor } },
         },
         plugins: {
           legend: { display: false },
@@ -353,8 +365,8 @@ const ufsTop10 = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total
       },
       options: {
         scales: {
-          x: { grid: { color: 'rgba(0,0,0,0.04)' } },
-          y: { ticks: { callback: tickFormat }, grid: { color: 'rgba(0,0,0,0.06)' } },
+          x: { grid: { color: gridColor } },
+          y: { ticks: { callback: tickFormat }, grid: { color: gridColor } },
         },
         plugins: {
           legend: { position: 'bottom', labels: { usePointStyle: true, pointStyleWidth: 10, padding: 16 } },
@@ -375,10 +387,8 @@ const ufsTop10 = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total
   }) as EventListener);
 
   // --- Employment charts (static, not filterable) ---
+  // Reuses c1, c2, c7, gridColor, textColor from above
   const empData = JSON.parse(document.getElementById('painel-data-empregabilidade')?.textContent || '[]');
-  const styles = getComputedStyle(document.documentElement);
-  const gridColor = styles.getPropertyValue('--chart-grid').trim() || 'rgba(0,0,0,0.04)';
-  const textColor = styles.getPropertyValue('--chart-text').trim() || '#41484c';
 
   if (empData.length > 0) {
     const empLatest = empData[empData.length - 1];
@@ -393,7 +403,7 @@ const ufsTop10 = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total
           datasets: [{
             label: `Salário médio ${empLatest.ano}`,
             data: [empLatest.salario_medio_medio, empLatest.salario_medio_tecnico, empLatest.salario_medio_superior],
-            backgroundColor: ['#8da1b9', '#476800', '#0D3B4C'],
+            backgroundColor: [c7, c2, c1],
             borderRadius: 4,
           }],
         },
@@ -428,13 +438,13 @@ const ufsTop10 = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total
           datasets: [{
             label: 'Técnicos empregados',
             data: empData.map((d: any) => d.empregados_tecnico),
-            borderColor: '#476800',
+            borderColor: c2,
             backgroundColor: 'rgba(71, 104, 0, 0.1)',
             fill: true,
             tension: 0.3,
             borderWidth: 2.5,
             pointRadius: 4,
-            pointBackgroundColor: '#476800',
+            pointBackgroundColor: c2,
           }],
         },
         options: {

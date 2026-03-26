@@ -110,8 +110,11 @@ const {
       },
     }).addTo(map);
 
-    // Fit bounds to Brazil
-    map.fitBounds(geoLayer.getBounds(), { padding: [10, 10] });
+    // Fit bounds to Brazil — minimal padding for maximum map visibility
+    map.fitBounds(geoLayer.getBounds(), { padding: [2, 2] });
+
+    // Ensure map renders correctly in dynamically-sized containers
+    setTimeout(() => map.invalidateSize(), 200);
 
     // Legend
     const legend = L.control({ position: 'bottomright' });
