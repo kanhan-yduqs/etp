@@ -112,17 +112,14 @@ const {
       },
     }).addTo(map);
 
-    // Fit bounds to Brazil — then zoom in slightly for maximum visibility
-    map.fitBounds(geoLayer.getBounds(), { padding: [0, 0] });
+    // Fit bounds to Brazil
+    map.fitBounds(geoLayer.getBounds(), { padding: [5, 5] });
 
-    // Zoom in a bit more to fill the container better
+    // Re-fit after container is fully sized (grid layouts may resize)
     setTimeout(() => {
       map.invalidateSize();
-      map.fitBounds(geoLayer.getBounds(), { padding: [0, 0] });
-      // Increase zoom by 0.3 to make Brazil fill more of the frame
-      const currentZoom = map.getZoom();
-      map.setZoom(currentZoom + 0.3, { animate: false });
-    }, 250);
+      map.fitBounds(geoLayer.getBounds(), { padding: [5, 5] });
+    }, 300);
 
     // Legend
     const legend = L.control({ position: 'bottomright' });

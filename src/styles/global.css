@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    /* Chart colors as CSS custom properties (accessible by Chart.js) */
+    /* Chart colors (light theme) */
     --chart-1: #0D3B4C;
     --chart-2: #476800;
     --chart-3: #4a6d00;
@@ -14,18 +14,17 @@
     --chart-7: #8da1b9;
     --chart-8: #354e00;
 
+    /* Chart grid/text colors (light theme) */
+    --chart-grid: rgba(0, 0, 0, 0.04);
+    --chart-grid-strong: rgba(0, 0, 0, 0.06);
+    --chart-text: #41484c;
+
     /* Big number sizing */
     --font-size-big-number: clamp(2.5rem, 5vw, 3.5rem);
   }
 
-  body {
-    font-family: 'Inter', system-ui, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-
+  /* Dark theme overrides — MUST come after :root */
   .dark {
-    /* Verde luminoso como cor primária de dados no dark mode */
     --chart-1: #b9f54f;
     --chart-2: #9ed833;
     --chart-3: #a4cce1;
@@ -35,16 +34,15 @@
     --chart-7: #c1c7cc;
     --chart-8: #476800;
 
-    /* Chart grid/text colors for dark mode */
     --chart-grid: rgba(255, 255, 255, 0.08);
     --chart-grid-strong: rgba(255, 255, 255, 0.12);
-    --chart-text: #c1c7cc;
+    --chart-text: #e4e3db;
   }
 
-  :root {
-    --chart-grid: rgba(0, 0, 0, 0.04);
-    --chart-grid-strong: rgba(0, 0, 0, 0.06);
-    --chart-text: #41484c;
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    margin: 0;
+    padding: 0;
   }
 }
 
