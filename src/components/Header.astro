@@ -1,6 +1,6 @@
 ---
 interface Props {
-  activePage?: 'dados' | 'politicas' | 'analises' | 'sobre' | 'comparacoes' | 'perfis';
+  activePage?: 'dados' | 'politicas' | 'analises' | 'sobre' | 'comparacoes' | 'perfis' | 'guia';
 }
 
 const { activePage } = Astro.props;
@@ -9,7 +9,7 @@ const navItems = [
   { id: 'dados', label: 'Dados', href: '/painel/' },
   { id: 'politicas', label: 'Políticas', href: '/politicas/' },
   { id: 'analises', label: 'Análises', href: '/analises/' },
-  { id: 'sobre', label: 'Sobre', href: '/sobre/' },
+  { id: 'guia', label: 'Guia', href: '/guia/' },
 ] as const;
 ---
 

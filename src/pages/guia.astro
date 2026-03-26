@@ -1,0 +1,236 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/Container.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import BigNumber from '../components/BigNumber.astro';
+import { getEmpregabilidadeLatest, formatCurrency } from '../lib/data';
+
+const emp = getEmpregabilidadeLatest();
+
+const modalidades = [
+  {
+    nome: 'Integrada ao Ensino Médio',
+    duracao: '3 a 4 anos',
+    requisito: 'Ter concluído o ensino fundamental',
+    descricao: 'Você cursa o ensino médio e o curso técnico ao mesmo tempo, com uma única matrícula. É a modalidade que mais cresce no Brasil (+77% entre 2019-2024).',
+    ideal: 'Quem está saindo do ensino fundamental e quer já sair do ensino médio com uma profissão.',
+    cor: 'bg-primary/10 border-primary/20',
+  },
+  {
+    nome: 'Concomitante',
+    duracao: '1 a 2 anos (paralelo ao EM)',
+    requisito: 'Estar cursando o ensino médio',
+    descricao: 'Você cursa o ensino médio em uma escola e o curso técnico em outra instituição, simultaneamente. Tem duas matrículas separadas.',
+    ideal: 'Quem já está no ensino médio regular e quer adicionar uma formação técnica.',
+    cor: 'bg-secondary/10 border-secondary/20',
+  },
+  {
+    nome: 'Subsequente',
+    duracao: '1 a 2 anos',
+    requisito: 'Ter concluído o ensino médio',
+    descricao: 'Você cursa apenas o curso técnico, após ter terminado o ensino médio. É a modalidade com mais matrículas no Brasil (~1 milhão em 2024).',
+    ideal: 'Quem já terminou o ensino médio e quer se qualificar rapidamente para o mercado de trabalho.',
+    cor: 'bg-chart-4/10 border-chart-4/20',
+  },
+];
+
+const eixos = [
+  { nome: 'Ambiente e Saúde', exemplos: 'Enfermagem, Meio Ambiente, Saúde Bucal, Análises Clínicas' },
+  { nome: 'Controle e Processos Industriais', exemplos: 'Eletrotécnica, Mecânica, Automação, Química' },
+  { nome: 'Desenvolvimento Educacional e Social', exemplos: 'Orientação Comunitária, Cuidados de Idosos, Tradução e Interpretação de Libras' },
+  { nome: 'Gestão e Negócios', exemplos: 'Administração, Contabilidade, Logística, Recursos Humanos, Seguros' },
+  { nome: 'Informação e Comunicação', exemplos: 'Informática, Desenvolvimento de Sistemas, Redes de Computadores, Programação de Jogos' },
+  { nome: 'Infraestrutura', exemplos: 'Edificações, Estradas, Saneamento, Agrimensura, Geodésia' },
+  { nome: 'Militar', exemplos: 'Formações específicas das Forças Armadas e forças auxiliares' },
+  { nome: 'Produção Alimentícia', exemplos: 'Agroindústria, Alimentos, Cervejaria, Panificação, Confeitaria' },
+  { nome: 'Produção Cultural e Design', exemplos: 'Design de Interiores, Comunicação Visual, Produção de Áudio e Vídeo, Artes Visuais' },
+  { nome: 'Produção Industrial', exemplos: 'Móveis, Vestuário, Calçados, Impressão Gráfica' },
+  { nome: 'Recursos Naturais', exemplos: 'Agropecuária, Agricultura, Zootecnia, Aquicultura, Florestas' },
+  { nome: 'Segurança', exemplos: 'Segurança do Trabalho, Defesa Civil, Segurança Pública (formação de praças)' },
+  { nome: 'Turismo, Hospitalidade e Lazer', exemplos: 'Guia de Turismo, Eventos, Hospedagem, Cozinha, Lazer' },
+];
+
+const faqs = [
+  {
+    pergunta: 'Preciso ter terminado o ensino médio para fazer um curso técnico?',
+    resposta: 'Depende da modalidade. Na <strong>integrada</strong>, você ingressa após o ensino fundamental e cursa o médio junto com o técnico. Na <strong>concomitante</strong>, basta estar cursando o ensino médio. Na <strong>subsequente</strong>, sim, é necessário ter concluído o ensino médio.',
+  },
+  {
+    pergunta: 'Quanto tempo dura um curso técnico?',
+    resposta: 'Varia conforme o curso e a modalidade. A modalidade integrada dura de 3 a 4 anos (junto com o ensino médio). As modalidades concomitante e subsequente duram de 1 a 2 anos. A carga horária mínima é definida pelo CNCT (Catálogo Nacional de Cursos Técnicos) e varia de 800 a 1.200 horas.',
+  },
+  {
+    pergunta: 'Curso técnico vale como ensino médio?',
+    resposta: 'Na modalidade <strong>integrada</strong>, sim: ao concluir, você recebe tanto o diploma de ensino médio quanto o diploma técnico. Nas modalidades concomitante e subsequente, o curso técnico é um diploma adicional — na concomitante, você ainda precisa concluir o ensino médio separadamente.',
+  },
+  {
+    pergunta: 'O que é o CNCT?',
+    resposta: 'O Catálogo Nacional de Cursos Técnicos é o documento oficial do MEC que lista todos os cursos técnicos reconhecidos no Brasil, organizados em 13 eixos tecnológicos. Define nome, carga horária mínima, perfil profissional e infraestrutura necessária para cada curso. Está na 4ª edição.',
+  },
+  {
+    pergunta: 'Posso fazer faculdade depois de um curso técnico?',
+    resposta: 'Sim! O curso técnico não impede o acesso ao ensino superior. Pelo contrário, muitos alunos usam a formação técnica como trampolim para uma graduação na mesma área. Na Suíça, por exemplo, 65% dos jovens iniciam pela via técnica e depois podem progredir para a universidade.',
+  },
+  {
+    pergunta: 'Quanto ganha um técnico?',
+    resposta: `Em média, trabalhadores com ensino médio técnico ganham <strong>~35% a mais</strong> do que aqueles com ensino médio geral. Em 2023, o salário médio do técnico era de ${formatCurrency(emp.salario_medio_tecnico)}, contra ${formatCurrency(emp.salario_medio_medio)} do ensino médio geral (dados estimados a partir da RAIS/DIEESE).`,
+  },
+  {
+    pergunta: 'Onde encontro cursos técnicos perto de mim?',
+    resposta: 'Os principais ofertantes são: <strong>Institutos Federais</strong> (gratuitos, presentes em 600+ cidades), <strong>escolas técnicas estaduais</strong> (como as Etecs em SP), <strong>Sistema S</strong> (SENAI para indústria, SENAC para comércio/serviços), e <strong>escolas privadas</strong>. O SISTEC (sistec.mec.gov.br) é o registro oficial de todos os cursos técnicos do Brasil.',
+  },
+  {
+    pergunta: 'O que é o Pé-de-Meia Técnico?',
+    resposta: 'É uma modalidade do programa Pé-de-Meia (Lei 14.818/2024) que paga ~R$200/mês para estudantes do ensino médio público que cursam formação técnica. O objetivo é reduzir a evasão e incentivar a matrícula em cursos profissionalizantes.',
+  },
+];
+---
+
+<BaseLayout title="Guia de Cursos Técnicos">
+  <!-- Hero -->
+  <section class="py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Guia de Cursos Técnicos"
+        subtitle="Tudo o que você precisa saber sobre o ensino técnico e profissionalizante no Brasil: modalidades, áreas de atuação, empregabilidade e como começar."
+      />
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <BigNumber
+          value={`+${emp.premio_salarial_pct}%`}
+          label="Prêmio Salarial"
+          source="técnico ganha mais que ensino médio"
+        />
+        <BigNumber
+          value={formatCurrency(emp.salario_medio_tecnico)}
+          label="Salário Médio Técnico"
+          source={`RAIS ${emp.ano} (estimativa)`}
+        />
+        <BigNumber
+          value="13"
+          label="Eixos Tecnológicos"
+          source="CNCT 4ª edição"
+        />
+      </div>
+    </Container>
+  </section>
+
+  <!-- O que é -->
+  <section class="bg-surface-container-low dark:bg-dark-surface-container-low py-16 md:py-24">
+    <Container>
+      <div class="max-w-3xl">
+        <SectionHeader title="O que é ensino técnico?" />
+        <div class="space-y-4 text-on-surface-variant leading-relaxed">
+          <p>
+            O <strong class="text-primary">ensino técnico profissionalizante</strong> é uma forma de educação que prepara o estudante para exercer uma profissão técnica específica. Diferente do ensino médio regular (que é generalista), o ensino técnico combina formação geral com conhecimentos práticos e teóricos de uma área profissional.
+          </p>
+          <p>
+            No Brasil, mais de <strong class="text-primary">2,5 milhões de estudantes</strong> estão matriculados em cursos técnicos (dados de 2024). Os cursos são reconhecidos pelo MEC e conferem diploma de técnico de nível médio, que é valorizado pelo mercado de trabalho.
+          </p>
+          <p>
+            O ensino técnico não é "menor" que o ensino superior — são caminhos diferentes. Em países como Alemanha, Suíça e Finlândia, mais de 45% dos jovens optam pela via técnica, com excelentes resultados de empregabilidade.
+          </p>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Modalidades -->
+  <section class="py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="As 3 Modalidades"
+        subtitle="Existem três formas de cursar um curso técnico. Cada uma tem requisitos e duração diferentes."
+      />
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {modalidades.map(mod => (
+          <div class={`p-6 md:p-8 rounded-xl border ${mod.cor}`}>
+            <h3 class="text-xl font-bold text-primary mb-3">{mod.nome}</h3>
+            <div class="space-y-3 text-sm text-on-surface-variant">
+              <div>
+                <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Duração</span>
+                <p class="font-semibold text-primary mt-1">{mod.duracao}</p>
+              </div>
+              <div>
+                <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Requisito</span>
+                <p class="mt-1">{mod.requisito}</p>
+              </div>
+              <p class="leading-relaxed">{mod.descricao}</p>
+              <div class="pt-2 border-t border-surface-container-high">
+                <span class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant">Ideal para</span>
+                <p class="mt-1 text-primary font-medium">{mod.ideal}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Eixos tecnológicos -->
+  <section class="bg-surface-container-low dark:bg-dark-surface-container-low py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Os 13 Eixos Tecnológicos"
+        subtitle="O CNCT (Catálogo Nacional de Cursos Técnicos) organiza todos os cursos reconhecidos em 13 grandes áreas."
+      />
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {eixos.map((eixo, i) => (
+          <div class="bg-surface-container-lowest dark:bg-dark-surface-container p-5 rounded-xl">
+            <div class="flex items-start gap-3">
+              <span class="font-label text-lg font-bold text-primary/30">{(i + 1).toString().padStart(2, '0')}</span>
+              <div>
+                <h4 class="font-semibold text-primary text-sm">{eixo.nome}</h4>
+                <p class="text-xs text-on-surface-variant mt-1 leading-relaxed">{eixo.exemplos}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Perguntas Frequentes"
+        subtitle="Respostas para as dúvidas mais comuns sobre o ensino técnico no Brasil."
+      />
+
+      <div class="max-w-3xl space-y-4">
+        {faqs.map(faq => (
+          <details class="group bg-surface-container-lowest dark:bg-dark-surface-container rounded-xl">
+            <summary class="flex items-center justify-between p-5 cursor-pointer list-none font-semibold text-primary hover:text-secondary transition-colors">
+              <span>{faq.pergunta}</span>
+              <svg class="w-5 h-5 shrink-0 ml-4 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="px-5 pb-5 text-on-surface-variant text-sm leading-relaxed" set:html={faq.resposta} />
+          </details>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-surface-container-low dark:bg-dark-surface-container-low py-16 md:py-24">
+    <Container>
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="text-3xl font-bold text-primary mb-4">Explore os Dados</h2>
+        <p class="text-on-surface-variant mb-8">Veja como o ensino técnico está crescendo no Brasil e compare as oportunidades por estado e região.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="/painel/" class="px-8 py-4 editorial-gradient text-on-primary font-semibold rounded-md hover:opacity-90 transition-all shadow-lg">
+            Painel de Indicadores
+          </a>
+          <a href="/perfis/" class="px-8 py-4 border border-outline-variant text-primary font-semibold rounded-md hover:bg-surface-container transition-all">
+            Perfis Estaduais
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>
