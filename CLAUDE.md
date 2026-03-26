@@ -144,12 +144,15 @@ Schema.org Dataset markup, OG/Twitter Cards com imagens dinâmicas, URLs semânt
 - [x] SEO: sitemap, robots.txt, OG tags, canonical URLs
 - [x] Home atualizada com links para políticas, comparações e análises reais
 
-### Fase 2 - Expansão
-- [ ] Dados de empregabilidade (RAIS/CAGED)
-- [ ] Perfis estaduais (27 UFs)
-- [ ] Comparações internacionais expandidas
-- [ ] Sala de imprensa
-- [ ] Busca (Pagefind), embeds, downloads
+### Fase 2 - Expansão (COMPLETA)
+- [x] Glossário (45+ termos EPT) e Sala de Imprensa (fact sheet)
+- [x] Dark mode audit (charts, prose, mapa — CSS custom properties)
+- [x] Conteúdo expandido: 12 artigos substantivos com dados reais
+- [x] Dados de empregabilidade (RAIS/CAGED curados, 2019-2023)
+- [x] Gráficos embeddáveis: 6 páginas /embed/ com EmbedLayout + EmbedModal
+- [x] Downloads CSV/PNG: ChartActions em gráficos da Home
+- [x] Deploy: GitHub Pages workflow + .nojekyll
+- [x] SEO: sitemap filter (exclui /embed/), robots.txt
 
 ### Fase 3 - Escala
 - [ ] Newsletter, SEO avançado, OG images dinâmicas
@@ -189,27 +192,24 @@ python scripts/01_process_sinopses.py
 
 ## Handoff - Estado atual e próximas etapas
 
-**Estágio:** Fase 2 em andamento. Sprints 1-2 completos, 3-6 pendentes.
+**Estágio:** Fase 2 (Expansão) completa. 55 páginas, pronto para deploy.
 
 **O que está funcional:**
-- 49 páginas estáticas (Home, Painel com filtros, 27 perfis UF, 5 políticas, 7 análises, comparações, glossário, imprensa, sobre, metodologia)
-- 8+ gráficos Chart.js interativos + mapa coroplético Leaflet
-- Filtros interativos no Painel (Ano, UF, Rede)
-- Busca client-side (Pagefind, 49 páginas, 2165 palavras indexadas)
-- Dark mode auditado (charts com CSS custom properties, prose com dark overrides)
-- Conteúdo editorial expandido: 12 artigos substantivos com dados reais
-- Glossário com 45+ termos EPT, sala de imprensa com fact sheet
-- SEO: sitemap, robots.txt, OG/Twitter meta tags, canonical URLs
-- Pipeline ETL Python (6 anos INEP 2019-2024)
-- CI via GitHub Actions
-- Build em ~4.5s
+- 55 páginas (49 conteúdo + 6 embeds), build em ~5s
+- Home, Painel (filtros + empregabilidade), 27 perfis UF, 5 políticas, 7 análises, comparações, glossário, imprensa, sobre, metodologia
+- 10+ gráficos Chart.js + mapa Leaflet + filtros interativos
+- 6 gráficos embeddáveis (/embed/) com EmbedModal copy-to-clipboard
+- Downloads CSV/PNG nos gráficos (ChartActions)
+- Dados empregabilidade: RAIS/CAGED curados (2019-2023), prêmio salarial, evolução
+- Busca Pagefind (49 páginas, 2165+ palavras), dark mode auditado
+- Conteúdo editorial: 12 artigos com dados reais (~15.000 palavras total)
+- SEO: sitemap (exclui embeds), OG tags, canonical, robots.txt
+- Deploy: GitHub Pages workflow pronto
 
-**Fase 2 Sprints completados:**
-- [x] Sprint 1: Glossário + Imprensa + Dark Mode Audit
-- [x] Sprint 2: Conteúdo expandido (12 artigos com dados reais)
-
-**Próximos sprints (ver plano em .claude/plans/):**
-3. **Dados de empregabilidade** — RAIS/CAGED (dados curados + ETL + dashboard)
-4. **Gráficos embeddáveis** — EmbedLayout + 6 páginas /embed/ + EmbedModal
-5. **Downloads CSV/PNG** — ChartActions em todos os gráficos
-6. **Deploy + polish** — GitHub Pages, sitemap filter, CLAUDE.md final
+**Próximas etapas (Fase 3 - Escala):**
+1. **Deploy efetivo** — Criar repo GitHub, push, ativar GitHub Pages
+2. **Newsletter** — Formulário de inscrição, integração com serviço de email
+3. **SEO avançado** — OG images dinâmicas, Schema.org Dataset
+4. **Multilíngue** — Resumos EN/ES para conteúdos-chave
+5. **API de dados** — Endpoint JSON público para pesquisadores
+6. **Guia de cursos** — Orientação para estudantes
