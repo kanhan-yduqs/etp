@@ -37,6 +37,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <meta name="twitter:title" content={fullTitle} />
   <meta name="twitter:description" content={description} />
 
+  <!-- Schema.org Organization -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Observatório Nacional ETP",
+    "url": Astro.site,
+    "description": "Plataforma digital de referência sobre o Ensino Técnico e Profissionalizante no Brasil.",
+    "founder": { "@type": "Person", "name": "Marcelo Kanhan" },
+    "funder": [
+      { "@type": "Organization", "name": "Instituto Yduqs" },
+      { "@type": "Organization", "name": "Estácio" }
+    ]
+  })} />
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

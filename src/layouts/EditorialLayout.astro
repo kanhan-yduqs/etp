@@ -17,6 +17,20 @@ const { title, subtitle, date, category, readTime, backLink, backLabel, activePa
 ---
 
 <BaseLayout title={title} activePage={activePage}>
+  {/* Schema.org Article */}
+  {date && (
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": title,
+      "description": subtitle || '',
+      "datePublished": date,
+      "author": { "@type": "Person", "name": "Marcelo Kanhan" },
+      "publisher": { "@type": "Organization", "name": "Observatório Nacional ETP" },
+      "mainEntityOfPage": Astro.url.href,
+    })} />
+  )}
+
   <section class="py-12 md:py-20">
     <Container>
       <div class="max-w-3xl">

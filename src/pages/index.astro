@@ -106,6 +106,28 @@ const mapData = JSON.stringify(mapDataObj);
 ---
 
 <BaseLayout title="Home">
+  <!-- Schema.org Dataset -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": "Matrículas da Educação Profissional e Tecnológica no Brasil",
+    "description": "Dados de matrículas em educação profissional técnica de nível médio no Brasil por UF, região, rede e modalidade, derivados das Sinopses Estatísticas da Educação Básica do INEP/MEC.",
+    "url": "https://observatorio-etp.pages.dev/painel/",
+    "temporalCoverage": `${oldest.ano}/${latestYear}`,
+    "spatialCoverage": { "@type": "Place", "name": "Brasil" },
+    "creator": { "@type": "Person", "name": "Marcelo Kanhan" },
+    "provider": { "@type": "Organization", "name": "Observatório Nacional ETP" },
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "isBasedOn": "https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/sinopses-estatisticas",
+    "measurementTechnique": "Sinopses Estatísticas derivadas do Censo Escolar da Educação Básica (INEP/MEC)",
+    "variableMeasured": [
+      "Matrículas por modalidade (integrada, concomitante, subsequente)",
+      "Matrículas por rede (federal, estadual, municipal, privada)",
+      "Matrículas por Unidade da Federação",
+      "Matrículas por região geográfica"
+    ]
+  })} />
+
   <!-- Hero -->
   <section class="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
     <Container class="py-16 md:py-20 relative z-10 w-full">
