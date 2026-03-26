@@ -40,6 +40,11 @@ const {
     const colorHigh = container.dataset.colorHigh || '#0D3B4C';
     const legendLabel = container.dataset.legendLabel || 'Valor';
 
+    const isDark = document.documentElement.classList.contains('dark');
+    const tooltipTitleColor = isDark ? '#a4cce1' : '#002532';
+    const tooltipTextColor = isDark ? '#c1c7cc' : '#41484c';
+    const borderColor = isDark ? '#1a2a30' : '#fbfaf1';
+
     // Fetch GeoJSON
     const response = await fetch('/geo/brazil-ufs.geojson');
     const geojson = await response.json();
@@ -74,9 +79,9 @@ const {
         const sigla = IBGE_TO_SIGLA[codarea] || '';
         const value = data[sigla] || 0;
         return {
-          fillColor: value > 0 ? getColor(value) : '#e9e8e0',
+          fillColor: value > 0 ? getColor(value) : (isDark ? '#1a2a30' : '#e9e8e0'),
           fillOpacity: 0.85,
-          color: '#fbfaf1',
+          color: borderColor,
           weight: 1.5,
         };
       },
@@ -86,8 +91,8 @@ const {
         const value = data[sigla] || 0;
 
         layer.bindTooltip(
-          `<div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:#002532">${sigla}</div>
-           <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;color:#41484c">${legendLabel}: ${formatNum(value)}</div>`,
+          `<div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:${tooltipTitleColor}">${sigla}</div>
+           <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;color:${tooltipTextColor}">${legendLabel}: ${formatNum(value)}</div>`,
           { sticky: true, className: 'etp-tooltip' }
         );
 
@@ -145,5 +150,18 @@ const {
   .leaflet-container {
     background: transparent !important;
     cursor: pointer;
+  }
+
+  /* Dark mode overrides */
+  .dark .etp-tooltip {
+    background: rgba(18, 28, 32, 0.95) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+  }
+  .dark .etp-tooltip::before {
+    border-top-color: rgba(18, 28, 32, 0.95) !important;
+  }
+  .dark .etp-legend {
+    background: rgba(18, 28, 32, 0.9);
+    color: #c1c7cc;
   }
 </style>

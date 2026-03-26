@@ -33,6 +33,17 @@
     --chart-6: #0D3B4C;
     --chart-7: #71787c;
     --chart-8: #4a6d00;
+
+    /* Chart grid/text colors for dark mode */
+    --chart-grid: rgba(255, 255, 255, 0.08);
+    --chart-grid-strong: rgba(255, 255, 255, 0.12);
+    --chart-text: #c1c7cc;
+  }
+
+  :root {
+    --chart-grid: rgba(0, 0, 0, 0.04);
+    --chart-grid-strong: rgba(0, 0, 0, 0.06);
+    --chart-text: #41484c;
   }
 }
 
@@ -92,5 +103,24 @@
 
   .prose-etp blockquote {
     @apply border-l-4 border-secondary pl-4 italic text-on-surface-variant my-6;
+  }
+
+  /* Dark mode prose overrides */
+  .dark .prose-etp {
+    @apply text-dark-on-surface-variant;
+  }
+
+  .dark .prose-etp h1,
+  .dark .prose-etp h2,
+  .dark .prose-etp h3 {
+    color: #a4cce1;
+  }
+
+  .dark .prose-etp a {
+    @apply text-secondary-fixed;
+  }
+
+  .dark .prose-etp strong {
+    color: #e4e3db;
   }
 }

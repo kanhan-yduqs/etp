@@ -25,6 +25,10 @@ const { chartId, chartData, title, horizontal = false, height = '400px' } = Astr
   document.querySelectorAll<HTMLCanvasElement>('canvas[data-chart-type="bar"]').forEach(canvas => {
     const data = JSON.parse(canvas.dataset.chart || '{}');
     const horizontal = canvas.dataset.horizontal === 'true';
+    const styles = getComputedStyle(document.documentElement);
+    const gridColor = styles.getPropertyValue('--chart-grid').trim() || 'rgba(0,0,0,0.04)';
+    const gridColorStrong = styles.getPropertyValue('--chart-grid-strong').trim() || 'rgba(0,0,0,0.06)';
+    const textColor = styles.getPropertyValue('--chart-text').trim() || '#41484c';
 
     const formatTick = (value: any) => {
       if (typeof value === 'number') {
@@ -39,18 +43,19 @@ const { chartId, chartData, title, horizontal = false, height = '400px' } = Astr
       data: data,
       options: {
         indexAxis: horizontal ? 'y' : 'x',
+        color: textColor,
         scales: {
           x: {
-            grid: { color: horizontal ? 'rgba(0,0,0,0.06)' : 'rgba(0,0,0,0.04)' },
-            ticks: horizontal ? { callback: formatTick } : {},
+            grid: { color: horizontal ? gridColorStrong : gridColor },
+            ticks: horizontal ? { callback: formatTick, color: textColor } : { color: textColor },
           },
           y: {
-            grid: { color: horizontal ? 'rgba(0,0,0,0.04)' : 'rgba(0,0,0,0.06)' },
-            ticks: horizontal ? {} : { callback: formatTick },
+            grid: { color: horizontal ? gridColor : gridColorStrong },
+            ticks: horizontal ? { color: textColor } : { callback: formatTick, color: textColor },
           },
         },
         plugins: {
-          legend: { position: 'bottom' },
+          legend: { position: 'bottom', labels: { color: textColor } },
           tooltip: {
             callbacks: {
               label: function(ctx: any) {

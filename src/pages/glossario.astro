@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/Container.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+
+const termos: Record<string, { termo: string; definicao: string }[]> = {
+  B: [
+    { termo: 'BNCC', definicao: 'Base Nacional Comum Curricular. Documento normativo que define o conjunto de aprendizagens essenciais que todos os alunos devem desenvolver ao longo da educação básica.' },
+    { termo: 'Bolsa-Formação', definicao: 'Componente do PRONATEC que financiava vagas gratuitas em cursos técnicos e FIC em instituições de ensino.' },
+    { termo: 'Brasil Profissionalizado', definicao: 'Programa federal que transfere recursos para os estados investirem em infraestrutura de educação profissional (laboratórios, equipamentos, construção de escolas).' },
+  ],
+  C: [
+    { termo: 'CAGED', definicao: 'Cadastro Geral de Empregados e Desempregados. Registro administrativo do MTE que acompanha admissões e desligamentos no mercado formal de trabalho.' },
+    { termo: 'CEFET', definicao: 'Centro Federal de Educação Tecnológica. Instituição federal de ensino técnico e tecnológico. Atualmente existem 2 CEFETs no Brasil (RJ e MG).' },
+    { termo: 'Censo Escolar', definicao: 'Levantamento de dados estatístico-educacionais realizado anualmente pelo INEP, cobrindo todas as escolas, turmas, matrículas e docentes da educação básica no Brasil.' },
+    { termo: 'CNCT', definicao: 'Catálogo Nacional de Cursos Técnicos. Documento do MEC/SETEC que define todos os cursos técnicos de nível médio reconhecidos, organizados por eixos tecnológicos, com carga horária mínima e perfil profissional.' },
+    { termo: 'Concomitante', definicao: 'Modalidade de educação profissional em que o aluno cursa o ensino médio regular e o curso técnico simultaneamente, mas com matrículas separadas, podendo ser na mesma ou em instituições diferentes.' },
+    { termo: 'Conif', definicao: 'Conselho Nacional das Instituições da Rede Federal de Educação Profissional, Científica e Tecnológica. Órgão que representa os Institutos Federais.' },
+  ],
+  D: [
+    { termo: 'DIEESE', definicao: 'Departamento Intersindical de Estatística e Estudos Socioeconômicos. Produz análises sobre mercado de trabalho, salários e condições de emprego.' },
+  ],
+  E: [
+    { termo: 'EJA', definicao: 'Educação de Jovens e Adultos. Modalidade de ensino destinada a pessoas que não tiveram acesso à educação na idade própria. Pode ser integrada à educação profissional.' },
+    { termo: 'EPT', definicao: 'Educação Profissional e Tecnológica. Abrange cursos de formação inicial e continuada (FIC), educação profissional técnica de nível médio e educação profissional tecnológica de graduação e pós-graduação.' },
+    { termo: 'Eixo Tecnológico', definicao: 'Classificação dos cursos técnicos do CNCT em grandes áreas: Ambiente e Saúde, Controle e Processos Industriais, Gestão e Negócios, Informação e Comunicação, Infraestrutura, Produção Alimentícia, Produção Cultural e Design, Produção Industrial, Recursos Naturais, Segurança, Turismo, Hospitalidade e Lazer, Desenvolvimento Educacional e Social, Militar.' },
+  ],
+  F: [
+    { termo: 'FGB', definicao: 'Formação Geral Básica. Componente curricular do Novo Ensino Médio que abrange as disciplinas comuns obrigatórias. A Lei 14.945/2024 ampliou a FGB para 2.400 horas.' },
+    { termo: 'FIC', definicao: 'Formação Inicial e Continuada. Cursos de curta duração (mínimo 160 horas) voltados à qualificação profissional. Diferem dos cursos técnicos completos pela menor carga horária e escopo.' },
+    { termo: 'FNDE', definicao: 'Fundo Nacional de Desenvolvimento da Educação. Autarquia federal responsável pela execução de políticas educacionais do MEC, incluindo transferências financeiras para programas como o Pé-de-Meia.' },
+    { termo: 'FTP', definicao: 'Formação Técnica e Profissional. Um dos cinco itinerários formativos do Novo Ensino Médio, que permite ao aluno cursar formação técnica integrada ao ensino médio.' },
+  ],
+  I: [
+    { termo: 'IDEB', definicao: 'Índice de Desenvolvimento da Educação Básica. Indicador que combina resultados do SAEB com taxas de aprovação/fluxo para medir a qualidade da educação básica.' },
+    { termo: 'INEP', definicao: 'Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira. Autarquia federal vinculada ao MEC responsável por avaliações, exames e indicadores educacionais (Censo Escolar, ENEM, SAEB, IDEB).' },
+    { termo: 'Instituto Federal (IF)', definicao: 'Instituição de educação superior, básica e profissional, pluricurricular e multicampi, especializada na oferta de educação profissional e tecnológica. O Brasil tem 38 Institutos Federais com mais de 600 campi.' },
+    { termo: 'Integrada', definicao: 'Modalidade de educação profissional em que o aluno cursa o ensino médio e o curso técnico em um currículo único, com uma só matrícula. É a modalidade que mais cresceu no período 2019-2024 (+77%).' },
+    { termo: 'Itinerário Formativo', definicao: 'Conjunto de disciplinas, projetos, oficinas e núcleos de estudo que o aluno escolhe no Novo Ensino Médio, aprofundando uma área de conhecimento ou a formação técnica profissional.' },
+  ],
+  M: [
+    { termo: 'MEC', definicao: 'Ministério da Educação. Órgão do governo federal responsável pela política nacional de educação.' },
+    { termo: 'MTE', definicao: 'Ministério do Trabalho e Emprego. Responsável pelas políticas de emprego e relações de trabalho, e pela gestão dos sistemas RAIS e CAGED.' },
+  ],
+  N: [
+    { termo: 'Novo Ensino Médio', definicao: 'Reforma do ensino médio brasileiro. Originalmente pela Lei 13.415/2017, revisada pela Lei 14.945/2024. Divide o currículo em Formação Geral Básica (2.400h) e Itinerários Formativos (600h+).' },
+  ],
+  O: [
+    { termo: 'OCDE', definicao: 'Organização para a Cooperação e Desenvolvimento Econômico. Publica o Education at a Glance com indicadores comparativos de VET entre países-membros e parceiros.' },
+  ],
+  P: [
+    { termo: 'Pé-de-Meia', definicao: 'Programa de incentivo financeiro-educacional (Lei 14.818/2024) que deposita ~R$200/mês para estudantes do ensino médio público que mantêm frequência e matrícula. Possui modalidade específica para cursos técnicos (Pé-de-Meia Técnico).' },
+    { termo: 'PNAD Contínua', definicao: 'Pesquisa Nacional por Amostra de Domicílios Contínua. Pesquisa domiciliar do IBGE que, entre outros temas, captura o nível educacional da população, incluindo educação técnica.' },
+    { termo: 'PNE', definicao: 'Plano Nacional de Educação. Lei 13.005/2014 com 20 metas para a educação brasileira (2014-2024). As metas 10 e 11 são específicas para educação profissional: integrar 25% da EJA à EP e triplicar matrículas da EP técnica.' },
+    { termo: 'PRONATEC', definicao: 'Programa Nacional de Acesso ao Ensino Técnico e Emprego (Lei 12.513/2011). Maior programa de expansão da EPT na história do Brasil (2011-2018). Incluiu Bolsa-Formação, Brasil Profissionalizado e expansão da Rede Federal.' },
+    { termo: 'PROPAG', definicao: 'Programa de Aceleração do Crescimento da Educação Profissional e Tecnológica. Parte do Novo PAC, focado em expansão de infraestrutura da Rede Federal (novos campi, laboratórios, pessoal).' },
+    { termo: 'Prêmio Salarial', definicao: 'Diferença percentual entre o salário médio de trabalhadores com ensino médio técnico e aqueles com ensino médio geral. No Brasil, estimado em ~35%.' },
+  ],
+  R: [
+    { termo: 'RAIS', definicao: 'Relação Anual de Informações Sociais. Registro administrativo do MTE com dados de emprego formal, incluindo escolaridade do trabalhador. Permite analisar a inserção de técnicos no mercado.' },
+    { termo: 'Rede Federal', definicao: 'Rede Federal de Educação Profissional, Científica e Tecnológica. Composta por 38 Institutos Federais, 2 CEFETs, Colégio Pedro II e UTFPR, com 600+ campi em todo o Brasil.' },
+  ],
+  S: [
+    { termo: 'SAEB', definicao: 'Sistema de Avaliação da Educação Básica. Avaliação nacional de aprendizagem aplicada pelo INEP.' },
+    { termo: 'SENAI', definicao: 'Serviço Nacional de Aprendizagem Industrial. Instituição do Sistema S que oferece educação profissional para a indústria. Maior rede privada de EPT no Brasil.' },
+    { termo: 'SENAC', definicao: 'Serviço Nacional de Aprendizagem Comercial. Instituição do Sistema S voltada para formação profissional no setor de comércio e serviços.' },
+    { termo: 'SETEC', definicao: 'Secretaria de Educação Profissional e Tecnológica do MEC. Responsável pela formulação e implementação de políticas de educação profissional e tecnológica.' },
+    { termo: 'Sinopses Estatísticas', definicao: 'Tabelas resumo publicadas anualmente pelo INEP com dados agregados do Censo Escolar, incluindo matrículas de educação profissional por UF, rede e modalidade.' },
+    { termo: 'Sistema Dual', definicao: 'Modelo de educação profissional em que o aluno alterna entre formação na empresa (prática) e na escola (teoria). Originário da Alemanha e Suíça, onde 45-65% dos jovens seguem este caminho.' },
+    { termo: 'Sistema S', definicao: 'Conjunto de organizações voltadas para formação profissional e assistência social mantidas com contribuições de empresas. Inclui SENAI, SENAC, SESI, SESC, SENAR, SENAT, SEST e SEBRAE.' },
+    { termo: 'SISTEC', definicao: 'Sistema Nacional de Informações da Educação Profissional e Tecnológica. Registro nacional onde instituições cadastram cursos técnicos e matrículas, validando diplomas.' },
+    { termo: 'Subsequente', definicao: 'Modalidade de educação profissional destinada a quem já concluiu o ensino médio. O aluno cursa apenas o curso técnico. É a modalidade com maior número absoluto de matrículas no Brasil (~1 milhão em 2024).' },
+  ],
+  U: [
+    { termo: 'UNESCO', definicao: 'Organização das Nações Unidas para a Educação, a Ciência e a Cultura. Através do UIS (Instituto de Estatística), publica dados comparativos de educação vocacional (ISCED 3) para 200+ países.' },
+  ],
+  V: [
+    { termo: 'VET', definicao: 'Vocational Education and Training. Termo internacional para educação profissional e técnica, utilizado pela OCDE, UNESCO e na literatura acadêmica.' },
+  ],
+};
+
+const letras = Object.keys(termos).sort();
+---
+
+<BaseLayout title="Glossário">
+  <section class="py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Glossário"
+        subtitle="Termos e definições essenciais da Educação Profissional e Tecnológica no Brasil."
+      />
+
+      <!-- Navegação por letra -->
+      <div class="flex flex-wrap gap-2 mb-12">
+        {letras.map(letra => (
+          <a href={`#letra-${letra}`} class="font-label text-sm font-semibold text-primary hover:text-secondary px-3 py-1 bg-surface-container-lowest dark:bg-dark-surface-container rounded-full transition-colors">
+            {letra}
+          </a>
+        ))}
+      </div>
+
+      <!-- Termos -->
+      <div class="space-y-12 max-w-3xl">
+        {letras.map(letra => (
+          <div id={`letra-${letra}`}>
+            <h2 class="text-3xl font-bold text-primary mb-6 font-label">{letra}</h2>
+            <dl class="space-y-6">
+              {termos[letra].map(({ termo, definicao }) => (
+                <div class="bg-surface-container-lowest dark:bg-dark-surface-container p-5 rounded-xl">
+                  <dt class="text-lg font-semibold text-primary">{termo}</dt>
+                  <dd class="mt-2 text-on-surface-variant text-sm leading-relaxed">{definicao}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

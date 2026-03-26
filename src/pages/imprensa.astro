@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/Container.astro';
+import BigNumber from '../components/BigNumber.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import {
+  getSerieTemporal,
+  getLatestYear,
+  getMetadata,
+  formatNumber,
+  formatPercent,
+  calcGrowthPercent,
+  getComparacoesInternacionais,
+} from '../lib/data';
+
+const serie = getSerieTemporal();
+const latestYear = getLatestYear();
+const latest = serie.find(s => s.ano === latestYear)!;
+const oldest = serie[0];
+const growth5y = calcGrowthPercent(latest.total, oldest.total);
+const comparacoes = getComparacoesInternacionais();
+const brasil = comparacoes.find(c => c.iso3 === 'BRA')!;
+---
+
+<BaseLayout title="Sala de Imprensa">
+  <!-- Hero -->
+  <section class="py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        title="Sala de Imprensa"
+        subtitle="Dados, fact sheets e contatos para jornalistas e veículos de comunicação interessados na educação profissional e tecnológica no Brasil."
+      />
+    </Container>
+  </section>
+
+  <!-- Fact Sheet: Big Numbers -->
+  <section class="bg-surface-container-low dark:bg-dark-surface-container-low py-16 md:py-24">
+    <Container>
+      <SectionHeader
+        label="Fact Sheet"
+        title="Números-Chave da EPT no Brasil"
+      >
+        <span class="font-label text-sm text-on-surface-variant italic">Dados: Censo Escolar {latestYear}</span>
+      </SectionHeader>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <BigNumber value={formatNumber(latest.total)} label="Matrículas EPT" />
+        <BigNumber value={formatNumber(latest.publica)} label="Rede Pública" />
+        <BigNumber value={`+${formatPercent(growth5y, 0)}`} label={`Crescimento ${oldest.ano}–${latestYear}`} />
+        <BigNumber value={`${formatPercent(brasil.vetEnrollmentRate, 1)}`} label="Jovens em VET (vs 44% OCDE)" />
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+        <BigNumber value={formatNumber(latest.federal)} label="Rede Federal" />
+        <BigNumber value={formatNumber(latest.estadual)} label="Rede Estadual" />
+        <BigNumber value={formatNumber(latest.privada)} label="Rede Privada" />
+        <BigNumber value="27" label="Estados monitorados" />
+      </div>
+    </Container>
+  </section>
+
+  <!-- Sobre o Observatório -->
+  <section class="py-16 md:py-24">
+    <Container>
+      <div class="max-w-3xl">
+        <SectionHeader
+          label="Sobre"
+          title="O Observatório Nacional ETP"
+        />
+
+        <div class="space-y-4 text-on-surface-variant leading-relaxed">
+          <p>
+            O Observatório Nacional do Ensino Técnico e Profissionalizante é a primeira plataforma digital brasileira que consolida, visualiza e analisa especificamente os dados da educação profissional técnica de nível médio.
+          </p>
+          <p>
+            Reunimos dados de fontes oficiais — INEP/MEC (Censo Escolar), IBGE (PNAD), MTE (RAIS/CAGED), OCDE e UNESCO — em um único lugar, com camada analítica e editorial, para informar decisões de política pública, práticas pedagógicas e cobertura jornalística.
+          </p>
+          <p>
+            Projeto de <strong class="text-primary">Marcelo Kanhan</strong>, executivo de comunicação, computational social scientist e pesquisador em tecnologia e inovação, com apoio institucional da <strong class="text-primary">Estácio/Yduqs</strong>.
+          </p>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Contato -->
+  <section class="bg-surface-container-low dark:bg-dark-surface-container-low py-16 md:py-24">
+    <Container>
+      <div class="max-w-3xl">
+        <SectionHeader
+          label="Contato para Imprensa"
+          title="Fale Conosco"
+        />
+
+        <div class="bg-surface-container-lowest dark:bg-dark-surface-container p-8 rounded-xl space-y-4">
+          <p class="text-on-surface-variant">
+            Para solicitações de dados, entrevistas ou informações adicionais, entre em contato:
+          </p>
+          <div class="space-y-2">
+            <p class="font-label text-sm">
+              <span class="text-on-surface-variant">Responsável:</span>
+              <span class="text-primary font-semibold ml-2">Marcelo Kanhan</span>
+            </p>
+            <p class="font-label text-sm">
+              <span class="text-on-surface-variant">Instituição:</span>
+              <span class="text-primary font-semibold ml-2">Observatório Nacional ETP / Estácio</span>
+            </p>
+          </div>
+          <p class="text-xs text-on-surface-variant mt-4">
+            Todos os dados apresentados no Observatório são de fontes públicas e oficiais. Gráficos e visualizações podem ser embeddados ou reproduzidos com crédito ao Observatório Nacional ETP.
+          </p>
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

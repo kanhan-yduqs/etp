@@ -22,21 +22,28 @@ const { chartId, chartData, title, xLabel, yLabel, height = '400px' } = Astro.pr
     const data = JSON.parse(canvas.dataset.chart || '{}');
     const xLabel = canvas.dataset.xLabel;
     const yLabel = canvas.dataset.yLabel;
+    const styles = getComputedStyle(document.documentElement);
+    const gridColor = styles.getPropertyValue('--chart-grid').trim() || 'rgba(0,0,0,0.04)';
+    const gridColorStrong = styles.getPropertyValue('--chart-grid-strong').trim() || 'rgba(0,0,0,0.06)';
+    const textColor = styles.getPropertyValue('--chart-text').trim() || '#41484c';
 
     new Chart(canvas, {
       type: 'line',
       data: data,
       options: {
         interaction: { mode: 'index', intersect: false },
+        color: textColor,
         scales: {
           x: {
-            title: xLabel ? { display: true, text: xLabel, font: { family: "'Space Grotesk'" } } : { display: false },
-            grid: { color: 'rgba(0,0,0,0.04)' },
+            title: xLabel ? { display: true, text: xLabel, font: { family: "'Space Grotesk'" }, color: textColor } : { display: false },
+            grid: { color: gridColor },
+            ticks: { color: textColor },
           },
           y: {
-            title: yLabel ? { display: true, text: yLabel, font: { family: "'Space Grotesk'" } } : { display: false },
-            grid: { color: 'rgba(0,0,0,0.06)' },
+            title: yLabel ? { display: true, text: yLabel, font: { family: "'Space Grotesk'" }, color: textColor } : { display: false },
+            grid: { color: gridColorStrong },
             ticks: {
+              color: textColor,
               callback: function(value: any) {
                 if (typeof value === 'number') {
                   if (value >= 1_000_000) return (value / 1_000_000).toFixed(1) + 'M';
