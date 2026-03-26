@@ -20,7 +20,7 @@ const { chartId, chartData, title, horizontal = false, height = '400px' } = Astr
 </div>
 
 <script>
-  import { Chart } from './ChartConfig';
+  import { Chart, registerChart } from './ChartConfig';
 
   document.querySelectorAll<HTMLCanvasElement>('canvas[data-chart-type="bar"]').forEach(canvas => {
     const data = JSON.parse(canvas.dataset.chart || '{}');
@@ -55,10 +55,9 @@ const { chartId, chartData, title, horizontal = false, height = '400px' } = Astr
       return value;
     };
 
-    // Override global default color for this chart instance (dark mode support)
     Chart.defaults.color = textColor;
 
-    new Chart(canvas, {
+    const chart = new Chart(canvas, {
       type: 'bar',
       data: data,
       options: {
@@ -90,5 +89,6 @@ const { chartId, chartData, title, horizontal = false, height = '400px' } = Astr
         },
       },
     });
+    registerChart(chart);
   });
 </script>

@@ -203,6 +203,7 @@ const ufsTop10 = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total
 
 <script>
   import { Chart, BarController, BarElement, LineController, LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend, Filler } from 'chart.js';
+  import { registerChart } from '../../components/charts/ChartConfig';
   Chart.register(BarController, BarElement, LineController, LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend, Filler);
 
   // Chart defaults
@@ -380,6 +381,11 @@ const ufsTop10 = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total
   const latestYear = Math.max(...allSerie.map((s: any) => s.ano));
   buildCharts(latestYear, 'todos', 'total');
 
+  // Register filterable charts for theme updates
+  if (chartTopUFs) registerChart(chartTopUFs);
+  if (chartPorRede) registerChart(chartPorRede);
+  if (chartModalidades) registerChart(chartModalidades);
+
   // Listen for filter changes
   document.addEventListener('filter-change', ((e: CustomEvent) => {
     const { ano, uf, rede } = e.detail;
@@ -396,7 +402,7 @@ const ufsTop10 = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total
     // Salary comparison bar chart
     const salCanvas = document.getElementById('chart-salarios') as HTMLCanvasElement;
     if (salCanvas) {
-      new Chart(salCanvas, {
+      const salChart = new Chart(salCanvas, {
         type: 'bar',
         data: {
           labels: ['Ensino Médio', 'Ensino Técnico', 'Ensino Superior'],
@@ -426,12 +432,13 @@ const ufsTop10 = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total
           },
         },
       });
+      registerChart(salChart);
     }
 
     // Employment evolution line chart
     const evoCanvas = document.getElementById('chart-emprego-evolucao') as HTMLCanvasElement;
     if (evoCanvas) {
-      new Chart(evoCanvas, {
+      const evoChart = new Chart(evoCanvas, {
         type: 'line',
         data: {
           labels: empData.map((d: any) => d.ano.toString()),
@@ -459,6 +466,7 @@ const ufsTop10 = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total
           },
         },
       });
+      registerChart(evoChart);
     }
   }
 </script>

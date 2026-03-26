@@ -16,7 +16,7 @@ const { chartId, chartData, title, xLabel, yLabel, height = '400px' } = Astro.pr
 </div>
 
 <script>
-  import { Chart } from './ChartConfig';
+  import { Chart, registerChart } from './ChartConfig';
 
   document.querySelectorAll<HTMLCanvasElement>('canvas[data-chart-type="line"]').forEach(canvas => {
     const data = JSON.parse(canvas.dataset.chart || '{}');
@@ -49,10 +49,9 @@ const { chartId, chartData, title, xLabel, yLabel, height = '400px' } = Astro.pr
       });
     }
 
-    // Override global default color for this chart instance (dark mode support)
     Chart.defaults.color = textColor;
 
-    new Chart(canvas, {
+    const chart = new Chart(canvas, {
       type: 'line',
       data: data,
       options: {
@@ -95,5 +94,6 @@ const { chartId, chartData, title, xLabel, yLabel, height = '400px' } = Astro.pr
         },
       },
     });
+    registerChart(chart);
   });
 </script>
