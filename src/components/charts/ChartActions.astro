@@ -1,0 +1,100 @@
+---
+interface Props {
+  chartId: string;
+  csvData: string; // JSON string of the chart data
+  csvFilename?: string;
+  embedPath?: string;
+}
+
+const { chartId, csvData, csvFilename = 'dados-observatorio-etp.csv', embedPath } = Astro.props;
+---
+
+<div class="flex items-center gap-2 mt-3 justify-end">
+  {embedPath && (
+    <span class="contents">
+      {/* Embed button rendered inline */}
+      <button
+        class="embed-trigger font-label text-[10px] text-on-surface-variant hover:text-primary px-2 py-1 rounded transition-colors"
+        data-embed-id={embedPath.replace(/\//g, '-').replace(/^-|-$/g, '')}
+        title="Incorporar"
+      >
+        &lt;/&gt;
+      </button>
+    </span>
+  )}
+  <button
+    class="chart-download-csv font-label text-[10px] text-on-surface-variant hover:text-primary px-2 py-1 rounded transition-colors"
+    data-csv-data={csvData}
+    data-csv-filename={csvFilename}
+    title="Baixar CSV"
+  >
+    CSV ↓
+  </button>
+  <button
+    class="chart-download-png font-label text-[10px] text-on-surface-variant hover:text-primary px-2 py-1 rounded transition-colors"
+    data-chart-id={chartId}
+    data-png-filename={csvFilename.replace('.csv', '.png')}
+    title="Baixar PNG"
+  >
+    PNG ↓
+  </button>
+</div>
+
+<script is:inline>
+  document.addEventListener('click', function(e) {
+    // CSV download
+    const csvBtn = e.target.closest('.chart-download-csv');
+    if (csvBtn) {
+      try {
+        var data = JSON.parse(csvBtn.dataset.csvData);
+        var filename = csvBtn.dataset.csvFilename || 'dados.csv';
+        var labels = data.labels || [];
+        var datasets = data.datasets || [];
+
+        // Build CSV
+        var header = [''].concat(labels);
+        var rows = [header.join(',')];
+        datasets.forEach(function(ds) {
+          var row = ['"' + (ds.label || '') + '"'];
+          (ds.data || []).forEach(function(v) { row.push(v); });
+          rows.push(row.join(','));
+        });
+
+        // BOM for Excel UTF-8 compatibility
+        var bom = '\uFEFF';
+        var blob = new Blob([bom + rows.join('\n')], { type: 'text/csv;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+      } catch (err) {
+        console.error('CSV download error:', err);
+      }
+    }
+
+    // PNG download
+    var pngBtn = e.target.closest('.chart-download-png');
+    if (pngBtn) {
+      var chartId = pngBtn.dataset.chartId;
+      var pngFilename = pngBtn.dataset.pngFilename || 'grafico.png';
+      var canvas = document.getElementById(chartId);
+      if (canvas && canvas.tagName === 'CANVAS') {
+        // Create temp canvas with white background
+        var temp = document.createElement('canvas');
+        temp.width = canvas.width;
+        temp.height = canvas.height;
+        var ctx = temp.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, temp.width, temp.height);
+        ctx.drawImage(canvas, 0, 0);
+
+        var a = document.createElement('a');
+        a.href = temp.toDataURL('image/png', 1.0);
+        a.download = pngFilename;
+        a.click();
+      }
+    }
+  });
+</script>

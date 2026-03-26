@@ -7,6 +7,7 @@ import SourceNote from '../components/SourceNote.astro';
 import LineChart from '../components/charts/LineChart.astro';
 import BarChart from '../components/charts/BarChart.astro';
 import ChoroplethMap from '../components/charts/ChoroplethMap.astro';
+import ChartActions from '../components/charts/ChartActions.astro';
 import AnalysisCard from '../components/AnalysisCard.astro';
 import PolicyCard from '../components/PolicyCard.astro';
 import {
@@ -177,6 +178,7 @@ const mapData = JSON.stringify(mapDataObj);
 
       <div class="bg-surface-container-lowest p-4 md:p-8 rounded-xl">
         <LineChart chartId="serie-temporal" chartData={lineChartData} yLabel="Matrículas" />
+        <ChartActions chartId="serie-temporal" csvData={lineChartData} csvFilename="serie-temporal-ept.csv" embedPath="embed/serie-temporal" />
       </div>
 
       <SourceNote source="Sinopses Estatísticas da Educação Básica — INEP/MEC" year={`${oldest.ano}–${latestYear}`} />
@@ -193,6 +195,7 @@ const mapData = JSON.stringify(mapDataObj);
 
       <div class="bg-surface-container-lowest p-4 md:p-8 rounded-xl">
         <BarChart chartId="por-regiao" chartData={barChartData} horizontal={true} height="320px" />
+        <ChartActions chartId="por-regiao" csvData={barChartData} csvFilename="distribuicao-regional-ept.csv" embedPath="embed/distribuicao-regional" />
       </div>
 
       <SourceNote source="Sinopses Estatísticas da Educação Básica — INEP/MEC" year={latestYear} />
