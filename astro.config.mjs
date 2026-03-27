@@ -10,6 +10,7 @@ export default defineConfig({
     }),
   ],
   output: 'static',
-  site: 'https://observatorio-etp.pages.dev',
+  site: 'https://kanhan-yduqs.github.io',
+  base: '/etp',
   compressHTML: true,
 });

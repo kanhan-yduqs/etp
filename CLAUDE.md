@@ -1,6 +1,6 @@
 # Observatório Nacional ETP
 
-Plataforma web de referência sobre ensino técnico médio profissionalizante no Brasil. Projeto de Marcelo Kanhan (comunicação, computational social science) com apoio institucional da Estácio. Branding: **Observatório Nacional ETP**.
+Plataforma web de referência sobre ensino técnico médio profissionalizante no Brasil. Projeto de Marcelo Kanhan (executivo e pesquisador da área de Educação) com apoio institucional do Instituto Yduqs e da Estácio. Branding: **Observatório Nacional ETP**.
 
 ## Visão
 
