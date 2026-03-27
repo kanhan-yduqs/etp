@@ -3,20 +3,22 @@ interface Props {
   activePage?: 'dados' | 'politicas' | 'analises' | 'sobre' | 'comparacoes' | 'perfis' | 'guia';
 }
 
+import { url } from '../lib/url';
+
 const { activePage } = Astro.props;
 
 const navItems = [
-  { id: 'dados', label: 'Dados', href: '/painel/' },
-  { id: 'politicas', label: 'Políticas', href: '/politicas/' },
-  { id: 'analises', label: 'Análises', href: '/analises/' },
-  { id: 'guia', label: 'Guia', href: '/guia/' },
+  { id: 'dados', label: 'Dados', href: url('/painel/') },
+  { id: 'politicas', label: 'Políticas', href: url('/politicas/') },
+  { id: 'analises', label: 'Análises', href: url('/analises/') },
+  { id: 'guia', label: 'Guia', href: url('/guia/') },
 ] as const;
 ---
 
 <header class="fixed top-0 left-0 right-0 z-50 bg-surface dark:bg-primary-deep transition-colors duration-200">
   <div class="flex justify-between items-center w-full px-6 md:px-8 py-4 max-w-[1440px] mx-auto">
     <div class="flex items-center gap-8">
-      <a href="/" class="text-xl font-bold tracking-tighter text-primary dark:text-surface">
+      <a href={url('/')} class="text-xl font-bold tracking-tighter text-primary dark:text-surface">
         Observatório Nacional ETP
       </a>
       <nav class="hidden md:flex gap-6 items-center">

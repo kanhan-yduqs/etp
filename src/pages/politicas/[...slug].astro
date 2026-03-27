@@ -1,6 +1,7 @@
 ---
 import EditorialLayout from '../../layouts/EditorialLayout.astro';
 import { getCollection, render } from 'astro:content';
+import { url } from '../../lib/url';
 
 export async function getStaticPaths() {
   const politicas = await getCollection('politicas');
@@ -20,7 +21,7 @@ const statusLabel = entry.data.status === 'ativa' ? 'Política Ativa' : entry.da
   title={entry.data.title}
   subtitle={entry.data.excerpt}
   category={statusLabel}
-  backLink="/politicas/"
+  backLink={url('/politicas/')}
   backLabel="Políticas Públicas"
   activePage="politicas"
 >

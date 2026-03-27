@@ -16,6 +16,8 @@ const {
   legendLabel = 'Matrículas',
   height = '500px',
 } = Astro.props;
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <div class="relative rounded-xl overflow-hidden" style={`height: ${height}`}>
@@ -26,6 +28,7 @@ const {
     data-color-low={colorLow}
     data-color-high={colorHigh}
     data-legend-label={legendLabel}
+    data-base-url={baseUrl}
   ></div>
 </div>
 
@@ -39,6 +42,7 @@ const {
     const colorLow = container.dataset.colorLow || '#e9e8e0';
     const colorHigh = container.dataset.colorHigh || '#0D3B4C';
     const legendLabel = container.dataset.legendLabel || 'Valor';
+    const baseUrl = container.dataset.baseUrl || '';
 
     const isDark = document.documentElement.classList.contains('dark');
     const tooltipTitleColor = isDark ? '#a4cce1' : '#002532';
@@ -46,7 +50,7 @@ const {
     const borderColor = isDark ? '#1a2a30' : '#fbfaf1';
 
     // Fetch GeoJSON
-    const response = await fetch('/geo/brazil-ufs.geojson');
+    const response = await fetch(`${baseUrl}/geo/brazil-ufs.geojson`);
     const geojson = await response.json();
 
     // Calculate min/max for color scale
@@ -106,7 +110,7 @@ const {
             geoLayer.resetStyle(e.target);
           },
           click: () => {
-            window.location.href = `/perfis/${sigla.toLowerCase()}/`;
+            window.location.href = `${baseUrl}/perfis/${sigla.toLowerCase()}/`;
           },
         });
       },

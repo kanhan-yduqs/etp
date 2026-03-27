@@ -4,6 +4,7 @@ import Container from '../../components/Container.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import AnalysisCard from '../../components/AnalysisCard.astro';
 import { getCollection } from 'astro:content';
+import { url } from '../../lib/url';
 
 const analises = await getCollection('analises');
 const featured = analises.find(a => a.data.featured);
@@ -26,7 +27,7 @@ const others = analises.filter(a => !a.data.featured).sort((a, b) => a.data.date
             category={featured.data.category}
             date={featured.data.date}
             excerpt={featured.data.excerpt}
-            href={`/analises/${featured.id}/`}
+            href={url(`/analises/${featured.id}/`)}
             readTime={featured.data.readTime}
             featured={true}
           />
@@ -41,7 +42,7 @@ const others = analises.filter(a => !a.data.featured).sort((a, b) => a.data.date
             category={a.data.category}
             date={a.data.date}
             excerpt={a.data.excerpt}
-            href={`/analises/${a.id}/`}
+            href={url(`/analises/${a.id}/`)}
             readTime={a.data.readTime}
           />
         ))}

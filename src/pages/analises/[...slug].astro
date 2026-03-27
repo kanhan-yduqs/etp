@@ -1,6 +1,7 @@
 ---
 import EditorialLayout from '../../layouts/EditorialLayout.astro';
 import { getCollection, render } from 'astro:content';
+import { url } from '../../lib/url';
 
 export async function getStaticPaths() {
   const analises = await getCollection('analises');
@@ -20,7 +21,7 @@ const { Content } = await render(entry);
   date={entry.data.date}
   category={entry.data.category}
   readTime={entry.data.readTime}
-  backLink="/analises/"
+  backLink={url('/analises/')}
   backLabel="Análises"
   activePage="analises"
 >

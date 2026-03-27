@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 const currentYear = new Date().getFullYear();
 ---
 
@@ -23,19 +24,19 @@ const currentYear = new Date().getFullYear();
       <div class="space-y-4">
         <p class="font-label text-[10px] uppercase tracking-widest text-white/60">Explorar</p>
         <ul class="space-y-2">
-          <li><a class="text-outline-variant hover:text-surface text-sm transition-opacity" href="/metodologia/">Metodologia</a></li>
-          <li><a class="text-outline-variant hover:text-surface text-sm transition-opacity" href="/glossario/">Glossário</a></li>
-          <li><a class="text-outline-variant hover:text-surface text-sm transition-opacity" href="/imprensa/">Imprensa</a></li>
-          <li><a class="text-outline-variant hover:text-surface text-sm transition-opacity" href="/guia/">Guia de Cursos</a></li>
-          <li><a class="text-outline-variant hover:text-surface text-sm transition-opacity" href="/sobre/">Sobre</a></li>
+          <li><a class="text-outline-variant hover:text-surface text-sm transition-opacity" href={url('/metodologia/')}>Metodologia</a></li>
+          <li><a class="text-outline-variant hover:text-surface text-sm transition-opacity" href={url('/glossario/')}>Glossário</a></li>
+          <li><a class="text-outline-variant hover:text-surface text-sm transition-opacity" href={url('/imprensa/')}>Imprensa</a></li>
+          <li><a class="text-outline-variant hover:text-surface text-sm transition-opacity" href={url('/guia/')}>Guia de Cursos</a></li>
+          <li><a class="text-outline-variant hover:text-surface text-sm transition-opacity" href={url('/sobre/')}>Sobre</a></li>
         </ul>
       </div>
       <div class="space-y-4">
         <p class="font-label text-[10px] uppercase tracking-widest text-white/60">Dados</p>
         <ul class="space-y-2">
-          <li><a class="text-outline-variant hover:text-surface text-sm transition-opacity" href="/painel/">Painel de Indicadores</a></li>
-          <li><a class="text-outline-variant hover:text-surface text-sm transition-opacity" href="/comparacoes/">Comparações</a></li>
-          <li><a class="text-outline-variant hover:text-surface text-sm transition-opacity" href="/politicas/">Políticas Públicas</a></li>
+          <li><a class="text-outline-variant hover:text-surface text-sm transition-opacity" href={url('/painel/')}>Painel de Indicadores</a></li>
+          <li><a class="text-outline-variant hover:text-surface text-sm transition-opacity" href={url('/comparacoes/')}>Comparações</a></li>
+          <li><a class="text-outline-variant hover:text-surface text-sm transition-opacity" href={url('/politicas/')}>Políticas Públicas</a></li>
         </ul>
       </div>
     </div>

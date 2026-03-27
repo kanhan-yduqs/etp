@@ -4,6 +4,7 @@ import Container from '../components/Container.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import BigNumber from '../components/BigNumber.astro';
 import { getEmpregabilidadeLatest, formatCurrency } from '../lib/data';
+import { url } from '../lib/url';
 
 const emp = getEmpregabilidadeLatest();
 
@@ -223,10 +224,10 @@ const faqs = [
         <h2 class="text-3xl font-bold text-primary mb-4">Explore os Dados</h2>
         <p class="text-on-surface-variant mb-8">Veja como o ensino técnico está crescendo no Brasil e compare as oportunidades por estado e região.</p>
         <div class="flex flex-wrap justify-center gap-4">
-          <a href="/painel/" class="px-8 py-4 editorial-gradient text-on-primary font-semibold rounded-md hover:opacity-90 transition-all shadow-lg">
+          <a href={url('/painel/')} class="px-8 py-4 editorial-gradient text-on-primary font-semibold rounded-md hover:opacity-90 transition-all shadow-lg">
             Painel de Indicadores
           </a>
-          <a href="/perfis/" class="px-8 py-4 border border-outline-variant text-primary font-semibold rounded-md hover:bg-surface-container transition-all">
+          <a href={url('/perfis/')} class="px-8 py-4 border border-outline-variant text-primary font-semibold rounded-md hover:bg-surface-container transition-all">
             Perfis Estaduais
           </a>
         </div>

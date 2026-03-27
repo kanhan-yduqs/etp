@@ -20,6 +20,7 @@ import {
   MODALIDADE_LABELS,
   MODALIDADE_COLORS,
 } from '../../lib/data';
+import { url } from '../../lib/url';
 
 export function getStaticPaths() {
   return getAllUFSlugs().map(slug => ({
@@ -33,7 +34,7 @@ const allYears = getUFData(sigla);
 const latest = getUFLatest(sigla);
 
 if (!latest) {
-  return Astro.redirect('/perfis/');
+  return Astro.redirect(url('/perfis/'));
 }
 
 const latestYear = getLatestYear();
@@ -100,9 +101,9 @@ const compData = JSON.stringify({
     <Container>
       <!-- Breadcrumbs -->
       <nav class="flex items-center gap-2 text-sm text-on-surface-variant mb-8">
-        <a href="/" class="hover:text-primary transition-colors">Brasil</a>
+        <a href={url('/')} class="hover:text-primary transition-colors">Brasil</a>
         <span>/</span>
-        <a href="/perfis/" class="hover:text-primary transition-colors">Perfis Estaduais</a>
+        <a href={url('/perfis/')} class="hover:text-primary transition-colors">Perfis Estaduais</a>
         <span>/</span>
         <span class="text-primary font-semibold">{latest.nome_uf}</span>
       </nav>

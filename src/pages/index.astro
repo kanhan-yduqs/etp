@@ -21,6 +21,7 @@ import {
   calcGrowthPercent,
 } from '../lib/data';
 import { getCollection } from 'astro:content';
+import { url } from '../lib/url';
 
 // --- Dados calculados em build time ---
 const serie = getSerieTemporal();
@@ -139,10 +140,10 @@ const mapData = JSON.stringify(mapDataObj);
           Traduzimos a complexidade da Educação Profissional e Tecnológica em conhecimento estratégico para transformar políticas públicas em realidade nacional.
         </p>
         <div class="pt-6 flex flex-wrap justify-center gap-4">
-          <a href="/painel/" class="px-8 py-4 editorial-gradient text-on-primary font-semibold rounded-md hover:opacity-90 transition-all shadow-lg">
+          <a href={url('/painel/')} class="px-8 py-4 editorial-gradient text-on-primary font-semibold rounded-md hover:opacity-90 transition-all shadow-lg">
             Explorar Dados Atuais
           </a>
-          <a href="/metodologia/" class="px-8 py-4 border border-outline-variant text-primary font-semibold rounded-md hover:bg-surface-container-low transition-all">
+          <a href={url('/metodologia/')} class="px-8 py-4 border border-outline-variant text-primary font-semibold rounded-md hover:bg-surface-container-low transition-all">
             Ver Metodologia
           </a>
         </div>
@@ -247,7 +248,7 @@ const mapData = JSON.stringify(mapDataObj);
         label="Políticas Públicas"
         title="Monitoramento de Políticas"
       >
-        <a href="/politicas/" class="font-label text-sm text-secondary hover:underline">Ver todas →</a>
+        <a href={url('/politicas/')} class="font-label text-sm text-secondary hover:underline">Ver todas →</a>
       </SectionHeader>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -256,7 +257,7 @@ const mapData = JSON.stringify(mapDataObj);
             title={p.data.title}
             status={p.data.status}
             excerpt={p.data.excerpt}
-            href={`/politicas/${p.id}/`}
+            href={url(`/politicas/${p.id}/`)}
             progressLabel={p.data.progressLabel}
             progressValue={p.data.progressValue}
           />
@@ -272,7 +273,7 @@ const mapData = JSON.stringify(mapDataObj);
         label="Contexto Internacional"
         title="Brasil no Cenário Global"
       >
-        <a href="/comparacoes/" class="font-label text-sm text-secondary hover:underline">Ver comparações →</a>
+        <a href={url('/comparacoes/')} class="font-label text-sm text-secondary hover:underline">Ver comparações →</a>
       </SectionHeader>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -302,7 +303,7 @@ const mapData = JSON.stringify(mapDataObj);
         label="Análises em Destaque"
         title="Aprofunde sua Pesquisa"
       >
-        <a href="/analises/" class="font-label text-sm text-secondary hover:underline">Ver todas →</a>
+        <a href={url('/analises/')} class="font-label text-sm text-secondary hover:underline">Ver todas →</a>
       </SectionHeader>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -312,7 +313,7 @@ const mapData = JSON.stringify(mapDataObj);
             category={a.data.category}
             date={a.data.date}
             excerpt={a.data.excerpt}
-            href={`/analises/${a.id}/`}
+            href={url(`/analises/${a.id}/`)}
             readTime={a.data.readTime}
           />
         ))}

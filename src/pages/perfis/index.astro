@@ -9,6 +9,7 @@ import {
   formatPercent,
   calcGrowthPercent,
 } from '../../lib/data';
+import { url } from '../../lib/url';
 
 const latestYear = getLatestYear();
 const ufsLatest = getMatriculasPorUF(latestYear).sort((a, b) => b.total - a.total);
@@ -43,7 +44,7 @@ function getGrowth(sigla: string): number {
                 const publicaPct = (uf.publica / uf.total) * 100;
                 return (
                   <a
-                    href={`/perfis/${uf.sigla_uf.toLowerCase()}/`}
+                    href={url(`/perfis/${uf.sigla_uf.toLowerCase()}/`)}
                     class="group bg-surface-container-lowest dark:bg-dark-surface-container p-5 rounded-xl hover:shadow-md transition-all"
                   >
                     <div class="flex justify-between items-start">
