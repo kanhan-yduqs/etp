@@ -198,22 +198,30 @@ python scripts/01_process_sinopses.py
 
 ## Handoff - Estado atual e próximas etapas
 
-**Estágio:** Fases 0-3 completas. 56 páginas. Pronto para revisão manual e deploy.
+**Estágio:** Publicado e em produção. Aprovação interna em andamento.
 
-**O que está funcional:**
+**Site publicado:** https://kanhan-yduqs.github.io/etp/
+**Repositório:** https://github.com/kanhan-yduqs/etp (público)
+**Deploy:** GitHub Pages via GitHub Actions (automático no push para main)
+
+**O que está em produção:**
 - 56 páginas (50 conteúdo + 6 embeds), build em ~5s
 - Home, Painel (filtros + empregabilidade), 27 perfis UF, 5 políticas, 7 análises, comparações, glossário, imprensa, guia de cursos, sobre, metodologia
-- 10+ gráficos Chart.js + mapa Leaflet + filtros interativos
+- 10+ gráficos Chart.js (dark mode reativo) + mapa Leaflet + filtros interativos
 - 6 gráficos embeddáveis (/embed/) com EmbedModal copy-to-clipboard
 - Downloads CSV/PNG nos gráficos (ChartActions)
 - Schema.org JSON-LD (Dataset, Organization, Article)
-- Logos Instituto Yduqs + Estácio no footer e página Sobre
+- Parceiros institucionais: Instituto Yduqs + Estácio (links no footer e Sobre)
 - Guia de cursos com 3 modalidades, 13 eixos CNCT, FAQ, empregabilidade
-- Busca Pagefind (50 páginas, 2261 palavras), dark mode auditado
+- Busca Pagefind (50 páginas, 2261 palavras), dark mode completo
 - SEO: sitemap, OG tags, canonical, robots.txt, Schema.org
-- Deploy: GitHub Pages workflow pronto
+- Base path /etp/ com url() helper para todos os links internos
 
-**Próximo passo:**
-1. **Revisão manual do Marcelo** — navegação completa, conteúdo, design, dark mode
-2. **Deploy efetivo** — criar repo GitHub, push, ativar GitHub Pages
-3. **Itens futuros** — newsletter, multilíngue, API, OG images dinâmicas
+**Status atual:**
+- Aprovação offline com clientes internos e pares (Marcelo)
+- Aguardando feedback para possíveis ajustes de conteúdo editorial
+
+**Itens futuros (não priorizados):**
+- Newsletter, multilíngue (EN/ES), API de dados, OG images dinâmicas
+- ChartActions/EmbedModal em todos os gráficos (atualmente só na Home)
+- Domínio customizado (migração de GitHub Pages para Cloudflare Pages se necessário)
